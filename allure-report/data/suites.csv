@@ -1,0 +1,3 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"  As a Contract Manager.I want to create a Commodity Contract with only the mandatory fields
+  So that I can quickly onboard a new supplier agreement without unnecessary data entry.","40680","Create Commodity Contract Management end to end flow with only mandatory fields","","2026-08-28","broken","2026-08-28","","Commodity Contract Management","Create Commodity Contract Management end to end flow with only mandatory fields",""

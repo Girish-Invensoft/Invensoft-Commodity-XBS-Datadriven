@@ -1,0 +1,152 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!--  Project Information  -->
+    <groupId>com.invensoft</groupId>
+    <artifactId>ERP-Automation</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!--  =====================================================  -->
+    <!--  Properties  -->
+    <!--  =====================================================  -->
+    <properties>
+        <!--  Java  -->
+        <maven.compiler.release>21</maven.compiler.release>
+        <!--  Encoding  -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--  Selenium  -->
+        <selenium.version>4.47.0</selenium.version>
+        <!--  TestNG  -->
+        <testng.version>7.11.0</testng.version>
+        <!--  Cucumber  -->
+        <cucumber.version>7.34.7</cucumber.version>
+        <!--  Allure  -->
+        <allure.version>2.29.0</allure.version>
+        <aspectj.version>1.9.22</aspectj.version>
+        <!--  Maven Plugins  -->
+        <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>3.5.4</maven.surefire.plugin.version>
+    </properties>
+    <!--  =====================================================  -->
+    <!--  Dependency Management  -->
+    <!--  =====================================================  -->
+    <dependencyManagement>
+        <dependencies>
+            <!--  Allure BOM  -->
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-bom</artifactId>
+                <version>${allure.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <!--  =====================================================  -->
+    <!--  Dependencies  -->
+    <!--  =====================================================  -->
+    <dependencies>
+        <!--  Selenium WebDriver  -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+        <!--  TestNG  -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
+        <!--  Cucumber Java  -->
+        <!--  Provides @Given, @When, @Then  -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+        <!--  Cucumber TestNG  -->
+        <!--  Allows Cucumber to run with TestNG  -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+        <!--  Allure + Cucumber JVM integration  -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+        </dependency>
+        <!--  Allure + TestNG  -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+        </dependency>
+        <!--  AspectJ Weaver (required by Allure to capture steps/attachments)  -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+    </dependencies>
+    <!--  =====================================================  -->
+    <!--  Build  -->
+    <!--  =====================================================  -->
+    <build>
+        <plugins>
+            <!--  =================================================  -->
+            <!--  Maven Compiler Plugin  -->
+            <!--  =================================================  -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <!--  =================================================  -->
+            <!--  Maven Surefire Plugin  -->
+            <!--  =================================================  -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <!--  TestNG suite  -->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <!--  Use Maven classloader  -->
+                    <useSystemClassLoader>true</useSystemClassLoader>
+                    <!--  AspectJ weaver agent for Allure step/attachment interception  -->
+                    <argLine> -javaagent:"${settings.localRepository}"/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar </argLine>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+            <!--  =================================================  -->
+            <!--  Allure Maven Plugin  -->
+            <!--  Auto-generates the Allure report into target/allure-report  -->
+            <!--  after every `mvn test` run (bound to the test phase)  -->
+            <!--  =================================================  -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.12.0</version>
+                <configuration>
+                    <reportVersion>${allure.version}</reportVersion>
+                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                    <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-allure-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

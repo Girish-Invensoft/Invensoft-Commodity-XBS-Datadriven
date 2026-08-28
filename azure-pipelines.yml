@@ -1,0 +1,103 @@
+# azure-pipelines.yml
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+parameters:
+  - name: browser
+    displayName: 'Browser to run tests on'
+    type: string
+    default: 'chrome'
+    values:
+      - chrome
+      - firefox
+      - edge
+  - name: environment
+    displayName: 'Target environment'
+    type: string
+    default: 'qa'
+    values:
+      - qa
+      - uat
+      - prod
+      - dev
+  - name: headless
+    displayName: 'Run headless'
+    type: boolean
+    default: true
+  - name: tags
+    displayName: 'Cucumber tag filter'
+    type: string
+    default: '@smoke'
+
+variables:
+  MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
+  MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
+
+steps:
+
+  # 1. Checkout
+  - checkout: self
+    displayName: 'Checkout source from Azure Repos'
+
+  # 2. Java 21
+  - task: JavaToolInstaller@0
+    displayName: 'Use Java 21 (Temurin)'
+    inputs:
+      versionSpec: '21'
+      jdkArchitectureOption: 'x64'
+      jdkSourceOption: 'PreInstalled'
+
+  # 3. Cache Maven local repo
+  - task: Cache@2
+    displayName: 'Cache Maven local repository'
+    inputs:
+      key: 'maven | "$(Agent.OS)" | **/pom.xml'
+      restoreKeys: |
+        maven | "$(Agent.OS)"
+      path: $(MAVEN_CACHE_FOLDER)
+
+  # 4. Run tests
+  - task: Maven@4
+    displayName: 'Run Cucumber/TestNG automation suite'
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'clean test'
+      options: >
+        -Dbrowser=${{ parameters.browser }}
+        -Denv=${{ parameters.environment }}
+        -Dheadless=${{ parameters.headless }}
+        -Dcucumber.filter.tags="${{ parameters.tags }}"
+        -Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)
+        -Dsurefire.testFailureIgnore=true
+      publishJUnitResults: false
+      javaHomeOption: 'JDKVersion'
+
+  # 5. Publish JUnit results (from Surefire, your actual output path)
+  - task: PublishTestResults@2
+    displayName: 'Publish test results'
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/surefire-reports/*.xml'
+      failTaskOnFailedTests: false
+
+  # 6. Install Allure CLI + generate the report
+  - script: |
+      npm install -g allure-commandline --save-dev
+      allure generate target/allure-results -o target/allure-report --clean
+    displayName: 'Generate Allure Report'
+    condition: succeededOrFailed()
+
+  # 7. Publish Allure report as a downloadable artifact
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Allure HTML report'
+    condition: succeededOrFailed()
+    inputs:
+      PathtoPublish: 'target/allure-report'
+      ArtifactName: 'allure-report'
+      publishLocation: 'Container'
