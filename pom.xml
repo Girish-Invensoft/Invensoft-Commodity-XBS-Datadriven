@@ -1,36 +1,69 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="
+            http://maven.apache.org/POM/4.0.0
+            https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
-    <!--  Project Information  -->
+
+    <!-- ===================================================== -->
+    <!-- Project Information                                   -->
+    <!-- ===================================================== -->
+
     <groupId>com.invensoft</groupId>
     <artifactId>ERP-Automation</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <!--  =====================================================  -->
-    <!--  Properties  -->
-    <!--  =====================================================  -->
+
+
+    <!-- ===================================================== -->
+    <!-- Properties                                            -->
+    <!-- ===================================================== -->
+
     <properties>
-        <!--  Java  -->
+
+        <!-- Java -->
         <maven.compiler.release>21</maven.compiler.release>
-        <!--  Encoding  -->
+
+        <!-- Encoding -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!--  Selenium  -->
+
+        <!-- Selenium -->
         <selenium.version>4.47.0</selenium.version>
-        <!--  TestNG  -->
+
+        <!-- TestNG -->
         <testng.version>7.11.0</testng.version>
-        <!--  Cucumber  -->
+
+        <!-- Cucumber -->
         <cucumber.version>7.34.7</cucumber.version>
-        <!--  Allure  -->
+
+        <!-- Allure -->
         <allure.version>2.29.0</allure.version>
+
+        <!-- AspectJ -->
         <aspectj.version>1.9.22</aspectj.version>
-        <!--  Maven Plugins  -->
+
+        <!-- Log4j2 -->
+        <log4j.version>2.25.2</log4j.version>
+
+        <!-- Maven Plugins -->
         <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.5.4</maven.surefire.plugin.version>
+        <allure.maven.version>2.12.0</allure.maven.version>
+
     </properties>
-    <!--  =====================================================  -->
-    <!--  Dependency Management  -->
-    <!--  =====================================================  -->
+
+
+    <!-- ===================================================== -->
+    <!-- Dependency Management                                 -->
+    <!-- ===================================================== -->
+
     <dependencyManagement>
+
         <dependencies>
-            <!--  Allure BOM  -->
+
+            <!-- Allure BOM -->
             <dependency>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-bom</artifactId>
@@ -38,115 +71,219 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
         </dependencies>
+
     </dependencyManagement>
-    <!--  =====================================================  -->
-    <!--  Dependencies  -->
-    <!--  =====================================================  -->
+
+
+    <!-- ===================================================== -->
+    <!-- Dependencies                                          -->
+    <!-- ===================================================== -->
+
     <dependencies>
-        <!--  Selenium WebDriver  -->
+
+
+        <!-- ================================================= -->
+        <!-- Selenium                                           -->
+        <!-- ================================================= -->
+
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
         </dependency>
-        <!--  TestNG  -->
+
+
+        <!-- ================================================= -->
+        <!-- TestNG                                             -->
+        <!-- ================================================= -->
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
         </dependency>
-        <!--  Cucumber Java  -->
-        <!--  Provides @Given, @When, @Then  -->
+
+
+        <!-- ================================================= -->
+        <!-- Cucumber Java                                      -->
+        <!-- ================================================= -->
+
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
         </dependency>
-        <!--  Cucumber TestNG  -->
-        <!--  Allows Cucumber to run with TestNG  -->
+
+
+        <!-- ================================================= -->
+        <!-- Cucumber TestNG                                    -->
+        <!-- ================================================= -->
+
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-testng</artifactId>
             <version>${cucumber.version}</version>
         </dependency>
-        <!--  Allure + Cucumber JVM integration  -->
+
+
+        <!-- ================================================= -->
+        <!-- Allure Cucumber 7                                  -->
+        <!-- ================================================= -->
+
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-cucumber7-jvm</artifactId>
         </dependency>
-        <!--  Allure + TestNG  -->
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-        </dependency>
-        <!--  AspectJ Weaver (required by Allure to capture steps/attachments)  -->
+
+
+        <!-- ================================================= -->
+        <!-- AspectJ Weaver                                     -->
+        <!-- Required for Allure                                -->
+        <!-- ================================================= -->
+
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>${aspectj.version}</version>
         </dependency>
+
+
+        <!-- ================================================= -->
+        <!-- Log4j2                                             -->
+        <!-- ================================================= -->
+
+        <!-- Log4j2 API -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+
+        <!-- Log4j2 Core -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+
+        <!-- ================================================= -->
+        <!-- SLF4J -> Log4j2 Provider                           -->
+        <!-- Fixes: No SLF4J providers were found              -->
+        <!-- ================================================= -->
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-configuration2</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.17.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+
+
     </dependencies>
-    <!--  =====================================================  -->
-    <!--  Build  -->
-    <!--  =====================================================  -->
+
+
+    <!-- ===================================================== -->
+    <!-- Build                                                  -->
+    <!-- ===================================================== -->
+
     <build>
+
         <plugins>
-            <!--  =================================================  -->
-            <!--  Maven Compiler Plugin  -->
-            <!--  =================================================  -->
+
+
+            <!-- ================================================= -->
+            <!-- Maven Compiler Plugin                             -->
+            <!-- ================================================= -->
+
             <plugin>
+
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
+
                 <configuration>
+
                     <release>${maven.compiler.release}</release>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+
+                    <encoding>
+                        ${project.build.sourceEncoding}
+                    </encoding>
+
                 </configuration>
+
             </plugin>
-            <!--  =================================================  -->
-            <!--  Maven Surefire Plugin  -->
-            <!--  =================================================  -->
+
+
+            <!-- ================================================= -->
+            <!-- Maven Surefire Plugin                             -->
+            <!-- ================================================= -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.plugin.version}</version>
                 <configuration>
-                    <!--  TestNG suite  -->
-                    <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                    <!--  Use Maven classloader  -->
-                    <useSystemClassLoader>true</useSystemClassLoader>
-                    <!--  AspectJ weaver agent for Allure step/attachment interception  -->
-                    <argLine> -javaagent:"${settings.localRepository}"/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar </argLine>
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
-            <!--  =================================================  -->
-            <!--  Allure Maven Plugin  -->
-            <!--  Auto-generates the Allure report into target/allure-report  -->
-            <!--  after every `mvn test` run (bound to the test phase)  -->
-            <!--  =================================================  -->
+
+            <!-- ================================================= -->
+            <!-- Allure Maven Plugin                               -->
+            <!-- ================================================= -->
+
             <plugin>
+
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
-                <version>2.12.0</version>
+                <version>${allure.maven.version}</version>
+
                 <configuration>
-                    <reportVersion>${allure.version}</reportVersion>
-                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
-                    <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
+
+                    <reportVersion>2.20.1</reportVersion>
+                    <installDirectory>C:/tools/allure-cli</installDirectory>
+
+                    <!-- Allure result files -->
+                    <resultsDirectory>
+                        ${project.build.directory}/allure-results
+                    </resultsDirectory>
+
+                    <!-- Generated HTML report -->
+                    <reportDirectory>
+                        ${project.build.directory}/allure-report
+                    </reportDirectory>
+
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-allure-report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
+
             </plugin>
+
         </plugins>
+
     </build>
+
 </project>

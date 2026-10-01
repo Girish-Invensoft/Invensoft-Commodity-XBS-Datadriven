@@ -1,12 +1,13 @@
 package runners;
 
-import io.cucumber.testng.AbstractTestNGCucumberTests;
+import
+        io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
         features = "src/test/resources/features",
-        glue = {"steps","hooks"},
-        tags = "@XBS_Commodity_Contract_Management_Flow",
+        glue = {"steps","hooks"},//hooks used for teardown --- screenshot
+        tags = "@XBS_Commodity_Contract_Management_Flow_With_Approver",
         plugin = {"pretty",
                 "html:target/cucumber-reports/cucumber.html",
                 "json:target/cucumber-reports/cucumber.json",

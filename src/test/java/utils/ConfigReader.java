@@ -1,11 +1,13 @@
 package utils;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigReader {
 
+    private static final String PROPERTY_FILE_PATH = "src/test/resources/values.properties";
     private static final String CONFIG_FILE = "config/values.properties";
     private static Properties properties;
 
@@ -61,5 +63,20 @@ public class ConfigReader {
     public static String getPropertyOrDefault(String key, String defaultValue) {
         String value = properties.getProperty(key);
         return (value == null || value.trim().isEmpty()) ? defaultValue : value.trim();
+    }
+
+    public static void setProperty(
+            String key,
+            String value) {
+
+        properties.setProperty(key, value);
+
+        try (FileOutputStream output = new FileOutputStream(PROPERTY_FILE_PATH)) {
+
+            properties.store(output, "Updated by automation");
+
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to update values.properties", e);
+        }
     }
 }
