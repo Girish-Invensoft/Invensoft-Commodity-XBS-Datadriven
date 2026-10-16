@@ -65,11 +65,13 @@ Feature: Commodity Contract Management
     And verifies that the "Documents" section is displayed
     And verifies that the "Remarks and Instructions" section is displayed
 
+    And click on "Save" button
+    Then verify the mandatory validation indicator is displayed for fields "Class,Pricing,Billing Location,Shipping Location,Trader,Season,Counterparty,Shipper,Invoice Currency,Price Currency / UOM,Tax Structure,Season,Product,Units,Packing,Qty.,UOM,Price,Target Date Range,Position Month,INCO Terms,Abritration,Weight Terms"
+
     When user selects "Coffee Farmer Purchase Contract" from the "Class" dropdown in the "General" section
     When user selects "EUR" from the "Invoice Currency" dropdown in the "General" section
     When user selects "INR/Kg" from the "Price Currency / UOM" dropdown in the "General" section
     When user selects "IMMEDIATE" from the "Payment Terms" dropdown in the "General" section
-
 
     When user selects "FLAT PRICE" from the "Pricing" dropdown in the "General" section
     When user selects "ABC Coffee Supplier (No. 77)" from the "Counterparty" dropdown in the "General" section
@@ -77,7 +79,6 @@ Feature: Commodity Contract Management
     When user selects "Default (DND)" from the "Shipping Location" dropdown in the "General" section
     When user selects "ABC Coffee Supplier (No. 77)" from the "Shipper" dropdown in the "General" section
     When user selects "GST 18%" from the "Tax Structure" dropdown in the "General" section
-
 
     When user selects "Season 2026 - 2027" from the "Season" dropdown in the "General" section
     When user selects "Prior to 1st Notice Day" from the "Fixation Terms" dropdown in the "General" section
@@ -133,6 +134,8 @@ Feature: Commodity Contract Management
 
     And verifies that the "<General>" section is displayed
     And verifies that the "<ProductDetails>" table section is displayed
+
+    And click on "Save" button
 
     When user selects "<class>" from the "Class" dropdown in the "General" section
     When user selects "<pricing>" from the "Pricing" dropdown in the "General" section

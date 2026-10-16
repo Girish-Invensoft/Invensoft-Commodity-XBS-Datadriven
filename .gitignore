@@ -27,3 +27,5 @@ Thumbs.db
 secrets.properties
 credentials.properties
 **/config/config-secrets.properties
+
+.allure/

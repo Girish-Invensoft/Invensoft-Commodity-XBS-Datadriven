@@ -20,8 +20,7 @@ public class ConfigReader {
         // Load from classpath instead of a relative file path.
         // This works no matter what the JVM's working directory is —
         // IDE run configs, mvn from any folder, CI runners, etc.
-        try (InputStream inputStream =
-                     ConfigReader.class.getClassLoader().getResourceAsStream(CONFIG_FILE)) {
+        try (InputStream inputStream = ConfigReader.class.getClassLoader().getResourceAsStream(CONFIG_FILE)) {
 
             if (inputStream == null) {
                 throw new RuntimeException(
@@ -31,7 +30,6 @@ public class ConfigReader {
                 );
             }
             properties.load(inputStream);
-
         } catch (IOException e) {
             throw new RuntimeException("Failed to read config file: " + CONFIG_FILE, e);
         }

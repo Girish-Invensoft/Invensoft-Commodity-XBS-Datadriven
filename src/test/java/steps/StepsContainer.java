@@ -26,12 +26,16 @@ import utils.DateExpressionResolver;
 import utils.TestDataReader;
 import utils.WebDriverCommonLibrary;
 
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static pages.PageObjectManager.getCommodityContractManagementPage;
 import static utils.Constants.ROW_SETTLE_PAUSE_MS;
 import static utils.Constants.SETTLE_PAUSE_MS;
 import static utils.Constants.WAIT_SHORT_SEC;
@@ -123,12 +127,12 @@ public class StepsContainer {
 
     @When("user navigates to {string} dashboard sidebar menu")
     public void userNavigatesToDashboardSidebarMenu(String arg0) {
-        PageObjectManager.getCommodityContractManagementPage().clickSidebarMenu(arg0);
+        getCommodityContractManagementPage().clickSidebarMenu(arg0);
     }
 
     @When("user clicks on {string} section on the dashboard page")
     public void userClicksOnSectionOnTheDashboardPage(String arg0) {
-        PageObjectManager.getCommodityContractManagementPage().clickDashboardSection(arg0);
+        getCommodityContractManagementPage().clickDashboardSection(arg0);
     }
 
     @Then("verify {string}{string} button is displayed on the Commercial Commodity Contract Management dashboard")
@@ -140,7 +144,7 @@ public class StepsContainer {
     @Then("verify {string}{string} prime icons is displayed on the Commercial Commodity Contract Management dashboard")
     public void verifyPrimeIconsIsDisplayedOnTheCommercialCommodityContractManagementDashboard(String arg0, String arg1) {
         arg1 = resolve(arg1);
-        PageObjectManager.getCommodityContractManagementPage().highlightPrimeIconButton(arg1);
+        getCommodityContractManagementPage().highlightPrimeIconButton(arg1);
     }
 
     @Then("verify {string}{string} boot strap icon is displayed on the Commercial Commodity Contract Management dashboard")
@@ -151,43 +155,43 @@ public class StepsContainer {
 
     @When("clicks on {string} {string} icon on the Commodity Contract Management dashboard")
     public void clicksOnIconOnTheCommodityContractManagementDashboard(String arg0, String arg1) {
-        PageObjectManager.getCommodityContractManagementPage().clickPrimeIconButton(arg1);
+        getCommodityContractManagementPage().clickPrimeIconButton(arg1);
     }
 
     @Then("verifies that the {string} popup is displayed")
     public void verifiesThatThePopupIsDisplayed(String arg0) {
-        CommodityContractManagementPage commodityContractManagementPage = PageObjectManager.getCommodityContractManagementPage();
+        CommodityContractManagementPage commodityContractManagementPage = getCommodityContractManagementPage();
         commodityContractManagementPage.getCreateGeneralPopupTitle();
     }
 
     @Then("verifies that the {string} section is displayed")
     public void verifiesThatTheSectionIsDisplayed(String arg0) {
-        PageObjectManager.getCommodityContractManagementPage().highlightSpanContaining(arg0);
+        getCommodityContractManagementPage().highlightSpanContaining(arg0);
     }
 
     @When("user selects {string} from the {string} dropdown in the {string} section")
     public void userSelectsFromTheDropdownInTheSection(String value, String field, String section) {
         value = resolve(value);
         field = resolve(field);
-        CommodityContractManagementPage commodityContractManagementPage = PageObjectManager.getCommodityContractManagementPage();
+        CommodityContractManagementPage commodityContractManagementPage = getCommodityContractManagementPage();
         commodityContractManagementPage.selectDropdownValue(section, field, value);
     }
 
     @And("click on {string} button")
     public void clickOnButton(String arg0) {
         arg0 = resolve(arg0);
-        PageObjectManager.getCommodityContractManagementPage().clickSpanButton(arg0);
+        getCommodityContractManagementPage().clickSpanButton(arg0);
     }
 
     @When("user enters {string} in {string} text field in the {string} section")
     public void userEntersInTheTextFieldInTheSection(String arg0, String field, String section) {
         arg0 = resolve(arg0);
-        PageObjectManager.getCommodityContractManagementPage().enterTextInSectionField(section, field, arg0);
+        getCommodityContractManagementPage().enterTextInSectionField(section, field, arg0);
     }
 
     @And("verifies that the {string} table section is displayed")
     public void verifiesThatTheTableSectionIsDisplayed(String label) {
-        PageObjectManager.getCommodityContractManagementPage().highlightTableSection(label);
+        getCommodityContractManagementPage().highlightTableSection(label);
     }
 
 
@@ -199,7 +203,7 @@ public class StepsContainer {
 
     @When("user selects {string} from the {string} dropdown in the {string} table")
     public void userSelectsFromTheDropdownInTheTable(String value, String field, String section) {
-        CommodityContractManagementPage commodityContractManagementPage = PageObjectManager.getCommodityContractManagementPage();
+        CommodityContractManagementPage commodityContractManagementPage = getCommodityContractManagementPage();
         commodityContractManagementPage.selectTableDropdownValue(value, field, section);
     }
 
@@ -271,7 +275,7 @@ public class StepsContainer {
 
     @When("user selects {string} from the {string} dropdown type in the {string} table")
     public void userSelectsFromTheDropdownTypeInTheTable(String value, String field, String section) {
-        CommodityContractManagementPage commodityContractManagementPage = PageObjectManager.getCommodityContractManagementPage();
+        CommodityContractManagementPage commodityContractManagementPage = getCommodityContractManagementPage();
         commodityContractManagementPage.selectTableType2DropdownValue(value, field, section);
     }
 
@@ -287,7 +291,7 @@ public class StepsContainer {
     @When("user enters {string} in {string} long text area field in the {string} section")
     public void userEntersInLongTextAreaFieldInTheSection(String value, String field, String section) {
         value = resolve(value);
-        PageObjectManager.getCommodityContractManagementPage().enterTextInSectionTextArea(section, field, value);
+        getCommodityContractManagementPage().enterTextInSectionTextArea(section, field, value);
     }
 
     @When("test selects target date range from {string} to {string} in the {string} field in the {string} table")
@@ -325,7 +329,7 @@ public class StepsContainer {
         }
         webDriverCommonLibrary.waitForSetTime(setTime / 2);
 
-        String contractNo = PageObjectManager.getCommodityContractManagementPage().getListColumnText(arg1).trim();
+        String contractNo = getCommodityContractManagementPage().getListColumnText(arg1).trim();
         String key = arg0 + "ContractNumber";
 
         webDriverCommonLibrary.updateTheValueInDataValuePropertiesFile(key, contractNo);
@@ -334,7 +338,7 @@ public class StepsContainer {
 
     @When("the user selects the {string} checkbox under {string}")
     public void theUserSelectsTheCheckboxUnder(String arg0, String arg1) {
-        PageObjectManager.getCommodityContractManagementPage().selectCheckbox(arg0);
+        getCommodityContractManagementPage().selectCheckbox(arg0);
     }
 
     @Then("verify {string}{string} prime icon button is displayed on the Commercial Commodity Contract Management dashboard")
@@ -345,7 +349,7 @@ public class StepsContainer {
     @When("user selects {string} from the {string} literal dropdown in the {string} section")
     public void userSelectsFromTheLiteralDropdownInTheSection(String value, String field, String section) {
         value = resolve(value);
-        CommodityContractManagementPage commodityContractManagementPage = PageObjectManager.getCommodityContractManagementPage();
+        CommodityContractManagementPage commodityContractManagementPage = getCommodityContractManagementPage();
         commodityContractManagementPage.selectLiteralDropdownValue(section, field, value);
     }
 
@@ -353,7 +357,7 @@ public class StepsContainer {
     public void userFillsProductDetailsForTestCase(String testCaseId) throws IOException {
         ContractTestData data = TestDataReader.getByTestCaseId(testCaseId);
         List<ProductDetailRow> rows = data.getProductDetails();
-        CommodityContractManagementPage page = PageObjectManager.getCommodityContractManagementPage();
+        CommodityContractManagementPage page = getCommodityContractManagementPage();
 
         final String section = "Product Details";
 
@@ -461,7 +465,7 @@ public class StepsContainer {
         PageObjectManager.getCreateCommodityContractPage().setTargetDateRange(xpathRowIndex, startDate, endDate);
     }
 
-    @Given("user fills multiple product details for test case {string}")
+      @Given("user fills multiple product details for test case {string}")
     public void userFillsMultipleProductDetailsForTestCase(String testCaseId) throws IOException {
         webDriverCommonLibrary.waitForSetTime(SETTLE_PAUSE_MS);
         try {
@@ -473,7 +477,7 @@ public class StepsContainer {
                 return;
             }
 
-            CommodityContractManagementPage page = PageObjectManager.getCommodityContractManagementPage();
+            CommodityContractManagementPage page = getCommodityContractManagementPage();
 
             final String section = "Product Details";
 
@@ -517,12 +521,8 @@ public class StepsContainer {
                     if (rowsAfter <= rowsBefore) {
                         throw new IllegalStateException("Product Details row was not added. " + "Expected rows > " + rowsBefore + " but found " + rowsAfter);
                     }
-                    /* * Give Angular/PrimeNG time to finish * rendering the new row.*/
                     webDriverCommonLibrary.waitForSetTime(ROW_SETTLE_PAUSE_MS);
                 }
-
-                /*  * IMPORTANT: * From this point every method receives rowIndex * rowIndex 0 -> UI tr[1  * rowIndex 1 -> UI tr[2]* rowIndex 2 -> UI tr[3]  */
-
                 page.selectMultipleDropdownValue(section, "Product", rowIndex, row.getProduct());
                 page.userEnterInTheMultipleNumberFieldInTheTable("Units", section, rowIndex, row.getUnits());
                 page.selectMultipleTableType2DropdownValues(section, "Packing", rowIndex, row.getPacking());
@@ -549,7 +549,7 @@ public class StepsContainer {
 //                page.selectPositionMonthValueInTheTable("Position Month", section, rowIndex, row.getPositionMonth());
 //                page.userEnterInTheMultipleQualityTextFieldInTheTable("Quality", section, rowIndex, row.getQuality());
 
-                page.createCertificationPremium(section, "Certification & Premium", rowIndex, row.getCertificationPremium());
+//                  page.createCertificationPremium(section, "Certification & Premium", rowIndex, row.getCertificationPremium());
 
             }
             log.info("========================================");
@@ -566,7 +566,7 @@ public class StepsContainer {
     @And("verify the message {string} is displayed")
     public void verifyTheMessageIsDisplayed(String arg0) {
         arg0 = resolve(arg0);
-        PageObjectManager.getCommodityContractManagementPage().verifyMessageVisible(arg0);
+        getCommodityContractManagementPage().verifyMessageVisible(arg0);
     }
 
 
@@ -574,13 +574,13 @@ public class StepsContainer {
     public void searchForTheCreatedBy(String arg0, String arg1) {
         String propertyKey = arg0 + arg1;
         String recordnumber = ConfigReader.getProperty(propertyKey);
-        PageObjectManager.getCommodityContractManagementPage().searchContractNo(recordnumber);
+        getCommodityContractManagementPage().searchContractNo(recordnumber);
     }
 
     @And("verify {string} is in {string} status")
     public void verifyIsInStatus(String arg0, String arg1) {
         arg1 = resolve(arg1);
-        PageObjectManager.getCommodityContractManagementPage().verifyRecordAndStatus(arg0, arg1);
+        getCommodityContractManagementPage().verifyRecordAndStatus(arg0, arg1);
     }
 
     @Then("user captures the created contract number")
@@ -603,13 +603,13 @@ public class StepsContainer {
 
     @When("the user selects the {string} for the created Purchase Order")
     public void theUserSelectsTheForTheCreatedPurchaseOrder(String arg0) {
-        PageObjectManager.getCommodityContractManagementPage().selectPurchaseOrderCheckbox(arg0);
+        getCommodityContractManagementPage().selectPurchaseOrderCheckbox(arg0);
     }
 
     @When("the user clicks the {string} button on the Commercial Commodity Contract Management page")
     public void theUserClicksTheButtonOnTheCommercialCommodityContractManagementPage(String arg0) {
         arg0 = resolve(arg0);
-        PageObjectManager.getCommodityContractManagementPage().clickSpanButtonWithJs(arg0);
+        getCommodityContractManagementPage().clickSpanButtonWithJs(arg0);
     }
 
 
@@ -638,28 +638,35 @@ public class StepsContainer {
     @Then("verify the {string} menu items is displayed for {string}")
     public void verifyTheMenuItemsIsDisplayedFor(String menuItemsText, String columnName) {
         menuItemsText = resolve(menuItemsText);
-        PageObjectManager.getCommodityContractManagementPage().verifyRowMenuItems(menuItemsText, columnName);
+        getCommodityContractManagementPage().verifyRowMenuItems(menuItemsText, columnName);
     }
-
     @Then("verify {string} message is displayed with {string} and {string} buttons")
-    public void verifyMessageIsDisplayedWithAndButtons(String arg0, String arg1, String arg2) {
-        arg0 = resolve(arg0);
-        arg1 = resolve(arg1);
-        arg2 = resolve(arg2);
-        // Confirmation message
-        WebElement confirmationMessage = PageObjectManager.getCommodityContractManagementPage().locateDialogText(arg0, false);
-        Assert.assertEquals(confirmationMessage.getText().trim(), arg0,
+    public void verifyMessageIsDisplayedWithAndButtons(String message, String firstButton, String secondButton) {
+        message      = resolve(message);
+        firstButton  = resolve(firstButton);
+        secondButton = resolve(secondButton);
+
+        CommodityContractManagementPage page = getCommodityContractManagementPage();
+
+        WebElement confirmationMessage = page.locateDialogText(message, false);
+        Assert.assertEquals(confirmationMessage.getText().trim(), message,
                 "Confirmation message text mismatch");
 
-        // Yes button
-        WebElement yesButton = PageObjectManager.getCommodityContractManagementPage().locateDialogText(arg1, true);
-        Assert.assertEquals(yesButton.getText().trim(), arg1,
-                "Yes button label mismatch");
+        if (secondButton == null || secondButton.isBlank()) {
+            // Single-button dialog (e.g. reason confirmation): only the confirm button
+            WebElement confirmButton = page.locateConfirmDialogText(firstButton, true);
+            Assert.assertEquals(confirmButton.getText().trim(), firstButton,
+                    "Confirm button label mismatch");
+        } else {
+            // Two-button dialog: Yes / No
+            WebElement yesButton = page.locateDialogText(firstButton, true);
+            Assert.assertEquals(yesButton.getText().trim(), firstButton,
+                    "Yes button label mismatch");
 
-        // No button
-        WebElement noButton = PageObjectManager.getCommodityContractManagementPage().locateDialogText(arg2, true);
-        Assert.assertEquals(noButton.getText().trim(), arg2,
-                "No button label mismatch");
+            WebElement noButton = page.locateDialogText(secondButton, true);
+            Assert.assertEquals(noButton.getText().trim(), secondButton,
+                    "No button label mismatch");
+        }
     }
 
     @Then("verify that the {string} field is automatically populated based on the logged-in {string}")
@@ -667,7 +674,7 @@ public class StepsContainer {
         user = resolve(user);
         // Verification only. The old version re-opened the dropdown and re-selected the user,
         // which changed application data instead of checking it.
-        WebElement lookUp = PageObjectManager.getCommodityContractManagementPage().locateLoggedInUserField(section, user);
+        WebElement lookUp = getCommodityContractManagementPage().locateLoggedInUserField(section, user);
 
         String actualLabel = lookUp.getAttribute("aria-label");
         Assert.assertTrue(actualLabel != null && actualLabel.contains(user),
@@ -678,7 +685,7 @@ public class StepsContainer {
 
     @Then("verify that the {string} field displays {string}.")
     public void verifyThatTheFieldDisplays(String arg0, String arg1) {
-        WebElement contractNo = PageObjectManager.getCommodityContractManagementPage().locateInputByLabel(arg0);
+        WebElement contractNo = getCommodityContractManagementPage().locateInputByLabel(arg0);
 
         // Assert the displayed text (arg1 was previously ignored). Falls back to the placeholder
         // in case the app renders "Auto" as a placeholder rather than as the input value.
@@ -707,12 +714,12 @@ public class StepsContainer {
     @Then("verify that the {string} field is displayed as {string}")
     public void verifyThatTheFieldIsDisplayedAs(String arg0, String arg1) {
         arg1 = resolve(arg1);
-        PageObjectManager.getCommodityContractManagementPage().highlightSpanByAriaLabel(arg1);
+        getCommodityContractManagementPage().highlightSpanByAriaLabel(arg1);
     }
 
     @And("verify that the {string} field is displayed as {string} date by default.")
     public void verifyThatTheFieldIsDisplayedAsDateByDefault(String arg0, String arg1) {
-        WebElement contractDate = PageObjectManager.getCommodityContractManagementPage().locateContractDateField();
+        WebElement contractDate = getCommodityContractManagementPage().locateContractDateField();
         String actualDate = contractDate.getAttribute("value");
         String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         Assert.assertEquals(actualDate, expectedDate, "Contract Date mismatch. Expected: " + expectedDate + " but found: " + actualDate);
@@ -732,7 +739,7 @@ public class StepsContainer {
                 return;
             }
 
-            CommodityContractManagementPage page = PageObjectManager.getCommodityContractManagementPage();
+            CommodityContractManagementPage page = getCommodityContractManagementPage();
 
             final String section = "Commission Details";
             log.info("========================================");
@@ -839,36 +846,164 @@ public class StepsContainer {
 
     @When("the user deselects the {string} checkbox under {string}")
     public void theUserDeselectsTheCheckboxUnder(String arg0, String arg1) {
-        PageObjectManager.getCommodityContractManagementPage().deselectCheckbox(arg0);
+        getCommodityContractManagementPage().deselectCheckbox(arg0);
     }
 
     @And("Logout")
     public void logout() {
         /** Temporary logout step.Later,this will be configured in Hooksto execute logout before ending the browser session.*/
-        PageObjectManager.getCommodityContractManagementPage().logout();
+        getCommodityContractManagementPage().logout();
         log.info("User logged out successfully.");
     }
 
     @And("select the {string} menu item for the {string}")
     public void selectTheMenuItemForThe(String item, String columnName) {
         item = resolve(item);
-        PageObjectManager.getCommodityContractManagementPage().selectRowMenuItem(item, columnName);
-    }
-
-    @Then("verify that the Class field is {string} and displays the added {string} value from the General section.")
-    public void verifyThatTheClassFieldIsAndDisplaysTheAddedValueFromTheGeneralSection(String arg0, String arg1) {
-        arg0 = resolve(arg0);
-        // arg0 = expected state ("disabled"), arg1 = the Class value chosen in the General section.
-        arg1 = resolve(arg1);
-        PageObjectManager.getCommodityContractManagementPage().highlightClassField("disabled".equalsIgnoreCase(arg0.trim()), arg1);
+        getCommodityContractManagementPage().selectRowMenuItem(item, columnName);
     }
 
     @When("user selects {string} from the {string} stale dropdown in the {string} section")
     public void userSelectsFromTheStaledropdownInTheSection(String value, String field, String section) {
         value = resolve(value);
         field = resolve(field);
-        CommodityContractManagementPage commodityContractManagementPage = PageObjectManager.getCommodityContractManagementPage();
+        CommodityContractManagementPage commodityContractManagementPage = getCommodityContractManagementPage();
         commodityContractManagementPage.selectDropdownValueupdated(section, field, value);
+
+    }
+
+    @Then("verify the mandatory validation indicator is displayed for fields {string}")
+    public void verifyTheMandatoryValidationIndicatorIsDisplayedForFields(String fields) {
+
+            String[] fieldNames = fields.split(",");
+
+            for (String field : fieldNames) {
+
+                String fieldName = field.trim();
+
+                By mandatoryLocator = By.xpath( "//span[contains(@class,'mandatory')]/preceding-sibling::span[normalize-space()='"+fieldName+"']");
+
+                webDriverCommonLibrary.highLightTheElement(driver, driver.findElement(mandatoryLocator));
+
+                Assert.assertTrue(webDriverCommonLibrary.isElementDisplayed(mandatoryLocator), "Mandatory validation is not displayed for field: " + fieldName);
+            }
+    }
+
+    @Then("apply a static wait for the web element for testing purposes only.")
+    public void applyAStaticWaitForTheWebElementForTestingPurposesOnly() {
+      webDriverCommonLibrary.waitForSetTime(4000);
+    }
+
+    @When("user selects {string} from the {string} modified dropdown in the {string} section")
+    public void userSelectsFromTheModifiedDropdownInTheSection(String value, String field, String section) {
+        value = resolve(value);
+        field = resolve(field);
+        CommodityContractManagementPage commodityContractManagementPage = getCommodityContractManagementPage();
+        commodityContractManagementPage.selectModifiedDropdownValue(section, field, value);
+    }
+
+    @Then("verify that the {string} field is {string}.")
+    public void verifyThatTheFieldIs(String arg0, String arg1) {
+          WebElement element = driver.findElement(By.xpath("//span[normalize-space()='"+arg0+"']/ancestor::div[1]//input['"+arg1+"']"));
+          webDriverCommonLibrary.highLightTheElement(driver,element);
+    }
+
+
+    @Then("verify that the {string} field in {string} section with value {string} is {string} and displays {string}")
+    public void verifyFieldStateAndValue(String fieldName, String section, String ariaLabel, String expectedState, String expectedValue) {
+
+            expectedState = resolve(expectedState);
+            section = resolve(section);
+            ariaLabel = resolve(ariaLabel);
+            expectedValue = resolve(expectedValue);
+
+            getCommodityContractManagementPage().verifyField(section, fieldName, ariaLabel, expectedState, expectedValue);
+    }
+
+    @When("user navigates to the required page")
+    public void userNavigatesToTheRequiredPage() {
+        driver.navigate().to("https://wepapp-xbsdcloud-dev-001-dta4d9ahhehvdfeb.centralindia-01.azurewebsites.net/#/11/XT1102801");
+    }
+
+    @When("user enters {string} in {string} long text area pop up")
+    public void userEntersInLongTextAreaPopUp(String value, String label) {
+        value = resolve(value);
+        try {
+            getCommodityContractManagementPage().enterPopupTextTextArea(label, value);
+        } catch (Exception e) {
+            System.out.println("WARN: skipped popup text entry: " + e.getMessage());
+        }
+    }
+
+    @And("close Popup Using X Button")
+    public void closePopupUsingXButton() {
+            By closeButton = By.xpath("//div[contains(@class,'p-dialog')]"
+                    + "//button[contains(@class,'p-dialog-header-close') or @aria-label='Close']");
+            WebElement close = new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.elementToBeClickable(closeButton));
+            webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, close);
+
+            // Confirm the popup is actually gone, returns instantly if it already is
+            new WebDriverWait(driver, Duration.ofSeconds(5)).until(
+                    ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@class,'p-dialog-mask')]")));
+        }
+
+    @And("close pop up using X button")
+    public void closePopUpUsingXButton() {
+        By closeButton = By.cssSelector("timesicon.p-element");
+        WebElement close = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(closeButton));
+        webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, close);
+
+        // Confirm the popup is actually gone, returns instantly if it already is
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(
+                ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("timesicon.p-element")));
+    }
+
+    @When("the user selects the {string}{string} for the created Purchase Order")
+    public void theUserSelectsTheForTheCreatedPurchaseOrder(String arg0, String arg1) {
+        WebElement checkboxRoot = driver.findElement(By.xpath( "//span[normalize-space()='"+arg0+"']/preceding::div[@data-pc-name='"+arg1+"']"));
+        webDriverCommonLibrary.explicitWait(driver, checkboxRoot);
+        webDriverCommonLibrary.scrollIntoTheView(driver, checkboxRoot);
+        WebElement checkboxBox = checkboxRoot.findElement(By.cssSelector("div.p-checkbox-box"));
+        webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, checkboxBox);
+    }
+
+    @When("the user selects Incoterms {string} one by one and verifies {string} is mandatory")
+    public void theUserSelectsIncotermsOneByOneAndVerifiesIsMandatory(String incoterms, String fieldName) {
+        CommodityContractManagementPage page = PageObjectManager.getCommodityContractManagementPage();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        for (String value : incoterms.split(",")) {
+            String incoterm = value.trim();
+            System.out.println("Selecting INCO Term: " + incoterm + " | Verifying mandatory field: " + fieldName);
+            page.selectDropdownValueupdated("Delivery Terms", "INCO Terms", incoterm);
+            By mandatoryAsteriskLocator = By.xpath("//span[normalize-space(.)='" + fieldName + "']" + "/following::span[normalize-space(.)='*'][1]/..");
+            WebElement mandatoryAsterisk = wait.until(ExpectedConditions.visibilityOfElementLocated(mandatoryAsteriskLocator));
+            webDriverCommonLibrary.scrollIntoTheView(driver, mandatoryAsterisk);
+            webDriverCommonLibrary.highLightTheElement(driver, mandatoryAsterisk);
+            Assert.assertTrue(mandatoryAsterisk.isDisplayed(), "Mandatory indicator missing for " + fieldName + " with INCO Term: " + incoterm);
+        }
+    }
+
+    @When("user selects {string} verify {string} value is displayed")
+    public void userSelectsAndVerifiesValueIsDisplayed(
+            String commissionTypeKey,
+            String expectedUnitKey) throws IOException {
+
+        CommodityContractManagementPage page = getCommodityContractManagementPage();
+
+        String commissionType = resolve(commissionTypeKey);
+        String expectedUnit = resolve(expectedUnitKey);
+
+        page.selectMultipleCommissionDropdownValue(
+                "Commission Details",
+                "Type",
+                0,
+                commissionType);
+
+        page.verifyMultipleCommissionValueUnit(
+                "Commission Details",
+                0,
+                expectedUnit);
 
     }
 }

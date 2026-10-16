@@ -23,8 +23,7 @@ public class PageObjectManager {
 
     public static CommodityContractManagementPage getCommodityContractManagementPage() {
         if (commodityContractManagementPage == null) {
-            commodityContractManagementPage = new CommodityContractManagementPage(
-                    DriverFactory.getDriver());
+            commodityContractManagementPage = new CommodityContractManagementPage(DriverFactory.getDriver());
         }
         return commodityContractManagementPage;
     }

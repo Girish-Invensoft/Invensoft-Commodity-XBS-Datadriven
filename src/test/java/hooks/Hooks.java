@@ -1,31 +1,40 @@
 package hooks;
 
+import base.DriverFactory;
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
-import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import base.DriverFactory;
+import org.openqa.selenium.WebDriver;
 import utils.WebDriverCommonLibrary;
-
-import static base.DriverFactory.driver;
 
 public class Hooks {
 
-    WebDriverCommonLibrary webDriverCommonLibrary;
+    // The test data validator (@BeforeSuite) now lives in runners.TestRunner,
+    // because TestNG does not run @BeforeSuite from a Cucumber glue class.
+
+    private static final String WATERMARK_TEXT = "XBS Automation ᴳᴷ | © 2026";
+
     @After
     public void tearDown(Scenario scenario) {
-        if (scenario.isFailed()) {
-            byte[] screenshot = ((TakesScreenshot) DriverFactory.getDriver())
-                    .getScreenshotAs(OutputType.BYTES);
+        if (!scenario.isFailed()) {
+            return;
+        }
+        WebDriver driver = DriverFactory.getDriver();
+        if (driver == null) {
+            return;
+        }
+        try {
+            // Watermark (Invensoft logo + text) first, so it appears in the screenshot
+            new WebDriverCommonLibrary(driver).addWatermark(driver, WATERMARK_TEXT);
+        } catch (Exception e) {
+            System.out.println("Watermark skipped: " + e.getMessage());
+        }
+        try {
+            byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
             scenario.attach(screenshot, "image/png", scenario.getName());
-          webDriverCommonLibrary.addWatermark(driver, "ERP Automationᴳᴷ | © 2026");
+        } catch (Exception e) {
+            System.out.println("Screenshot skipped: " + e.getMessage());
         }
     }
-
-    @Attachment(value = "Page source", type = "text/plain")
-    public String attachPageSource() {
-        return DriverFactory.getDriver().getPageSource();
-    }
-
 }

@@ -1,5 +1,7 @@
 package pages;
 
+import base.DriverFactory;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -7,13 +9,22 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import utils.DateExpressionResolver;
 import utils.WebDriverCommonLibrary;
 
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.ElementNotInteractableException;
+
+import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
@@ -22,7 +33,7 @@ import static org.openqa.selenium.support.locators.RelativeLocator.with;
  * ERP Automation Framework
  */
 
-public class CommodityContractManagementPage {
+public class CommodityContractManagementPage{
 
     static WebDriver driver;
     static WebDriverCommonLibrary webDriverCommonLibrary;
@@ -59,62 +70,225 @@ public class CommodityContractManagementPage {
     }
 
     public void selectDropdownValue(String section, String field, String value) {
+        WebElement dropdown = null;
+
+        // ============CASE 1: Product Details -> Product============ //
+        if (section.equalsIgnoreCase("Product Details") && field.equalsIgnoreCase("Product")) {
+            dropdown = driver.findElement(By.xpath("//div[@formarrayname='item_details']" +
+                            "//tbody/tr[1]" + "/td[2]" + "//p-dropdown" + "//span[@role='combobox']"));
+            System.out.println("Dropdown found using Product Details -> Product locator.");
+        } else {
+            // ===========Case 2 : Normal dropdown floating table inside the field ============= //
+            By insideFieldLocator = By.xpath("//p-card[@class='p-element']" + "[.//span[contains(text(),'" + section + "')]]" + "//span[contains(@aria-label,'" + field + "')]");
+
+            List<WebElement> insideFieldDropdown = driver.findElements(insideFieldLocator);
+            System.out.println("Inside-field elements found: " + insideFieldDropdown.size());
+
+            // Find FIRST VISIBLE element
+            for (WebElement element : insideFieldDropdown) {
+                if (element.isDisplayed()) {
+                    dropdown = element;
+                    System.out.println("Dropdown found using INSIDE-FIELD locator: " + section + " -> " + field);
+                    break;
+                }
+            }
+            // ============ CASE 3: Floating label ABOVE the field ============ //
+            if (dropdown == null) {
+                By aboveFieldLocator = By.xpath(
+                        "//label[.//span[normalize-space()='" + field + "']]" +
+                                "/..//div[@aria-label='dropdown trigger']"
+                );
+                try {
+                    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+                    dropdown = wait.until(ExpectedConditions.elementToBeClickable(aboveFieldLocator));
+                    System.out.println("Dropdown found using ABOVE-FIELD locator: " + section + " -> " + field);
+                } catch (TimeoutException e) {
+                    throw new NoSuchElementException("Unable to locate clickable dropdown. " + "Section: [" + section + "] " + "Field: [" + field + "]");
+                }
+            }
+            // ========== NO VISIBLE DROPDOWN FOUND===========  //
+            if (dropdown == null) {
+                throw new NoSuchElementException(
+                        "Unable to locate a VISIBLE dropdown." +
+                                " Section: [" + section + "]" +
+                                " Field: [" + field + "]" +
+                                " Tried: INSIDE-FIELD and ABOVE-FIELD locators.");
+            }
+        }
+        // ============CLICK DROPDOWN=============  //
+        webDriverCommonLibrary.explicitWait(driver, dropdown);
+        webDriverCommonLibrary.scrollIntoTheView(driver, dropdown);
+        dropdown.click();
+
+        // =========SEARCH BOX ============== //
+        WebElement searchboxoption = driver.findElement(By.xpath("//input[@role='searchbox']"));
+        System.out.println("Search box located successfully.");
+        webDriverCommonLibrary.explicitWait(driver, searchboxoption);
+        searchboxoption.clear();
+        searchboxoption.sendKeys(value);
+        webDriverCommonLibrary.scrollIntoTheView(driver, searchboxoption);
+
+        // ======== SELECT DROPDOWN OPTION ========= //
+        WebElement selectOption = driver.findElement(By.xpath("//li[@role='option' and normalize-space()='" + value + "']"));
+        webDriverCommonLibrary.explicitWait(driver, selectOption);
+        webDriverCommonLibrary.scrollIntoTheView(driver, selectOption);
+        webDriverCommonLibrary.clickUsingActionClass(driver, selectOption);
+    }
+
+    public void selectModifiedDropdownValue(String section, String field, String value) {
         WebElement dropdown;
 
         if (section.equalsIgnoreCase("Product Details") && field.equalsIgnoreCase("Product")) {
-            dropdown = driver.findElement(By.xpath("//div[@formarrayname='item_details']" + "//tbody/tr[1]" + "/td[2]" + "//p-dropdown" + "//span[@role='combobox']"));
+            dropdown = driver.findElement(By.xpath("//div[@formarrayname='item_details']"
+                    + "//tbody/tr[1]/td[2]//p-dropdown//span[@role='combobox']"));
         } else {
-            dropdown = driver.findElement(By.xpath("//p-card[@class='p-element']" + "[.//span[contains(text(),'" + section + "')]]" + "//span[contains(@aria-label,'" + field + "')]"));
+            dropdown = findNormalDropdown(section, field);
         }
-        dropdown.click();
+        webDriverCommonLibrary.scrollIntoTheView(driver, dropdown);
+        webDriverCommonLibrary.clickWithOverlayRetry(dropdown);
 
-        WebElement searchboxoption = driver.findElement(By.xpath("//input[@role='searchbox']"));
-        System.out.println("Search box located successfully.");
-        webDriverCommonLibrary.explicitWait(driver,searchboxoption);
-        searchboxoption.clear();
-        searchboxoption.sendKeys(value);
-        webDriverCommonLibrary.scrollIntoTheView(driver,searchboxoption);
+        // Scope to the open panel so old/hidden overlays are not picked up
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[contains(@class,'p-dropdown-panel')]//input[@role='searchbox']")));
+        searchBox.click();
+        searchBox.clear();
+        searchBox.sendKeys(value);
 
-        WebElement selectOption = driver.findElement(By.xpath("//li[@role='option' and normalize-space()='" + value + "']"));
-        webDriverCommonLibrary.explicitWait(driver,selectOption);
-        webDriverCommonLibrary.scrollIntoTheView(driver,selectOption);
-        webDriverCommonLibrary.clickUsingActionClass(driver,selectOption);
+        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//div[contains(@class,'p-dropdown-panel')]"
+                        + "//li[@role='option' and normalize-space()='" + value + "']")));
+        webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, option);
+    }
 
+    private WebElement findNormalDropdown(String section, String field) {
+        // Works for both empty and already-filled dropdowns (label does not change)
+        By aboveField = By.xpath("//p-card[.//span[contains(text(),'" + section + "')]]"
+                + "//label[.//span[normalize-space()='" + field + "']]/..//div[@aria-label='dropdown trigger']");
+        // Fallback for fields where the trigger is inside the field (only matches when empty)
+        By insideField = By.xpath("//p-card[@class='p-element'][.//span[contains(text(),'" + section + "')]]"
+                + "//span[contains(@aria-label,'" + field + "')]");
+
+        Duration originalImplicit = driver.manage().timeouts().getImplicitWaitTimeout();
+        driver.manage().timeouts().implicitlyWait(Duration.ZERO);
+        try {
+            return new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .ignoring(StaleElementReferenceException.class)
+                    .until(d -> {
+                        for (By by : new By[]{aboveField, insideField}) {
+                            for (WebElement e : d.findElements(by)) {
+                                if (e.isDisplayed() && e.isEnabled()) {
+                                    return e;
+                                }
+                            }
+                        }
+                        return null;   // null makes the wait keep polling
+                    });
+        } catch (TimeoutException e) {
+            throw new NoSuchElementException("Unable to locate a visible dropdown. Section: ["
+                    + section + "] Field: [" + field + "]");
+        } finally {
+            driver.manage().timeouts().implicitlyWait(originalImplicit);
+        }
     }
 
     public void selectDropdownValueupdated(String section, String field, String value) {
-
         By dropdownLocator;
-        if (section.equalsIgnoreCase("Product Details") && field.equalsIgnoreCase("Product")) {
-            dropdownLocator = By.xpath("//div[@formarrayname='item_details']//tbody/tr[1]/td[2]//p-dropdown//span[@role='combobox']");
+        if (section.equalsIgnoreCase("Product Details")
+                && field.equalsIgnoreCase("Product")) {
+
+            dropdownLocator = By.xpath(
+                    "//div[@formarrayname='item_details']" +
+                            "//tbody/tr[1]/td[2]//p-dropdown//span[@role='combobox']"
+            );
+
         } else {
-            dropdownLocator = By.xpath("//p-card[@class='p-element'][.//span[contains(text(),'" + section + "')]]"
-                    + "//span[contains(@aria-label,'" + field + "')]");
+
+            // First: dropdown inside the field
+            By insideField = By.xpath(
+                    "//p-card[@class='p-element']" +
+                            "[.//span[contains(text(),'" + section + "')]]" +
+                            "//span[contains(@aria-label,'" + field + "')]"
+            );
+
+            // Second: dropdown trigger above/associated with the field
+            By aboveField = By.xpath(
+                    "//p-card[.//span[contains(text(),'" + section + "')]]" +
+                            "//label[.//span[normalize-space()='" + field + "']]" +
+                            "/..//div[@aria-label='dropdown trigger']"
+            );
+
+            Duration originalImplicit =
+                    driver.manage().timeouts().getImplicitWaitTimeout();
+
+            driver.manage().timeouts().implicitlyWait(Duration.ZERO);
+
+            try {
+
+                dropdownLocator = new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .ignoring(StaleElementReferenceException.class)
+                        .until(d -> {
+
+                            // 1. First try inside-field dropdown
+                            for (WebElement e : d.findElements(insideField)) {
+                                if (e.isDisplayed() && e.isEnabled()) {
+                                    return insideField;
+                                }
+                            }
+
+                            // 2. If not found, try above-field dropdown
+                            for (WebElement e : d.findElements(aboveField)) {
+                                if (e.isDisplayed() && e.isEnabled()) {
+                                    return aboveField;
+                                }
+                            }
+
+                            return null;
+                        });
+
+            } finally {
+                driver.manage().timeouts().implicitlyWait(originalImplicit);
+            }
         }
 
-        By panel     = By.xpath("//div[contains(@class,'p-dropdown-panel')]");
-        By searchBox = By.xpath("//div[contains(@class,'p-dropdown-panel')]//input[@role='searchbox']");
-        By option    = By.xpath("//div[contains(@class,'p-dropdown-panel')]"
-                + "//li[@role='option' and normalize-space()='" + value + "']");
+        By panel = By.xpath(
+                "//div[contains(@class,'p-dropdown-panel')]"
+        );
 
-        // 1. Open the dropdown, and only click if it is not already open
-       webDriverCommonLibrary.staleTolerantWait(driver).until(d -> {
+        By searchBox = By.xpath(
+                "//div[contains(@class,'p-dropdown-panel')]" +
+                        "//input[@role='searchbox']"
+        );
+
+        By option = By.xpath(
+                "//div[contains(@class,'p-dropdown-panel')]" +
+                        "//li[@role='option' and normalize-space()='" + value + "']"
+        );
+
+        // 1. Open dropdown
+        webDriverCommonLibrary.staleTolerantWait(driver).until(d -> {
+
             WebElement dd = d.findElement(dropdownLocator);
+
             if (!"true".equals(dd.getAttribute("aria-expanded"))) {
                 dd.click();
             }
+
             return webDriverCommonLibrary.isDisplayedNow(d, searchBox);
         });
 
-        // 2. Type into the filter
-        webDriverCommonLibrary.typeWhenReady(driver, searchBox, value);
+        // 2. Type into filter
+        webDriverCommonLibrary.typeWhenReady(
+                driver,
+                searchBox,
+                value
+        );
 
-        // 3. Click the filtered option (re-found on each attempt)
-        webDriverCommonLibrary.clickWhenReady(driver, option);
-
-        // 4. Confirm the panel closed, so the next step starts from a stable page
-//        new WebDriverWait(driver, Duration.ofSeconds(10))
-//                .until(ExpectedConditions.invisibilityOfElementLocated(panel));
+        // 3. Select option
+        webDriverCommonLibrary.clickWhenReady(
+                driver,
+                option
+        );
     }
 
     public void selectTableDropdownValue(String value, String field, String section) {
@@ -186,26 +360,114 @@ public class CommodityContractManagementPage {
         webDriverCommonLibrary.explicitWaitInvisibility(driver, By.cssSelector(".p-overlay-mask, .p-dropdown-panel"));
     }
 
+//    public void selectLiteralDropdownValue(String section, String field, String value) {
+//        //Find class element
+//        WebElement dropdown = driver.findElement(By.xpath("//p-card[@class='p-element'][.//span[contains(text()," + xpathLiteral(section) + ")]]//span[contains(@aria-label," + xpathLiteral(field) + ")]"));
+//        dropdown.click();
+//        webDriverCommonLibrary.waitForSetTime(200);
+//        //search required options
+//        WebElement searchboxoption = driver.findElement(By.xpath("//span[@aria-label=" + xpathLiteral(field) + " and @aria-expanded='true']/following::input[@role='searchbox']"));
+//        webDriverCommonLibrary.explicitWait(driver, searchboxoption);
+//        searchboxoption.clear();
+//        searchboxoption.sendKeys(value);
+//        //Click on required option
+//        WebElement selectOption = driver.findElement(By.xpath("//ul[contains(@class,'p-dropdown-items')]//span[normalize-space(text())=" + xpathLiteral(value) + "]"));
+//        webDriverCommonLibrary.explicitWait(driver, selectOption);
+//        webDriverCommonLibrary.scrollIntoTheView(driver, selectOption);
+//        webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, selectOption);
+//    }
+//
+//    /**
+//     * Safely wraps a raw string as an XPath string literal, handling values
+//     * that contain single quotes, double quotes, or both — via concat()
+//     * when necessary. Prevents malformed XPath like:
+//     *   @aria-label='BUYER'S CALL'   (breaks on the embedded apostrophe)
+//     */
+//    String xpathLiteral(String value) {
+//        if (!value.contains("'")) {
+//            return "'" + value + "'";
+//        }
+//        if (!value.contains("\"")) {
+//            return "\"" + value + "\"";
+//        }
+//        // Contains BOTH quote types — split on ' and rebuild with concat()
+//        String[] parts = value.split("'", -1);
+//        StringBuilder sb = new StringBuilder("concat(");
+//        for (int i = 0; i < parts.length; i++) {
+//            sb.append("'").append(parts[i]).append("'");
+//            if (i < parts.length - 1) {
+//                sb.append(", \"'\", ");
+//            }
+//        }
+//        sb.append(")");
+//        return sb.toString();
+//    }
+
+
     public void selectLiteralDropdownValue(String section, String field, String value) {
-        //Find class element
-        WebElement dropdown = driver.findElement(By.xpath("//p-card[@class='p-element'][.//span[contains(text()," + xpathLiteral(section) + ")]]//span[contains(@aria-label," + xpathLiteral(field) + ")]"));
-        dropdown.click();
-        webDriverCommonLibrary.waitForSetTime(200);
-        //search required options
-        WebElement searchboxoption = driver.findElement(By.xpath("//span[@aria-label=" + xpathLiteral(field) + " and @aria-expanded='true']/following::input[@role='searchbox']"));
-        webDriverCommonLibrary.explicitWait(driver, searchboxoption);
-        searchboxoption.clear();
-        searchboxoption.sendKeys(value);
-        //Click on required option
-        WebElement selectOption = driver.findElement(By.xpath("//ul[contains(@class,'p-dropdown-items')]//span[normalize-space(text())=" + xpathLiteral(value) + "]"));
-        webDriverCommonLibrary.explicitWait(driver, selectOption);
-        webDriverCommonLibrary.scrollIntoTheView(driver, selectOption);
-        webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, selectOption);
+        WebElement dropdown;
+
+        if (section.equalsIgnoreCase("Product Details") && field.equalsIgnoreCase("Product")) {
+            dropdown = driver.findElement(By.xpath("//div[@formarrayname='item_details']"
+                    + "//tbody/tr[1]/td[2]//p-dropdown//span[@role='combobox']"));
+        } else {
+            dropdown = findLiteralNormalDropdown(section, field);
+        }
+        webDriverCommonLibrary.scrollIntoTheView(driver, dropdown);
+        webDriverCommonLibrary.clickWithOverlayRetry(dropdown);
+
+        // Scope to the open panel so old/hidden overlays are not picked up
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[contains(@class,'p-dropdown-panel')]//input[@role='searchbox']")));
+        searchBox.click();
+        searchBox.clear();
+        searchBox.sendKeys(value);
+
+        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//div[contains(@class,'p-dropdown-panel')]"
+                        + "//li[@role='option' and normalize-space()=" + xpathLiteral(value) + "]")));
+        webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, option);
+    }
+
+    /**
+     * Literal-safe version of findNormalDropdown: section and field are wrapped
+     * with xpathLiteral(), so names like BUYER'S CALL don't break the XPath.
+     */
+    private WebElement findLiteralNormalDropdown(String section, String field) {
+        // Works for both empty and already-filled dropdowns (label does not change)
+        By aboveField = By.xpath("//p-card[.//span[contains(text()," + xpathLiteral(section) + ")]]"
+                + "//label[.//span[normalize-space()=" + xpathLiteral(field) + "]]/..//div[@aria-label='dropdown trigger']");
+        // Fallback for fields where the trigger is inside the field (only matches when empty)
+        By insideField = By.xpath("//p-card[@class='p-element'][.//span[contains(text()," + xpathLiteral(section) + ")]]"
+                + "//span[contains(@aria-label," + xpathLiteral(field) + ")]");
+
+        Duration originalImplicit = driver.manage().timeouts().getImplicitWaitTimeout();
+        driver.manage().timeouts().implicitlyWait(Duration.ZERO);
+        try {
+            return new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .ignoring(StaleElementReferenceException.class)
+                    .until(d -> {
+                        for (By by : new By[]{aboveField, insideField}) {
+                            for (WebElement e : d.findElements(by)) {
+                                if (e.isDisplayed() && e.isEnabled()) {
+                                    return e;
+                                }
+                            }
+                        }
+                        return null;   // null makes the wait keep polling
+                    });
+        } catch (TimeoutException e) {
+            throw new NoSuchElementException("Unable to locate a visible dropdown. Section: ["
+                    + section + "] Field: [" + field + "]");
+        } finally {
+            driver.manage().timeouts().implicitlyWait(originalImplicit);
+        }
     }
 
     /**
      * Safely wraps a raw string as an XPath string literal, handling values
-     * that contain single quotes, double quotes, or both — via concat()
+     * that contain single quotes, double quotes, or both, via concat()
      * when necessary. Prevents malformed XPath like:
      *   @aria-label='BUYER'S CALL'   (breaks on the embedded apostrophe)
      */
@@ -216,7 +478,7 @@ public class CommodityContractManagementPage {
         if (!value.contains("\"")) {
             return "\"" + value + "\"";
         }
-        // Contains BOTH quote types — split on ' and rebuild with concat()
+        // Contains BOTH quote types: split on ' and rebuild with concat()
         String[] parts = value.split("'", -1);
         StringBuilder sb = new StringBuilder("concat(");
         for (int i = 0; i < parts.length; i++) {
@@ -228,6 +490,7 @@ public class CommodityContractManagementPage {
         sb.append(")");
         return sb.toString();
     }
+
     @When("user enter {string} in the {string} number field in the {string} table")
     public void userEnterInTheNumberFieldInTheTable(String value, String field, String section) {
         WebElement numberField = driver.findElement(By.xpath("//h3[normalize-space()='"+section+"']/following::table[1]//tbody/tr[1]/td[count(//h3[normalize-space()='"+section+"']/following::table[1]//thead/tr/th[.//span[normalize-space()='"+field+"']]/preceding-sibling::th)+1]//.//input"));
@@ -717,9 +980,6 @@ public class CommodityContractManagementPage {
         input.sendKeys(value);
     }
 
-
-    // Click whatever "+ Add Row" control your grid uses before filling row i > 0.
-    // Update the locator to match your actual markup — placeholder shown here.
     public void addProductDetailRow(String sectionName) {
 
         int rowCountBefore = countProductDetailRows();
@@ -729,13 +989,6 @@ public class CommodityContractManagementPage {
         System.out.println("Rows before    : " + rowCountBefore);
         System.out.println("========================================");
 
-        /*
-         * IMPORTANT:
-         * The Add (+) button may NOT be inside the last <tr>.
-         *
-         * Therefore we scope to the Product Details section first,
-         * then search for the + button anywhere inside that section.
-         */
         By addButtonLocator = By.xpath("//div[@formarrayname='item_details']" + "//button[" + ".//span[contains(@class,'pi-plus')]" + " or .//i[contains(@class,'pi-plus')]" + " or contains(@class,'pi-plus')" + "]");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
@@ -836,14 +1089,10 @@ public class CommodityContractManagementPage {
     private int countProductDetailRows() {
         return driver.findElements(productDetailRows).size();
     }
-
-
     private boolean waitForRowCountToExceed(
             int previousCount,
             Duration timeout) {
-
         try {
-
             new WebDriverWait(driver, timeout)
                     .until(d -> {
 
@@ -852,7 +1101,6 @@ public class CommodityContractManagementPage {
                         System.out.println(
                                 "Current row count = " + count
                         );
-
                         return count > previousCount;
                     });
 
@@ -864,7 +1112,6 @@ public class CommodityContractManagementPage {
                     "Timed out waiting for row count > "
                             + previousCount
             );
-
             return false;
         }
     }
@@ -901,8 +1148,6 @@ public class CommodityContractManagementPage {
         }
         return rows.get(rowNumber - 1);
     }
-
-
     // Temporary button
     public void printProductDetailRowCount() {
         List<WebElement> rows = getProductDetailRows();
@@ -910,23 +1155,16 @@ public class CommodityContractManagementPage {
         System.out.println("PRODUCT DETAIL ROW COUNT = " + rows.size());
         System.out.println("================================");
     }
-
     // Temporary button
     public void debugProductDetailActionButtons(int rowNumber) {
-
         WebElement row = getProductDetailRow(rowNumber);
-
         List<WebElement> buttons = row.findElements(By.xpath(".//button"));
-
         System.out.println("========================================");
         System.out.println("ROW NUMBER       = " + rowNumber);
         System.out.println("BUTTON COUNT     = " + buttons.size());
         System.out.println("========================================");
-
         for (int i = 0; i < buttons.size(); i++) {
-
             WebElement button = buttons.get(i);
-
             System.out.println("----------------------------------------");
             System.out.println("BUTTON " + (i + 1));
             System.out.println("text      = [" + button.getText() + "]");
@@ -940,22 +1178,18 @@ public class CommodityContractManagementPage {
     }
 
     public void debugProductDetailAddButtons(String sectionName) {
-
         System.out.println("========================================");
         System.out.println("PRODUCT DETAILS ADD BUTTON DEBUG");
         System.out.println("Section = " + sectionName);
         System.out.println("========================================");
-
         By sectionLocator = By.xpath("//div[@formarrayname='item_details']" + "//xbs-dcloud-caption[.//h3[normalize-space()='" + sectionName + "']][1]" + "/following-sibling::div[1]");
         List<WebElement> sections = driver.findElements(sectionLocator);
         System.out.println("Section containers found = " + sections.size());
-
         if (sections.isEmpty()) {
             System.out.println(
                     "ERROR: Product Details section container was NOT found."
             );return;
         }
-
         WebElement section = sections.get(0);
         List<WebElement> buttons = section.findElements(
                 By.xpath(".//button | .//*[@role='button']"));
@@ -1091,23 +1325,14 @@ public class CommodityContractManagementPage {
 
     public int debugProductDetailRowCountBroad() {
 
-        By locator = By.xpath(
-                "//div[@formarrayname='item_details']" +
-                        "//h3[normalize-space()='Product Details']" +
-                        "/ancestor::*[self::div or self::section][1]" +
-                        "//table//tbody/tr"
-        );
+        By locator = By.xpath("//div[@formarrayname='item_details']" + "//h3[normalize-space()='Product Details']" + "/ancestor::*[self::div or self::section][1]" + "//table//tbody/tr");
 
-        int count = driver.findElements(locator).size();
+        int count= driver.findElements(locator).size();
         System.out.println("BROAD PRODUCT DETAIL ROW COUNT = " + count);
         return count;
     }
 
-    public WebElement getProductDetailCell(
-            String sectionName,
-            String columnName,
-            int rowIndex) {
-
+    public WebElement getProductDetailCell(String sectionName, String columnName, int rowIndex) {
         System.out.println("========================================");
         System.out.println("RESOLVING PRODUCT DETAIL CELL");
         System.out.println("Section   = " + sectionName);
@@ -1115,67 +1340,36 @@ public class CommodityContractManagementPage {
         System.out.println("Row Index = " + rowIndex);
         System.out.println("UI Row    = " + (rowIndex + 1));
         System.out.println("========================================");
-
         // ---------------------------------------------------------
         // 1. Locate Product Details container
         // ---------------------------------------------------------
-
         WebElement productDetailsContainer = driver. findElement(
-                By.xpath(
-                        "//div[@formarrayname='item_details']" +
-                                "[.//xbs-dcloud-caption//h3[normalize-space()='" +
-                                sectionName +
-                                "']]"
-                )
-        );
-
+                By.xpath("//div[@formarrayname='item_details']" + "[.//xbs-dcloud-caption//h3[normalize-space()='" +sectionName + "']]"));
         // ---------------------------------------------------------
         // 2. Find ALL headers
         // ---------------------------------------------------------
-
-        List<WebElement> allHeaders = productDetailsContainer.findElements(
-                By.xpath(".//thead/tr/th")
-        );
-
-        List<WebElement> visibleHeaders = allHeaders.stream()
-                .filter(WebElement::isDisplayed)
-                .toList();
+        List<WebElement> allHeaders = productDetailsContainer.findElements(By.xpath(".//thead/tr/th"));
+        List<WebElement> visibleHeaders = allHeaders.stream().filter(WebElement::isDisplayed).toList();
 
         int visibleColumnIndex = -1;
-
         for (int i = 0; i < visibleHeaders.size(); i++) {
-
             String headerText = visibleHeaders.get(i)
                     .getText()
                     .replace("*", "")
                     .replace("\u00A0", " ")
                     .trim();
-
-            System.out.println(
-                    "Visible Header [" + i + "] = [" + headerText + "]"
-            );
+            System.out.println("Visible Header [" + i + "] = [" + headerText + "]");
 
             if (headerText.equalsIgnoreCase(columnName.trim())) {
-
                 visibleColumnIndex = i;
-
-                System.out.println(
-                        "Resolved visible column index = " +
-                                visibleColumnIndex
-                );
-
+                System.out.println("Resolved visible column index = " + visibleColumnIndex);
                 break;
             }
         }
 
         if (visibleColumnIndex == -1) {
-
-            throw new IllegalArgumentException(
-                    "Column '" + columnName +
-                            "' was not found among visible headers."
-            );
+            throw new IllegalArgumentException("Column '" + columnName + "' was not found among visible headers.");
         }
-
         // ---------------------------------------------------------
         // 3. IMPORTANT:
         //    Find rows from Product Details container itself
@@ -1193,8 +1387,7 @@ public class CommodityContractManagementPage {
 
         if (rowIndex < 0 || rowIndex >= allRows.size()) {
 
-            throw new IllegalArgumentException(
-                    "Invalid rowIndex = " + rowIndex +
+            throw new IllegalArgumentException("Invalid rowIndex = " + rowIndex +
                             ". Available rows = " + allRows.size()
             );
         }
@@ -1362,14 +1555,8 @@ public class CommodityContractManagementPage {
         filterInput.sendKeys(visibleText);
 
         // Use contains() instead of exact text() match — safer against whitespace/casing differences
-        By optionLocator = By.xpath(
-                "//div[contains(@class,'p-dropdown-panel')]" +
-                        "//li[contains(@class,'p-dropdown-item')]" +
-                        "[contains(normalize-space(.), '" + visibleText + "')]"
-        );
-
-        WebElement option = new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(optionLocator));
+        By optionLocator = By.xpath("//div[contains(@class,'p-dropdown-panel')]" + "//li[contains(@class,'p-dropdown-item')]" + "[contains(normalize-space(.), '" + visibleText + "')]");
+        WebElement option = new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(optionLocator));
         option.click();
     }
 
@@ -1724,7 +1911,8 @@ public class CommodityContractManagementPage {
     }
 
     private static By menuItemLocator(String label) {
-        return By.xpath("//li[@data-pc-section='menuitem' " + "and @aria-label='" + label + "']");
+//        return By.xpath("//li[@data-pc-section='menuitem' " + "and @aria-label='" + label + "']");
+        return By.xpath("//*[self::li or self::a or self::span or self::button][normalize-space(.)='"+label+"' or @aria-label='"+label+"']");
     }
 
     // ---- dashboard / navigation ----
@@ -1762,10 +1950,17 @@ public class CommodityContractManagementPage {
     // ---- buttons ----
 
     /** Plain click on a button whose label is a span with exactly this text (Save, Yes ...). */
-    public void clickSpanButton(String label) {
-        WebElement button = driver.findElement(By.xpath("//span[text()='" + label + "']"));
-        webDriverCommonLibrary.explicitWait(driver, button);
-        button.click();
+    public void clickSpanButton(String buttonText) {
+        By button = By.xpath("//button[@type='button' and .//span[normalize-space()='"+buttonText+"']]");
+        WebElement element = driver.findElement(button);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center', inline:'nearest'});", element);
+        try {
+            element.click();
+        } catch (ElementClickInterceptedException e) {
+            webDriverCommonLibrary.waitForLoadingOverlay();
+            element = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(button));
+            element.click();
+        }
     }
 
     /** JavaScript click on a button whose label is a span with this text (Approve ...). */
@@ -1783,6 +1978,7 @@ public class CommodityContractManagementPage {
         webDriverCommonLibrary.explicitWait(driver, textField);
         webDriverCommonLibrary.scrollIntoTheView(driver, textField);
         webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, textField);
+        textField.clear();
         textField.sendKeys(value);
     }
 
@@ -1792,7 +1988,17 @@ public class CommodityContractManagementPage {
         webDriverCommonLibrary.scrollIntoTheView(driver, longTextArea);
         webDriverCommonLibrary.explicitWaitVisibility(driver, longTextArea);
         longTextArea.click();
+        longTextArea.clear();
         longTextArea.sendKeys(value);
+    }
+
+    public void enterPopupTextTextArea(String label, String value) {
+        By loc = By.xpath("//span[normalize-space()='" + label + "']/following::textarea");
+        WebElement popupTextArea = webDriverCommonLibrary.waitForFirstVisible(loc, 15);
+        webDriverCommonLibrary.scrollIntoTheView(driver, popupTextArea);
+        popupTextArea.click();
+        popupTextArea.clear();
+        popupTextArea.sendKeys(value);
     }
 
     /** Ticks a checkbox whose label text is exactly this text. */
@@ -1852,7 +2058,7 @@ public class CommodityContractManagementPage {
     // ---- messages and dialogs ----
 
     public void verifyMessageVisible(String text) {
-        By messageLocator = By.xpath("//div[contains(@aria-label, '" + text + "')]");
+        By messageLocator = By.xpath("//*[contains(@aria-label, '" + text + "')]");
         webDriverCommonLibrary.explicitWaitVisibilityByLocator(driver, messageLocator);
         WebElement message = driver.findElement(messageLocator);
         webDriverCommonLibrary.highLightTheElement(driver, message);
@@ -1860,6 +2066,16 @@ public class CommodityContractManagementPage {
 
     /** Finds a dialog span by its exact text, waits for it and highlights it. Optionally scrolls to it first. */
     public WebElement locateDialogText(String text, boolean scrollIntoView) {
+        WebElement element = driver.findElement(By.xpath("//*[normalize-space(.)='" + text + "']"));
+        webDriverCommonLibrary.explicitWait(driver, element);
+        if (scrollIntoView) {
+            webDriverCommonLibrary.scrollIntoTheView(driver, element);
+        }
+        webDriverCommonLibrary.highLightTheElement(driver, element);
+        return element;
+    }
+
+    public WebElement locateConfirmDialogText(String text, boolean scrollIntoView) {
         WebElement element = driver.findElement(By.xpath("//span[normalize-space(.)='" + text + "']"));
         webDriverCommonLibrary.explicitWait(driver, element);
         if (scrollIntoView) {
@@ -1899,8 +2115,37 @@ public class CommodityContractManagementPage {
         webDriverCommonLibrary.waitForSetTime(200);
     }
 
+//    public void searchContractNo(String contractNumber) {
+//        By searchLocator = By.xpath("//input[@placeholder='Search Contract No.']");
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+//
+//        webDriverCommonLibrary.waitForLoadingOverlay();
+//
+//        WebElement searchbox = wait.ignoring(StaleElementReferenceException.class)
+//                .until(ExpectedConditions.elementToBeClickable(searchLocator));
+//
+//        // Set the full value in one go so only one search request fires
+//        ((JavascriptExecutor) driver).executeScript(
+//                "const el = arguments[0]; el.focus(); el.value = '';" +
+//                        "el.dispatchEvent(new Event('input', {bubbles: true}));" +
+//                        "el.value = arguments[1];" +
+//                        "el.dispatchEvent(new Event('input', {bubbles: true}));" +
+//                        "el.dispatchEvent(new Event('change', {bubbles: true}));",
+//                searchbox, contractNumber);
+//
+//        // Wait for the filtered row instead of a fixed sleep
+//        By resultRow = By.xpath("//tbody[contains(@class,'p-datatable-tbody')]"
+//                + "/tr[td[contains(normalize-space(), '" + contractNumber + "')]]");
+//        new WebDriverWait(driver, Duration.ofSeconds(20))
+//                .ignoring(StaleElementReferenceException.class)
+//                .until(ExpectedConditions.visibilityOfElementLocated(resultRow));
+//
+//        webDriverCommonLibrary.waitForLoadingOverlay();
+//    }
+
     public void selectPurchaseOrderCheckbox(String checkboxName) {
-        WebElement checkboxRoot = driver.findElement(By.xpath("//span[normalize-space()='Purchase']/../..//div[contains(@data-pc-name,'" + checkboxName + "')]"));
+//        WebElement checkboxRoot = driver.findElement(By.xpath("//span[normalize-space()='Purchase']/../..//div[contains(@data-pc-name,'" + checkboxName + "')]"));
+        WebElement checkboxRoot = driver.findElement(By.xpath( "//span[normalize-space()='"+checkboxName+"']/preceding::div[@data-pc-name='checkbox']"));
         webDriverCommonLibrary.explicitWait(driver, checkboxRoot);
         webDriverCommonLibrary.scrollIntoTheView(driver, checkboxRoot);
 
@@ -1909,35 +2154,237 @@ public class CommodityContractManagementPage {
         webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, checkboxBox);
     }
 
-    /** Opens the row actions menu under the column and highlights each comma-separated menu item. */
-    public void verifyRowMenuItems(String menuItemsText, String columnName) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(listRowActionButtonLocator(columnName)));
-        System.out.println("Button text = [" + button.getText() + "]");
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
-        button.click();
+//    public void verifyRowMenuItems(String menuItemsText, String columnName) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+//        wait.pollingEvery(Duration.ofMillis(100))
+//                .ignoring(StaleElementReferenceException.class)
+//                .ignoring(ElementClickInterceptedException.class)
+//                .ignoring(ElementNotInteractableException.class);
+//
+//        webDriverCommonLibrary.waitForLoadingOverlay();
+//
+//        // Find fresh, scroll and click atomically; any stale/intercepted failure re-runs all three
+//        wait.until(d -> {
+//            WebElement button = d.findElement(listRowActionButtonLocator(columnName));
+//            ((JavascriptExecutor) d).executeScript(
+//                    "arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
+//            button.click();
+//            return true;
+//        });
+//
+//        for (String menuItem : menuItemsText.split(",")) {
+//            WebElement menuElement = wait.until(
+//                    ExpectedConditions.visibilityOfElementLocated(menuItemLocator(menuItem.trim())));
+//            webDriverCommonLibrary.explicitWait(driver, menuElement);
+//            webDriverCommonLibrary.highLightTheElement(driver, menuElement);
+//        }
+//    }
 
-        for (String menuItem : menuItemsText.split(",")) {
-            WebElement menuElement = wait.until(ExpectedConditions.visibilityOfElementLocated(menuItemLocator(menuItem.trim())));
-            webDriverCommonLibrary.explicitWait(driver, menuElement);
-            webDriverCommonLibrary.highLightTheElement(driver, menuElement);
+    public void verifyRowMenuItems(String menuItemsText, String columnName) {
+        List<String> items = Arrays.stream(menuItemsText.split(","))
+                .map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
+        By buttonLocator = listRowActionButtonLocator(columnName);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.pollingEvery(Duration.ofMillis(100))
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(ElementNotInteractableException.class);
+
+        // Short wait only for "the menu has opened"; the whole-test deadline is below
+        WebDriverWait openWait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        openWait.pollingEvery(Duration.ofMillis(100));
+
+        long deadline = System.nanoTime() + Duration.ofSeconds(20).toNanos();
+
+        while (true) {
+            webDriverCommonLibrary.waitForLoadingOverlay();
+
+            // Find fresh, scroll and click atomically (same as before)
+            wait.until(d -> {
+                WebElement button = d.findElement(buttonLocator);
+                ((JavascriptExecutor) d).executeScript(
+                        "arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
+                button.click();
+                return true;
+            });
+
+            // Menu is open once its first item is visible (same wait as the old first iteration)
+            try {
+                openWait.until(ExpectedConditions.visibilityOfElementLocated(menuItemLocator(items.get(0))));
+            } catch (TimeoutException ignored) {
+                // fall through: the check below fails and we re-open
+            }
+
+            // Check every expected item immediately, with no waiting
+            List<WebElement> found = new ArrayList<>();
+            for (String item : items) {
+                WebElement el = firstDisplayed(menuItemLocator(item));
+                if (el == null) {
+                    break;
+                }
+                found.add(el);
+            }
+
+            if (found.size() == items.size()) {
+                for (WebElement menuElement : found) {
+                    webDriverCommonLibrary.explicitWait(driver, menuElement);
+                    webDriverCommonLibrary.highLightTheElement(driver, menuElement);
+                }
+                return;
+            }
+
+            if (System.nanoTime() > deadline) {
+                List<String> visible = driver.findElements(By.cssSelector("[role='menuitem'], .p-menuitem-text"))
+                        .stream().map(el -> "[" + el.getText() + "]").collect(Collectors.toList());
+                throw new AssertionError("Expected menu items " + items + " for '" + columnName
+                        + "' but menu showed: " + visible);
+            }
+
+            // Stale menu (row not refreshed yet): close it and re-open on the refreshed row
+            new Actions(driver).sendKeys(Keys.ESCAPE).perform();
         }
     }
 
+    private WebElement firstDisplayed(By locator) {
+        try {
+            for (WebElement el : driver.findElements(locator)) {
+                if (el.isDisplayed()) {
+                    return el;
+                }
+            }
+        } catch (StaleElementReferenceException ignored) {
+            // menu re-rendered between find and check; treat as not found, caller re-opens
+        }
+        return null;
+    }
     /** Opens the row actions menu under the column and clicks the given menu item. */
     public void selectRowMenuItem(String item, String columnName) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(listRowActionButtonLocator(columnName)));
-        System.out.println("Button text = [" + button.getText() + "]");
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
-        button.click();
 
-        WebElement menuElement = wait.until(ExpectedConditions.visibilityOfElementLocated(menuItemLocator(item)));
-        webDriverCommonLibrary.explicitWait(driver, menuElement);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        By buttonLocator = listRowActionButtonLocator(columnName);
+        // Wait until the button exists and is clickable
+        wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
+        try {
+            WebElement button = driver.findElement(buttonLocator);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
+            // Re-find the button after scroll because the table can re-render
+            button = wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
+            System.out.println("Button text = [" + button.getText() + "]");
+            button.click();
+        } catch (StaleElementReferenceException e) {
+            System.out.println("Row action button became stale. Re-locating...");
+            WebElement button = wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
+            button.click();
+        }
+        // Wait for requested menu item
+        By menuLocator = menuItemLocator(item);
+        WebElement menuElement = wait.until(ExpectedConditions.elementToBeClickable(menuLocator));
         menuElement.click();
-    }
+       }
 
-    // ---- session ----
+//    public void selectRowMenuItem(String item, String columnName) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+//        wait.pollingEvery(Duration.ofMillis(100))
+//                .ignoring(StaleElementReferenceException.class)
+//                .ignoring(ElementClickInterceptedException.class);
+//
+//        By buttonLocator = listRowActionButtonLocator(columnName);
+//        By menuLocator = menuItemLocator(item);
+//
+//        // Only open the menu if it isn't already open (avoids toggling it closed)
+//        if (driver.findElements(menuLocator).isEmpty()) {
+//            wait.until(d -> {
+//                WebElement button = d.findElement(buttonLocator);
+//                ((JavascriptExecutor) d).executeScript(
+//                        "arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
+//                button.click();
+//                return true;
+//            });
+//        }
+//
+//        try {
+//            wait.until(ExpectedConditions.elementToBeClickable(menuLocator)).click();
+//        } catch (TimeoutException e) {
+//            List<String> visible = driver.findElements(By.cssSelector("[role='menuitem'], .p-menuitem-text"))
+//                    .stream().map(el -> "[" + el.getText() + "]").collect(Collectors.toList());
+//            throw new AssertionError("Menu item '" + item + "' not found. Menu items currently in DOM: " + visible, e);
+//        }
+//    }
+
+
+    /********************overlau
+    /** Waits only while the loading overlay is present; returns instantly if it isn't. */
+//    private void waitForLoadingOverlayGone() {
+//        new WebDriverWait(driver, Duration.ofSeconds(15)).until(
+//                ExpectedConditions.invisibilityOfElementLocated(
+//                        By.xpath("//div[contains(@class,'loading-overlay')]")));
+//    }
+//
+//    /** Opens the row actions menu under the column and clicks the given menu item. */
+//    public void selectRowMenuItem(String item, String columnName) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        By buttonLocator = listRowActionButtonLocator(columnName);
+//
+//        // Re-locate on every attempt, so stale or intercepted clicks are retried once
+//        for (int attempt = 1; attempt <= 2; attempt++) {
+//            try {
+//                waitForLoadingOverlayGone();
+//                WebElement button = wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
+//                ((JavascriptExecutor) driver).executeScript(
+//                        "arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
+//                button.click();
+//                break;
+//            } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
+//                if (attempt == 2) {
+//                    throw e;   // second failure is a real problem, so report it
+//                }
+//                // loop again: the overlay wait at the top handles the timing
+//            }
+//        }
+//
+//        // Menu item (the overlay can reappear after the menu opens)
+//        waitForLoadingOverlayGone();
+//        WebElement menuElement = wait.until(ExpectedConditions.elementToBeClickable(menuItemLocator(item)));
+//        menuElement.click();
+//    }
+
+//    public void selectRowMenuItem(String item, String columnName) {
+//
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+//        By buttonLocator = listRowActionButtonLocator(columnName);
+//        By menuLocator = menuItemLocator(item);
+//
+//        // 1. Wait for the page/table to finish loading
+//        waitForLoadingToFinish(driver);
+//
+//        // 2. Open the row action menu (re-find + retry on stale/intercepted)
+//        wait.ignoring(StaleElementReferenceException.class, ElementClickInterceptedException.class)
+//                .until(d -> {
+//                    waitForLoadingToFinish(d);
+//                    WebElement button = d.findElement(buttonLocator);
+//                    ((JavascriptExecutor) d).executeScript(
+//                            "arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
+//                    button.click();
+//                    return true;
+//                });
+//
+//        // 3. Click the requested menu item (same retry protection)
+//        new WebDriverWait(driver, Duration.ofSeconds(20))
+//                .ignoring(StaleElementReferenceException.class, ElementClickInterceptedException.class)
+//                .until(d -> {
+//                    d.findElement(menuLocator).click();
+//                    return true;
+//                });
+//
+//        // 4. Menu action usually triggers a load (navigation/modal), wait for it
+//        waitForLoadingToFinish(driver);
+//    }
+
+    public void waitForLoadingToFinish(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.loading-overlay")));
+    }
 
     public void logout() {
         By userMenu = By.xpath("//div[@class='p-toolbar-group-end']//i[contains(@class,'bi-person-circle')]");
@@ -1949,6 +2396,106 @@ public class CommodityContractManagementPage {
 
         webDriverCommonLibrary.explicitWait(driver, logoutButtonIcon);
         webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, logoutButtonIcon);
+    }
+
+    public void verifyFieldState(
+            WebElement field,
+            String fieldName,
+            String expectedState) {
+
+        boolean actualDisabled = isFieldDisabled(field);
+
+        boolean expectedDisabled;
+
+        if ("disabled".equalsIgnoreCase(expectedState)) {
+            expectedDisabled = true;
+
+        } else if ("enabled".equalsIgnoreCase(expectedState)) {
+            expectedDisabled = false;
+
+        } else {
+            Assert.fail("Invalid expected field state '" + expectedState + "' for field '" + fieldName + "'. Expected 'enabled' or 'disabled'.");
+            return;
+        }
+
+        Assert.assertEquals(actualDisabled, expectedDisabled, "Field state mismatch for '" + fieldName +"'. Expected: " + expectedState + ", Actual: " + (actualDisabled ? "disabled" : "enabled")
+        );
+    }
+
+    private boolean isFieldDisabled(WebElement field) {
+        String ariaDisabled = field.getAttribute("aria-disabled");
+        if ("true".equalsIgnoreCase(ariaDisabled)) {
+            return true;
+        }
+
+        String disabled = field.getAttribute("disabled");
+        if (disabled != null) {
+            return true;
+        }
+
+        String classAttribute = field.getAttribute("class");
+        if (classAttribute != null && classAttribute.contains("p-disabled")) {
+            return true;
+        }
+        return !field.isEnabled();
+    }
+
+
+    public void verifyField(String section, String fieldName, String ariaLabel, String expectedState, String expectedValue) {
+        WebElement field = getField(section, fieldName, ariaLabel);
+        webDriverCommonLibrary.waitForSetTime(2000);
+        webDriverCommonLibrary.verifyFieldState(field, fieldName, expectedState);
+        webDriverCommonLibrary.highLightTheElement(driver, field);
+        verifyFieldValue(field, fieldName, expectedValue);
+    }
+
+    public WebElement getField(String section, String field, String ariaLabel) {
+        By locator = By.xpath("//p-card[.//span[contains(text(),'" + section + "')]]" + "//label[.//span[normalize-space()='" + field + "']]/.." + "//*[@aria-label='" + ariaLabel + "']");
+        return webDriverCommonLibrary.waitForVisibility(locator);
+    }
+
+    public void verifyFieldValue(WebElement field, String fieldName, String expectedValue) {
+        String actualValue = field.getAttribute("value");
+        if (actualValue == null || actualValue.trim().isEmpty()) {
+            actualValue = field.getText();
+        }
+        Assert.assertEquals(actualValue.trim(), expectedValue.trim(), "Field value mismatch for '" + fieldName + "'. Expected: " + expectedValue + ", Actual: " + actualValue);
+    }
+
+    public void verifyMultipleCommissionValueUnit(String section, int rowIndex, String expectedUnit) {
+
+        WebDriver driver = DriverFactory.getDriver();
+
+        /*
+         * IMPORTANT:
+         * Replace the column locator below with the exact Value Unit
+         * column locator from your Commission Details table.
+         *
+         * This generic locator finds dropdowns in the specified row;
+         * it does NOT guarantee that the first dropdown is Value Unit.
+         */
+        By valueUnitLocator = By.xpath(
+                "//p-card[.//span[contains(normalize-space(.),'"
+                        + section
+                        + "')]]//tbody/tr["
+                        + (rowIndex + 1)
+                        + "]//p-dropdown//span[@role='combobox']"
+        );
+
+        WebElement valueUnit = new WebDriverWait(
+                driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(
+                        valueUnitLocator));
+
+        String actualUnit = valueUnit.getText().trim();
+
+        Assert.assertEquals(
+                actualUnit,
+                expectedUnit,
+                "Commission Details Value Unit mismatch in row "
+                        + (rowIndex + 1)
+                        + ". Expected: " + expectedUnit
+                        + ", Actual: " + actualUnit);
     }
 
 }

@@ -13,12 +13,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.testng.Assert;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import java.io.File;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Month;
@@ -35,6 +36,7 @@ public class WebDriverCommonLibrary {
     private static final Duration TIMEOUT = Duration.ofSeconds(20);
     private static final ObjectMapper MAPPER =
             new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    private static final By LOADING_OVERLAY = By.cssSelector(".loading-overlay");
 
     public WebDriverCommonLibrary(WebDriver driver) {
         this.driver = driver;
@@ -75,13 +77,21 @@ public class WebDriverCommonLibrary {
 
 
     public void highLightTheElement(final WebDriver driver, final WebElement ele) {
-        JavascriptExecutor jsExe = (JavascriptExecutor) driver;
-        scrollIntoTheView(driver, ele);
-        String originalStyle = ele.getAttribute("style");
-        jsExe.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", ele);
-        dynamicWait(ConfigReader.getHighlightWaitMillis());
-        jsExe.executeScript("arguments[0].setAttribute('style', arguments[1]);", ele, originalStyle == null ? "" : originalStyle);
+        try {
+            JavascriptExecutor jsExe = (JavascriptExecutor) driver;
+            scrollIntoTheView(driver, ele);
+            String originalStyle = ele.getAttribute("style");
+            jsExe.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", ele);
+            dynamicWait(ConfigReader.getHighlightWaitMillis());
+            jsExe.executeScript("arguments[0].setAttribute('style', arguments[1]);", ele, originalStyle == null ? "" : originalStyle);
+        } catch (StaleElementReferenceException e) {
+            // Element was re-rendered (Angular/PrimeNG refresh); highlight is cosmetic, so skip it
+        } catch (WebDriverException e) {
+            // Any other driver hiccup during highlighting should not fail the test
+        }
     }
+
+
 
     private void dynamicWait(long millis) {
         try {
@@ -324,7 +334,7 @@ public class WebDriverCommonLibrary {
         return ele;
     }
 
-    public WebElement waitForVisibility(WebDriver driver, By locator) {
+    public WebElement waitForVisibility(By locator) {
         WebElement ele = new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOfElementLocated(locator));
         scrollIntoTheView(driver, ele);
         highLightTheElement(driver, ele);
@@ -400,4 +410,118 @@ public class WebDriverCommonLibrary {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean isElementDisplayed(By locator) {
+        try {
+            return driver.findElement(locator).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void waitForLoadingOverlay() {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(3))
+                    .pollingEvery(Duration.ofMillis(50))
+                    .until(d -> (Boolean) ((JavascriptExecutor) d).executeScript(
+                            "const o=document.querySelector('div.loading-overlay');" +
+                                    "if(!o) return true;" +
+                                    "const s=getComputedStyle(o), r=o.getBoundingClientRect();" +
+                                    "return s.display==='none' || s.visibility==='hidden' || s.opacity==='0'" +
+                                    " || s.pointerEvents==='none' || r.width===0 || r.height===0;"));
+        } catch (TimeoutException e) {
+            System.out.println("WARN: loading overlay still present after 10s");
+        }
+    }
+
+    public void clickWithOverlayRetry(WebElement element) {
+        try {
+            element.click();
+        } catch (ElementClickInterceptedException e) {
+            System.out.println("Click intercepted. Waiting for loading overlay...");
+            waitForLoadingOverlay();
+            try {
+                element.click();
+            } catch (StaleElementReferenceException stale) {
+                throw new StaleElementReferenceException("Element became stale after loading overlay disappeared.", stale);
+            }
+        }
+    }
+
+    public void waitForOverlayToDisappear(WebDriver driver) {
+        new WebDriverWait(driver, Duration.ofSeconds(30)).until(d ->
+                d.findElements(LOADING_OVERLAY).stream().noneMatch(WebElement::isDisplayed));
+    }
+
+
+    public void verifyFieldValue(
+            WebElement field,
+            String fieldName,
+            String expectedValue) {
+
+        String actualValue = field.getAttribute("value");
+
+        if (actualValue == null || actualValue.isBlank()) {
+            actualValue = field.getText().trim();
+        }
+
+        if (!actualValue.equals(expectedValue)) {
+            throw new AssertionError(
+                    "Field '" + fieldName +
+                            "' expected value: '" + expectedValue +
+                            "' but actual value: '" + actualValue + "'"
+            );
+        }
+    }
+
+    public void verifyFieldState(WebElement field, String fieldName, String expectedState) {
+
+        boolean actualDisabled = isFieldDisabled(field);
+        boolean expectedDisabled;
+        if ("disabled".equalsIgnoreCase(expectedState)) {
+            expectedDisabled = true;
+        } else if ("enabled".equalsIgnoreCase(expectedState)) {
+            expectedDisabled = false;
+        } else {
+            Assert.fail(String.format("Invalid expected state '%s' for field '%s'. Expected 'enabled' or 'disabled'.", expectedState, fieldName));            return;
+        }
+        Assert.assertEquals(actualDisabled, expectedDisabled, "Field state mismatch for '" + fieldName + "'. Expected: " + expectedState + ", Actual: " + (actualDisabled ? "disabled" : "enabled"));
+    }
+
+    private boolean isFieldDisabled(WebElement field) {
+
+        String ariaDisabled = field.getAttribute("aria-disabled");
+
+        if ("true".equalsIgnoreCase(ariaDisabled)) {
+            return true;
+        }
+
+        String disabled = field.getAttribute("disabled");
+
+        if (disabled != null) {
+            return true;
+        }
+
+        String classAttribute = field.getAttribute("class");
+
+        if (classAttribute != null &&
+                classAttribute.contains("p-disabled")) {
+            return true;
+        }
+
+        return !field.isEnabled();
+    }
+
+    public WebElement waitForFirstVisible(By locator, int seconds) {
+        return new WebDriverWait(driver, Duration.ofSeconds(seconds))
+                .pollingEvery(Duration.ofMillis(100))
+                .ignoring(StaleElementReferenceException.class)
+                .until(d -> {
+                    for (WebElement e : d.findElements(locator)) {
+                        if (e.isDisplayed()) return e;
+                    }
+                    return null;
+                });
+    }
+
 }
