@@ -10,7 +10,7 @@ import utils.RetryAnalyzer;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = {"steps","hooks"},
-        tags = "@XBS_Commodity_Contract_Management_Flow_With_Approver_Modify_Amendment",
+        tags = "@RegressionTesting",
         plugin = {"pretty",
                 "html:target/cucumber-reports/cucumber.html",
                 "json:target/cucumber-reports/cucumber.json",

@@ -43,7 +43,7 @@ public class WebDriverCommonLibrary {
     }
 
     public WebElement explicitWait(WebDriver driver, WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         return wait.until(ExpectedConditions.elementToBeClickable(element));
         //elementtobeclickable covers both isdisplayed() and isenabled().
     }
@@ -91,7 +91,110 @@ public class WebDriverCommonLibrary {
         }
     }
 
+    public void highLightTheElementRed(final WebDriver driver, final WebElement ele) {
+        try {
+            JavascriptExecutor jsExe = (JavascriptExecutor) driver;
+            scrollIntoTheView(driver, ele);
+            String originalStyle = ele.getAttribute("style");
+            jsExe.executeScript("arguments[0].setAttribute('style', 'background: red; border: 2px solid blue;');", ele);
+            dynamicWait(ConfigReader.getHighlightWaitMillis());
+            jsExe.executeScript("arguments[0].setAttribute('style', arguments[1]);", ele, originalStyle == null ? "" : originalStyle);
+        } catch (StaleElementReferenceException e) {
+            // Element was re-rendered (Angular/PrimeNG refresh); highlight is cosmetic, so skip it
+        } catch (WebDriverException e) {
+            // Any other driver hiccup during highlighting should not fail the test
+        }
+    }
 
+    public void highLightTheElementGreen(final WebDriver driver, final WebElement ele) {
+        try {
+            JavascriptExecutor jsExe = (JavascriptExecutor) driver;
+            scrollIntoTheView(driver, ele);
+            String originalStyle = ele.getAttribute("style");
+            jsExe.executeScript("arguments[0].setAttribute('style', 'background: green; border: 2px solid blue;');", ele);
+            dynamicWait(ConfigReader.getHighlightWaitMillis());
+            jsExe.executeScript("arguments[0].setAttribute('style', arguments[1]);", ele, originalStyle == null ? "" : originalStyle);
+        } catch (StaleElementReferenceException e) {
+            // Element was re-rendered (Angular/PrimeNG refresh); highlight is cosmetic, so skip it
+        } catch (WebDriverException e) {
+            // Any other driver hiccup during highlighting should not fail the test
+        }
+    }
+
+    public enum HighlightType {
+        ACTION("#1E88E5", "rgba(30,136,229,0.15)", "solid"),
+        PASS("#2E7D32", "rgba(46,125,50,0.15)", "solid"),
+        FAIL("#D32F2F", "rgba(211,47,47,0.20)", "dashed"),
+        WARN("#F57C00", "rgba(245,124,0,0.15)", "solid"),
+        INFO("#7B1FA2", "rgba(123,31,162,0.12)", "solid");
+
+        private final String outline;
+        private final String background;
+        private final String lineStyle;
+
+        HighlightType(String outline, String background, String lineStyle) {
+            this.outline = outline;
+            this.background = background;
+            this.lineStyle = lineStyle;
+        }
+    }
+
+//    // Existing calls continue to use the blue ACTION highlight.
+//    public void highLightTheElement(
+//            final WebDriver driver,
+//            final WebElement ele) {
+//
+//        highLightTheElement(driver, ele, HighlightType.ACTION);
+//    }
+
+//    public void highLightTheElement(
+//            final WebDriver driver,
+//            final WebElement ele,
+//            final HighlightType type) {
+//
+//        try {
+//            scrollIntoTheView(driver, ele);
+//            JavascriptExecutor jsExe = (JavascriptExecutor) driver;
+//            jsExe.executeScript(
+//                    "var e = arguments[0];"
+//                            + "var color = arguments[1];"
+//                            + "var background = arguments[2];"
+//                            + "var lineStyle = arguments[3];"
+//                            + "var duration = arguments[4];"
+//
+//                            + "var oldOutline = e.style.getPropertyValue('outline');"
+//                            + "var oldOutlinePriority = e.style.getPropertyPriority('outline');"
+//                            + "var oldBackground = e.style.getPropertyValue('background-color');"
+//                            + "var oldBackgroundPriority = e.style.getPropertyPriority('background-color');"
+//                            + "var oldOffset = e.style.getPropertyValue('outline-offset');"
+//                            + "var oldOffsetPriority = e.style.getPropertyPriority('outline-offset');"
+//
+//                            + "e.style.setProperty("
+//                            + "  'outline', '3px ' + lineStyle + ' ' + color, 'important');"
+//                            + "e.style.setProperty("
+//                            + "  'outline-offset', '1px', 'important');"
+//                            + "e.style.setProperty("
+//                            + "  'background-color', background, 'important');"
+//
+//                            + "window.setTimeout(function() {"
+//                            + "  if (!e.isConnected) return;"
+//                            + "  e.style.setProperty('outline', oldOutline, oldOutlinePriority);"
+//                            + "  e.style.setProperty('outline-offset', oldOffset, oldOffsetPriority);"
+//                            + "  e.style.setProperty("
+//                            + "      'background-color', oldBackground, oldBackgroundPriority);"
+//                            + "}, duration);",
+//                    ele,
+//                    type.outline,
+//                    type.background,
+//                    type.lineStyle,
+//                    ConfigReader.getHighlightWaitMillis());
+//
+//        } catch (StaleElementReferenceException e) {
+//            // The page re-rendered the element; highlighting is cosmetic.
+//        } catch (WebDriverException e) {
+//            // A highlighting failure should not fail the test.
+//        }
+//    }
 
     private void dynamicWait(long millis) {
         try {

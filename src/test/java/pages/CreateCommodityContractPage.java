@@ -68,12 +68,21 @@ public class CreateCommodityContractPage {
       leafXPathFragment swaps in either the calendaricon (to open) or the
       input[@role='combobox'] (to verify), reusing the same row/column scope.
      **/
+//    private By buildDateRangeLocator(int rowIndex, String leafXPathFragment) {
+//        String xpath =
+//                "//div[@formarrayname='item_details']" +
+//                        "//xbs-dcloud-caption[.//h3[normalize-space()='" + SECTION_CAPTION + "']][1]" +
+//                        "/following-sibling::div[" + rowIndex + "]//table" +
+//                        "//p-calendar[@selectionmode='range']//" + leafXPathFragment;
+//
+//        return By.xpath(xpath);
+//    }
+
     private By buildDateRangeLocator(int rowIndex, String leafXPathFragment) {
+        // rowIndex is 1-based (already converted in fillTargetDateRangeFromJson)
         String xpath =
-                "//div[@formarrayname='item_details']" +
-                        "//xbs-dcloud-caption[.//h3[normalize-space()='" + SECTION_CAPTION + "']][1]" +
-                        "/following-sibling::div[" + rowIndex + "]//table" +
-                        "//p-calendar[@selectionmode='range']//" + leafXPathFragment;
+                "(//div[@formarrayname='item_details']//p-calendar)[" + rowIndex + "]"
+                        + "//" + leafXPathFragment;
 
         return By.xpath(xpath);
     }

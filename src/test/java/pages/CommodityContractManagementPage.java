@@ -1,7 +1,6 @@
 package pages;
 
 import base.DriverFactory;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -17,7 +16,6 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
 
-import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -99,7 +97,7 @@ public class CommodityContractManagementPage{
                                 "/..//div[@aria-label='dropdown trigger']"
                 );
                 try {
-                    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+                    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
                     dropdown = wait.until(ExpectedConditions.elementToBeClickable(aboveFieldLocator));
                     System.out.println("Dropdown found using ABOVE-FIELD locator: " + section + " -> " + field);
                 } catch (TimeoutException e) {
@@ -134,6 +132,62 @@ public class CommodityContractManagementPage{
         webDriverCommonLibrary.scrollIntoTheView(driver, selectOption);
         webDriverCommonLibrary.clickUsingActionClass(driver, selectOption);
     }
+
+//        public void selectDropdownValue(String section, String field, String value) {
+//        Duration originalImplicit = driver.manage().timeouts().getImplicitWaitTimeout();
+//        driver.manage().timeouts().implicitlyWait(Duration.ZERO); // explicit waits only
+//        try {
+//            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//            wait.pollingEvery(Duration.ofMillis(200));
+//
+//            // 1. Locate the dropdown: all candidates polled together, first visible wins
+//            List<By> candidates = new ArrayList<>();
+//            if (section.equalsIgnoreCase("Product Details") && field.equalsIgnoreCase("Product")) {
+//                candidates.add(By.xpath("//div[@formarrayname='item_details']//tbody/tr[1]/td[2]//p-dropdown//span[@role='combobox']"));
+//            } else {
+//                candidates.add(By.xpath("//p-card[.//span[contains(text(),'" + section + "')]]//span[contains(@aria-label,'" + field + "')]"));
+//                candidates.add(By.xpath("//label[.//span[normalize-space()='" + field + "']]/..//div[@aria-label='dropdown trigger']"));
+//            }
+//
+//            WebElement dropdown = wait.until(d -> {
+//                for (By by : candidates) {
+//                    for (WebElement e : d.findElements(by)) {
+//                        try {
+//                            if (e.isDisplayed() && e.isEnabled()) return e;
+//                        } catch (StaleElementReferenceException ignored) { }
+//                    }
+//                }
+//                return null;
+//            });
+//
+//            // 2. Open it
+//            webDriverCommonLibrary.scrollIntoTheView(driver, dropdown);
+//            try {
+//                wait.until(ExpectedConditions.elementToBeClickable(dropdown)).click();
+//            } catch (ElementClickInterceptedException e) {
+//                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", dropdown);
+//            }
+//
+//            // 3. Search inside the open overlay panel only
+//            String panel = "//div[contains(@class,'p-dropdown-panel')]";
+//            WebElement searchBox = wait.until(
+//                    ExpectedConditions.visibilityOfElementLocated(By.xpath(panel + "//input[@role='searchbox']")));
+//            searchBox.sendKeys(value);
+//
+//            // 4. Wait for the filtered option, then click it
+//            By optionLocator = By.xpath(panel + "//li[@role='option' and normalize-space()='" + value + "']");
+//            WebElement option = wait.until(ExpectedConditions.elementToBeClickable(optionLocator));
+//            try {
+//                option.click();
+//            } catch (ElementClickInterceptedException | StaleElementReferenceException e) {
+//                webDriverCommonLibrary.clickUsingActionClass(driver, driver.findElement(optionLocator));
+//            }
+//        } catch (TimeoutException e) {
+//            throw new NoSuchElementException("Unable to select [" + value + "] in Section: [" + section + "] Field: [" + field + "]", e);
+//        } finally {
+//            driver.manage().timeouts().implicitlyWait(originalImplicit);
+//        }
+//    }
 
     public void selectModifiedDropdownValue(String section, String field, String value) {
         WebElement dropdown;
@@ -906,6 +960,12 @@ public class CommodityContractManagementPage{
         selectMultipleCommissionDetailValue(sectionName, columnName, rowIndex, value);
     }
 
+    public void selectMultipleCommissionDropdownValueValidation(String sectionName, String columnName, int rowIndex, String value) {
+        if (value == null || value.trim().isEmpty())
+            return;
+        selectMultipleCommissionDetailValueValidation(sectionName, columnName, rowIndex, value);
+    }
+
     // For PrimeNG multi-select / secondary dropdown style columns (e.g. Packing)
     public void selectTableType2DropdownValues(String sectionName, String columnName,
                                                int rowIndex, String value) {
@@ -1344,7 +1404,8 @@ public class CommodityContractManagementPage{
         // 1. Locate Product Details container
         // ---------------------------------------------------------
         WebElement productDetailsContainer = driver. findElement(
-                By.xpath("//div[@formarrayname='item_details']" + "[.//xbs-dcloud-caption//h3[normalize-space()='" +sectionName + "']]"));
+//                By.xpath("//div[@formarrayname='item_details']" + "[.//xbs-dcloud-caption//h3[normalize-space()='" +sectionName + "']]"));
+                By.xpath("//div[@formarrayname='item_details'][preceding::span[contains(@class,'form-header')][1][normalize-space()='"+sectionName+"']]"));
         // ---------------------------------------------------------
         // 2. Find ALL headers
         // ---------------------------------------------------------
@@ -1445,9 +1506,10 @@ public class CommodityContractManagementPage{
         System.out.println("========================================");
 
         // 1. Locate Commission Details container
-        WebElement commissionDetailsContainer = driver. findElement(
-                By.xpath("//div[@formarrayname='commision_details']" + "[.//xbs-dcloud-caption//h3[normalize-space()='" + sectionName + "']]"));
-
+        WebElement commissionDetailsContainer = driver.findElement(
+                By.xpath("//div[@formarrayname='commision_details']"
+                        + "[preceding::span[contains(@class,'form-header')][1]"
+                        + "[normalize-space()='" + sectionName + "']]"));
         // 2. Find ALL headers
         // 2. Find ALL headers       // 2. Find ALL headers
         // 2. Find ALL headers
@@ -1529,6 +1591,125 @@ public class CommodityContractManagementPage{
         WebElement cell = visibleCells.get(visibleColumnIndex);
         System.out.println("SUCCESS: Cell resolved | Row = " + (rowIndex + 1) + " | Column = " + columnName + " | Visible Column Index = " + visibleColumnIndex);
         return cell;
+    }
+
+    public WebElement getCommissionDetailCellValidation(
+            String sectionName,
+            String columnName,
+            int rowIndex) {
+
+        System.out.println("========================================");
+        System.out.println("RESOLVING COMMISSION DETAIL CELL");
+        System.out.println("Section   = " + sectionName);
+        System.out.println("Column    = " + columnName);
+        System.out.println("Row Index = " + rowIndex);
+        System.out.println("UI Row    = " + (rowIndex + 1));
+        System.out.println("========================================");
+
+        WebElement commissionDetailsContainer = driver.findElement(
+                By.xpath("//div[@formarrayname='commision_details']"
+                        + "[preceding::span[contains(@class,'form-header')][1]"
+                        + "[normalize-space()='" + sectionName + "']]"));
+
+        List<WebElement> visibleHeaders =
+                commissionDetailsContainer.findElements(
+                                By.xpath(".//thead/tr/th"))
+                        .stream()
+                        .filter(WebElement::isDisplayed)
+                        .toList();
+
+        String requestedHeader = normalizeCommissionHeader(columnName);
+        int visibleColumnIndex = -1;
+
+        for (int i = 0; i < visibleHeaders.size(); i++) {
+            String headerText = normalizeCommissionHeader(
+                    visibleHeaders.get(i).getText());
+
+            System.out.println(
+                    "Visible Header [" + i + "] = [" + headerText + "]");
+
+            if (headerText.equalsIgnoreCase(requestedHeader)) {
+                visibleColumnIndex = i;
+                System.out.println(
+                        "Resolved visible column index = " + visibleColumnIndex);
+                break;
+            }
+        }
+
+        if (visibleColumnIndex < 0) {
+            throw new IllegalArgumentException(
+                    "Column '" + columnName
+                            + "' was not found among visible headers.");
+        }
+
+        List<WebElement> allRows =
+                commissionDetailsContainer.findElements(
+                        By.xpath(".//tbody/tr"));
+
+        System.out.println("Total rows found = " + allRows.size());
+
+        if (rowIndex < 0 || rowIndex >= allRows.size()) {
+            throw new IllegalArgumentException(
+                    "Invalid rowIndex = " + rowIndex
+                            + ". Available rows = " + allRows.size());
+        }
+
+        WebElement requestedRow = allRows.get(rowIndex);
+
+        // The Value header covers both the amount input and currency dropdown.
+        // Return the cell containing the last dropdown in that row.
+        if ("Value".equalsIgnoreCase(requestedHeader)) {
+            List<WebElement> dropdowns =
+                    requestedRow.findElements(By.cssSelector("p-dropdown"));
+
+            if (dropdowns.isEmpty()) {
+                throw new IllegalStateException(
+                        "No dropdown found in Commission Details row "
+                                + (rowIndex + 1));
+            }
+
+            WebElement unitDropdown = dropdowns.get(dropdowns.size() - 1);
+            WebElement unitCell =
+                    unitDropdown.findElement(By.xpath("./ancestor::td[1]"));
+
+            System.out.println(
+                    "SUCCESS: Value unit dropdown cell resolved | Row = "
+                            + (rowIndex + 1));
+
+            return unitCell;
+        }
+
+        List<WebElement> visibleCells =
+                requestedRow.findElements(By.xpath("./td"))
+                        .stream()
+                        .filter(WebElement::isDisplayed)
+                        .toList();
+
+        System.out.println("Visible cells in row = " + visibleCells.size());
+
+        if (visibleColumnIndex >= visibleCells.size()) {
+            throw new IllegalStateException(
+                    "Column '" + columnName
+                            + "' resolved to visible index " + visibleColumnIndex
+                            + ", but row " + (rowIndex + 1)
+                            + " has only " + visibleCells.size()
+                            + " visible cells.");
+        }
+
+        WebElement cell = visibleCells.get(visibleColumnIndex);
+
+        System.out.println(
+                "SUCCESS: Cell resolved | Row = " + (rowIndex + 1)
+                        + " | Column = " + columnName
+                        + " | Visible Column Index = " + visibleColumnIndex);
+
+        return cell;
+    }
+    private String normalizeCommissionHeader(String text) {
+        return text
+                .replace("*", "")
+                .replace("\u00A0", " ")
+                .trim();
     }
     // ---- Step 2: new helpers ----
     public WebElement getCommissionValueAmountField(String sectionName, int rowIndex) {
@@ -1651,6 +1832,16 @@ public class CommodityContractManagementPage{
         trigger.click();
     }
 
+    public void clickMultipleCommissionGridColumnDropdownValidation(WebDriver driver, String sectionName, String columnHeaderText, int rowIndex) {
+
+        WebElement cell = getCommissionDetailCellValidation(sectionName, columnHeaderText, rowIndex);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", cell);
+        WebElement dropdown = cell.findElement(By.cssSelector("p-dropdown"));
+        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.elementToBeClickable(dropdown));
+        dropdown.click();
+    }
+
+
 
     public void selectMultipleProductDetailValue(String sectionName, String columnName, int rowIndex, String value) {
         clickMultipleGridColumnDropdown(driver, sectionName, columnName, rowIndex);
@@ -1713,6 +1904,16 @@ public class CommodityContractManagementPage{
 
     public void selectMultipleCommissionDetailValue(String sectionName, String columnName, int rowIndex, String value) {
         clickMultipleCommissionGridColumnDropdown(driver, sectionName, columnName, rowIndex);
+        WebElement option = driver.findElement(By.xpath("//ul[contains(@class,'p-dropdown-items')]//li[@aria-label='"+value+"']"));
+        try{
+            webDriverCommonLibrary.clickWithJavaScriptExecutor(driver,option);
+        }catch (Exception e){
+            webDriverCommonLibrary.clickUsingActionClass(driver,option);
+        }
+    }
+
+    public void selectMultipleCommissionDetailValueValidation(String sectionName, String columnName, int rowIndex, String value) {
+        clickMultipleCommissionGridColumnDropdownValidation(driver, sectionName, columnName, rowIndex);
         WebElement option = driver.findElement(By.xpath("//ul[contains(@class,'p-dropdown-items')]//li[@aria-label='"+value+"']"));
         try{
             webDriverCommonLibrary.clickWithJavaScriptExecutor(driver,option);
@@ -1911,10 +2112,10 @@ public class CommodityContractManagementPage{
     }
 
     private static By menuItemLocator(String label) {
-//        return By.xpath("//li[@data-pc-section='menuitem' " + "and @aria-label='" + label + "']");
-        return By.xpath("//*[self::li or self::a or self::span or self::button][normalize-space(.)='"+label+"' or @aria-label='"+label+"']");
+        return By.xpath(
+                "//*[self::li or self::a or self::span or self::button]" +
+                        "[normalize-space(.)='" + label + "' or @aria-label='" + label + "']");
     }
-
     // ---- dashboard / navigation ----
 
     public void clickSidebarMenu(String id) {
@@ -1943,7 +2144,7 @@ public class CommodityContractManagementPage{
     }
 
     public void highlightTableSection(String heading) {
-        WebElement element = driver.findElement(By.xpath("//h3[normalize-space()='" + heading + "']"));
+        WebElement element = driver.findElement(By.xpath("//*[normalize-space()='" + heading + "']"));
         webDriverCommonLibrary.highLightTheElement(driver, element);
     }
 
@@ -2003,7 +2204,7 @@ public class CommodityContractManagementPage{
 
     /** Ticks a checkbox whose label text is exactly this text. */
     public void selectCheckbox(String label) {
-        WebElement checkbox = driver.findElement(By.xpath("//div[input[@type='checkbox'] and normalize-space(.)='" + label + "']/input[@type='checkbox']"));
+        WebElement checkbox = driver.findElement(By.xpath("//label[contains(@class,'doc-check')][normalize-space(span)='"+label+"']/input[@type='checkbox']"));
         webDriverCommonLibrary.explicitWait(driver, checkbox);
         webDriverCommonLibrary.scrollIntoTheView(driver, checkbox);
         webDriverCommonLibrary.highLightTheElement(driver, checkbox);
@@ -2012,7 +2213,7 @@ public class CommodityContractManagementPage{
 
     /** Clicks a checkbox whose label text contains this text (kept as the original: contains, not exact). */
     public void deselectCheckbox(String label) {
-        WebElement checkbox = driver.findElement(By.xpath("//div[input[@type='checkbox'] and contains(normalize-space(.),'" + label + "')]/input[@type='checkbox']"));
+        WebElement checkbox = driver.findElement(By.xpath("//label[contains(@class,'doc-check')][normalize-space(span)='"+label+"']/input[@type='checkbox']"));
         webDriverCommonLibrary.explicitWait(driver, checkbox);
         webDriverCommonLibrary.scrollIntoTheView(driver, checkbox);
         webDriverCommonLibrary.highLightTheElement(driver, checkbox);
@@ -2040,6 +2241,14 @@ public class CommodityContractManagementPage{
     /** Finds a selected-value span by aria-label, brings it into view and highlights it (e.g. Price Currency / UOM). */
     public void highlightSpanByAriaLabel(String ariaLabel) {
         WebElement element = driver.findElement(By.xpath("//span[@aria-label='" + ariaLabel + "']"));
+        webDriverCommonLibrary.scrollIntoTheView(driver, element);
+        webDriverCommonLibrary.explicitWait(driver, element);
+        webDriverCommonLibrary.highLightTheElement(driver, element);
+        webDriverCommonLibrary.waitForSetTime(2000);
+    }
+
+    public void highlightDisabledSpanByAriaLabel(String ariaLabel) {
+        WebElement element = driver.findElement(By.xpath("//div[contains(@class,'p-disabled')]/..//span[@aria-label='"+ariaLabel+"']"));
         webDriverCommonLibrary.scrollIntoTheView(driver, element);
         webDriverCommonLibrary.explicitWait(driver, element);
         webDriverCommonLibrary.highLightTheElement(driver, element);
@@ -2180,9 +2389,18 @@ public class CommodityContractManagementPage{
 //        }
 //    }
 
+
     public void verifyRowMenuItems(String menuItemsText, String columnName) {
         List<String> items = Arrays.stream(menuItemsText.split(","))
-                .map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+
+        if (items.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "No menu items provided for column: " + columnName);
+        }
+
         By buttonLocator = listRowActionButtonLocator(columnName);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -2191,60 +2409,105 @@ public class CommodityContractManagementPage{
                 .ignoring(ElementClickInterceptedException.class)
                 .ignoring(ElementNotInteractableException.class);
 
-        // Short wait only for "the menu has opened"; the whole-test deadline is below
-        WebDriverWait openWait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        openWait.pollingEvery(Duration.ofMillis(100));
+        WebDriverWait openWait =
+                new WebDriverWait(driver, Duration.ofSeconds(3));
+        openWait.pollingEvery(Duration.ofMillis(100))
+                .ignoring(StaleElementReferenceException.class);
 
-        long deadline = System.nanoTime() + Duration.ofSeconds(20).toNanos();
+        long deadline =
+                System.nanoTime() + Duration.ofSeconds(20).toNanos();
 
         while (true) {
+
             webDriverCommonLibrary.waitForLoadingOverlay();
 
-            // Find fresh, scroll and click atomically (same as before)
+            // Open the row-action menu using a fresh button reference
             wait.until(d -> {
                 WebElement button = d.findElement(buttonLocator);
+
                 ((JavascriptExecutor) d).executeScript(
-                        "arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
+                        "arguments[0].scrollIntoView({block:'center', inline:'center'});",
+                        button);
+
+                button = d.findElement(buttonLocator);
                 button.click();
+
                 return true;
             });
 
-            // Menu is open once its first item is visible (same wait as the old first iteration)
+            // Wait until the first expected menu item is visible
             try {
-                openWait.until(ExpectedConditions.visibilityOfElementLocated(menuItemLocator(items.get(0))));
+                openWait.until(ExpectedConditions.visibilityOfElementLocated(
+                        menuItemLocator(items.get(0))));
             } catch (TimeoutException ignored) {
-                // fall through: the check below fails and we re-open
+                // Continue checking and retry if the menu did not open
             }
 
-            // Check every expected item immediately, with no waiting
+            // Verify every expected menu item
             List<WebElement> found = new ArrayList<>();
+
             for (String item : items) {
-                WebElement el = firstDisplayed(menuItemLocator(item));
-                if (el == null) {
+                WebElement element = firstDisplayed(menuItemLocator(item));
+
+                if (element == null) {
                     break;
                 }
-                found.add(el);
+
+                found.add(element);
             }
 
             if (found.size() == items.size()) {
+
+                // Highlight all verified menu items
                 for (WebElement menuElement : found) {
                     webDriverCommonLibrary.explicitWait(driver, menuElement);
-                    webDriverCommonLibrary.highLightTheElement(driver, menuElement);
+                    webDriverCommonLibrary.highLightTheElement(
+                            driver, menuElement);
                 }
+
+                // Close the menu by clicking the same row-action button again
+                wait.until(d -> {
+                    WebElement button = d.findElement(buttonLocator);
+
+                    ((JavascriptExecutor) d).executeScript(
+                            "arguments[0].scrollIntoView({block:'center', inline:'center'});",
+                            button);
+
+                    button = d.findElement(buttonLocator);
+                    button.click();
+
+                    return true;
+                });
+
+                System.out.println(
+                        "Verified menu items and closed the menu for column: "
+                                + columnName);
+
                 return;
             }
 
+            // Fail with details if the expected items are not found
             if (System.nanoTime() > deadline) {
-                List<String> visible = driver.findElements(By.cssSelector("[role='menuitem'], .p-menuitem-text"))
-                        .stream().map(el -> "[" + el.getText() + "]").collect(Collectors.toList());
-                throw new AssertionError("Expected menu items " + items + " for '" + columnName
-                        + "' but menu showed: " + visible);
+
+                List<String> visible = driver.findElements(
+                                By.cssSelector(
+                                        "[role='menuitem'], .p-menuitem-text"))
+                        .stream()
+                        .filter(WebElement::isDisplayed)
+                        .map(el -> "[" + el.getText() + "]")
+                        .collect(Collectors.toList());
+
+                throw new AssertionError(
+                        "Expected menu items " + items
+                                + " for '" + columnName
+                                + "' but menu showed: " + visible);
             }
 
-            // Stale menu (row not refreshed yet): close it and re-open on the refreshed row
+            // Close an incomplete menu before retrying
             new Actions(driver).sendKeys(Keys.ESCAPE).perform();
         }
     }
+
 
     private WebElement firstDisplayed(By locator) {
         try {
@@ -2263,7 +2526,7 @@ public class CommodityContractManagementPage{
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         By buttonLocator = listRowActionButtonLocator(columnName);
-        // Wait until the button exists and is clickable
+
         wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
         try {
             WebElement button = driver.findElement(buttonLocator);
@@ -2462,40 +2725,74 @@ public class CommodityContractManagementPage{
         Assert.assertEquals(actualValue.trim(), expectedValue.trim(), "Field value mismatch for '" + fieldName + "'. Expected: " + expectedValue + ", Actual: " + actualValue);
     }
 
-    public void verifyMultipleCommissionValueUnit(String section, int rowIndex, String expectedUnit) {
-
-        WebDriver driver = DriverFactory.getDriver();
-
-        /*
-         * IMPORTANT:
-         * Replace the column locator below with the exact Value Unit
-         * column locator from your Commission Details table.
-         *
-         * This generic locator finds dropdowns in the specified row;
-         * it does NOT guarantee that the first dropdown is Value Unit.
-         */
-        By valueUnitLocator = By.xpath(
-                "//p-card[.//span[contains(normalize-space(.),'"
-                        + section
-                        + "')]]//tbody/tr["
-                        + (rowIndex + 1)
-                        + "]//p-dropdown//span[@role='combobox']"
-        );
-
-        WebElement valueUnit = new WebDriverWait(
-                driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(
-                        valueUnitLocator));
-
-        String actualUnit = valueUnit.getText().trim();
-
+    public void verifyMultipleCommissionValueUnit(String section, String columnName, int rowIndex, String expectedUnit) {
+        String actualUnit = getCommissionDetailDisplayedValue(section, columnName, rowIndex);
         Assert.assertEquals(
                 actualUnit,
-                expectedUnit,
-                "Commission Details Value Unit mismatch in row "
-                        + (rowIndex + 1)
-                        + ". Expected: " + expectedUnit
-                        + ", Actual: " + actualUnit);
+                expectedUnit, "Commission Details value mismatch in column '" + columnName + "', row " + (rowIndex + 1) + ". Expected: " + expectedUnit + ", Actual: " + actualUnit);
     }
 
+    public void verifyMultipleCommissionValueUnitValidation(String section, String columnName, int rowIndex, String expectedUnit) {
+        String actualUnit = getCommissionDetailDisplayedValue(section, columnName, rowIndex);
+        WebElement element = getCommissionDetailCellValidation(section, columnName, rowIndex);
+        Assert.assertEquals(actualUnit, expectedUnit, "Commission Details value mismatch in column '" + columnName + "', row " + (rowIndex + 1) + ". Expected: " + expectedUnit + ", Actual: " + actualUnit);
+        highlightElement(element);
+    }
+    private void highlightElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        String originalStyle = element.getAttribute("style") == null
+                ? ""
+                : element.getAttribute("style");
+
+        js.executeScript(
+                "arguments[0].style.setProperty("
+                        + "'background-color', '#C8E6C9', 'important');"   // light green
+                        + "arguments[0].style.setProperty("
+                        + "'outline', '3px solid #4CAF50', 'important');", // medium green border
+                element);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        js.executeScript(
+                "arguments[0].setAttribute('style', arguments[1]);",
+                element,
+                originalStyle);
+    }
+
+    public String getCommissionDetailDisplayedValue(String sectionName, String columnName, int rowIndex) {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement cell = wait.until(d -> {
+            WebElement currentCell = getCommissionDetailCellValidation(sectionName, columnName, rowIndex);
+            return currentCell.isDisplayed() ? currentCell : null;
+        });
+
+        WebElement selectedLabel = wait.until(d -> {
+            List<WebElement> labels = cell.findElements(By.cssSelector(".p-dropdown-label"));
+
+            for (WebElement label : labels) {
+                if (label.isDisplayed()) {
+                    String text = label.getText().replace("\u00A0", " ").trim();
+                    if (!text.isEmpty()) {
+                        return label;
+                    }
+                }
+            }
+            return null;
+        });
+
+        return selectedLabel.getText().replace("\u00A0", " ").trim();
+    }
+    public String getCommissionDetailDisplayedValueValidation(String sectionName, String columnName, int rowIndex) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement cell = wait.until(d -> {WebElement currentCell = getCommissionDetailCell(sectionName, columnName, rowIndex);
+            return currentCell.isDisplayed() ? currentCell : null;
+        });
+        return cell.getText().replace("\u00A0", " ").trim();
+    }
 }

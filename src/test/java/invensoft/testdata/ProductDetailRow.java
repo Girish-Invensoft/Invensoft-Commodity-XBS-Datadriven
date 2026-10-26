@@ -7,6 +7,7 @@ public class ProductDetailRow {
     private String qty;
     private String uom;
     private String noOfLots;
+    private String differential;
     private String price;
     private String targetType;
     private String targetDateRange;
@@ -57,6 +58,14 @@ public class ProductDetailRow {
     }
     public void setNoOfLots(String noOfLots) {
         this.noOfLots = noOfLots;
+    }
+
+
+    public String getdifferential() {
+        return differential;
+    }
+    public void setdifferential(String differential) {
+        this.noOfLots = differential;
     }
 
     public String getPrice() {

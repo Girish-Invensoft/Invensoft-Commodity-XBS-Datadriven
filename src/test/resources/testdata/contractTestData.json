@@ -4,7 +4,7 @@
       "testCaseId": "TC_CCM_001",
       "login": {
         "url": "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
-        "browser": "edge",
+        "browser": "chrome",
         "username": "Girishkumar.MR@invensoft.co.in",
         "password": "Admin#01",
         "loggedInUser": "Girish"
@@ -206,8 +206,8 @@
           "value": "2.5",
           "valueUnit": "EUR/Kg"
         }
-        ],
-        "commissionDetailsValidation": [
+      ],
+      "commissionDetailsValidation": [
         {
           "agentBroker": "Agent (dcsza)",
           "refNo": "REF-1001",
@@ -215,7 +215,7 @@
           "type2": "Value",
           "value": "1.5"
         }
-        ],
+      ],
       "contractAmendment": {
         "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
         "pendingStatus": "Pending",
@@ -237,7 +237,7 @@
         "billingLocation": "demo (DE)",
         "shippingLocation": "Default (DND)",
         "season": "Season 2026 - 2027",
-        "fixationBy" : "SELLER'S CALL",
+        "fixationBy": "SELLER'S CALL",
         "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
         "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
         "invoiceCurrency": "EUR",
@@ -300,6 +300,10 @@
         "polDescription": "Port of Santos, Sao Paulo, Brazil",
         "countryOfOrigin": "China"
       },
+      "validatedeliveryTerms": {
+        "portOfDischarge": "Busan",
+        "portOfLoading": "Busan"
+      },
       "documents": {
         "documentSet": "CERTIFICATES REQUIRED FOR ECC",
         "select": [
@@ -361,10 +365,6 @@
         "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
         "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
       },
-      "validatedeliveryTerms": {
-        "portOfDischarge": "Busan",
-        "portOfLoading": "Busan"
-      },
       "amendment": {
         "menuItem": "Amendment",
         "classFieldState": "disabled",
@@ -421,44 +421,21 @@
         "pendingStatus": "Pending"
       },
       "secondAmendment": {
-      "menuItem": "Amendment",
-      "classFieldState": "disabled",
-      "class": "Coffee Vendor Purchase Contract",
-      "pricing": "FLAT PRICE",
-      "fieldState": "disabled",
-      "Contract No.": "",
-      "Contract Date": "",
-      "Amend No.": "",
-      "billingLocation": "demo (DE)",
-      "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-      "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
-      "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-      "pendingStatus": "Pending",
-      "approvedStatus": "Approved"
-    },
-      "copyByContract": {
-        "menuItem": "Copy By Contract",
-        "class": "Coffee Farmer Purchase Contract",
+        "menuItem": "Amendment",
+        "classFieldState": "disabled",
+        "class": "Coffee Vendor Purchase Contract",
+        "pricing": "FLAT PRICE",
+        "fieldState": "disabled",
+        "Contract No.": "",
+        "Contract Date": "",
+        "Amend No.": "",
         "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "fixationBy": "SELLER'S CALL",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse."
+        "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "pendingStatus": "Pending",
+        "approvedStatus": "Approved"
       },
-
       "productDetails": [
         {
           "product": "AC AB ",
@@ -573,6 +550,15 @@
           "valueUnit": "INR/Gm"
         }
       ],
+      "commissionDetailsValidation": [
+        {
+          "agentBroker": "Agent (dcsza)",
+          "refNo": "REF-1001",
+          "type1": "Flat Amount",
+          "type2": "Value",
+          "value": "1.5"
+        }
+      ],
       "contractAmendment": {
         "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
         "pendingStatus": "Pending",
@@ -587,6 +573,29 @@
         "confirmButton": "Confirm",
         "canceledMessage": "CONTRACT AMENDMENT CANCELED SUCCESSFULLY.",
         "reasonForCancel": "The amendment was created against the wrong counterparty."
+      },
+      "copyByContract": {
+        "menuItem": "Copy By Contract",
+        "class": "Coffee Farmer Purchase Contract",
+        "billingLocation": "demo (DE)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "fixationBy": "SELLER'S CALL",
+        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
+        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
+        "invoiceCurrency": "EUR",
+        "exchangePriceCurrencyUom": "USC/GM",
+        "portOfLoading": "Geneva",
+        "portOfDischarge": "Houston",
+        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
+        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
+        "incoTerms": "DEQ",
+        "weightTerms": "Net Delivered Weights",
+        "arbitration": "Hamburg",
+        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
       }
     },
     {
@@ -633,6 +642,10 @@
         "termsAndConditions": "The goods must meet the agreed quality.",
         "polDescription": "Port of Santos, Sao Paulo, Brazil",
         "countryOfOrigin": "China"
+      },
+      "validatedeliveryTerms": {
+        "portOfDischarge": "Busan",
+        "portOfLoading": "Busan"
       },
       "documents": {
         "documentSet": "CERTIFICATES REQUIRED FOR ECC",
@@ -694,11 +707,6 @@
         "instructions": "Modifying price confirmed with supplier; pending manager approval.",
         "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
         "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
-
-      },
-      "validatedeliveryTerms": {
-        "portOfDischarge": "Busan",
-        "portOfLoading": "Busan"
       },
       "amendment": {
         "menuItem": "Amendment",
@@ -745,22 +753,6 @@
           "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
           "FUMIGATION CERTIFICATE"
         ],
-        "secondAmendment": {
-          "menuItem": "Amendment",
-          "classFieldState": "disabled",
-          "class": "Coffee Vendor Purchase Contract",
-          "pricing": "FLAT PRICE",
-          "fieldState": "disabled",
-          "Contract No.": "",
-          "Contract Date": "",
-          "Amend No.": "",
-          "billingLocation": "demo (DE)",
-          "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-          "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
-          "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-          "pendingStatus": "Pending",
-          "approvedStatus": "Approved"
-        },
         "deselect": [
           "PREFERENTIAL ENTRY CERTIFICATE",
           "INSURANCE CERTIFICATE",
@@ -771,27 +763,21 @@
         "internalRemarks": "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
         "pendingStatus": "Pending"
       },
-      "copyByContract": {
-        "menuItem": "Copy By Contract",
-        "class": "Coffee Farmer Purchase Contract",
+      "secondAmendment": {
+        "menuItem": "Amendment",
+        "classFieldState": "disabled",
+        "class": "Coffee Vendor Purchase Contract",
+        "pricing": "FLAT PRICE",
+        "fieldState": "disabled",
+        "Contract No.": "",
+        "Contract Date": "",
+        "Amend No.": "",
         "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "fixationBy": "SELLER'S CALL",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse."
+        "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "pendingStatus": "Pending",
+        "approvedStatus": "Approved"
       },
       "productDetails": [
         {
@@ -1162,6 +1148,15 @@
           "valueUnit": "INR/Gm"
         }
       ],
+      "commissionDetailsValidation": [
+        {
+          "agentBroker": "Agent (dcsza)",
+          "refNo": "REF-1001",
+          "type1": "Flat Amount",
+          "type2": "Value",
+          "value": "1.5"
+        }
+      ],
       "contractAmendment": {
         "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
         "pendingStatus": "Pending",
@@ -1176,6 +1171,29 @@
         "confirmButton": "Confirm",
         "canceledMessage": "CONTRACT AMENDMENT CANCELED SUCCESSFULLY.",
         "reasonForCancel": "The amendment was created against the wrong counterparty."
+      },
+      "copyByContract": {
+        "menuItem": "Copy By Contract",
+        "class": "Coffee Farmer Purchase Contract",
+        "billingLocation": "demo (DE)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "fixationBy": "SELLER'S CALL",
+        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
+        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
+        "invoiceCurrency": "EUR",
+        "exchangePriceCurrencyUom": "USC/GM",
+        "portOfLoading": "Geneva",
+        "portOfDischarge": "Houston",
+        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
+        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
+        "incoTerms": "DEQ",
+        "weightTerms": "Net Delivered Weights",
+        "arbitration": "Hamburg",
+        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
       }
     },
     {
@@ -1222,6 +1240,10 @@
         "termsAndConditions": "The goods must meet the agreed quality.",
         "polDescription": "Port of Santos, Sao Paulo, Brazil",
         "countryOfOrigin": "China"
+      },
+      "validatedeliveryTerms": {
+        "portOfDischarge": "Busan",
+        "portOfLoading": "Busan"
       },
       "documents": {
         "documentSet": "CERTIFICATES REQUIRED FOR ECC",
@@ -1283,11 +1305,6 @@
         "instructions": "Modifying price confirmed with supplier; pending manager approval.",
         "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
         "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
-
-      },
-      "validatedeliveryTerms": {
-        "portOfDischarge": "Busan",
-        "portOfLoading": "Busan"
       },
       "amendment": {
         "menuItem": "Amendment",
@@ -1359,28 +1376,6 @@
         "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
         "pendingStatus": "Pending",
         "approvedStatus": "Approved"
-      },
-      "copyByContract": {
-        "menuItem": "Copy By Contract",
-        "class": "Coffee Farmer Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "fixationBy": "SELLER'S CALL",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse."
       },
       "productDetails": [
         {
@@ -2101,6 +2096,15 @@
           "valueUnit": "INR/Gm"
         }
       ],
+      "commissionDetailsValidation": [
+        {
+          "agentBroker": "Agent (dcsza)",
+          "refNo": "REF-1001",
+          "type1": "Flat Amount",
+          "type2": "Value",
+          "value": "1.5"
+        }
+      ],
       "contractAmendment": {
         "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
         "pendingStatus": "Pending",
@@ -2115,6 +2119,539 @@
         "confirmButton": "Confirm",
         "canceledMessage": "CONTRACT AMENDMENT CANCELED SUCCESSFULLY.",
         "reasonForCancel": "The amendment was created against the wrong counterparty."
+      },
+      "copyByContract": {
+        "menuItem": "Copy By Contract",
+        "class": "Coffee Farmer Purchase Contract",
+        "billingLocation": "demo (DE)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "fixationBy": "SELLER'S CALL",
+        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
+        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
+        "invoiceCurrency": "EUR",
+        "exchangePriceCurrencyUom": "USC/GM",
+        "portOfLoading": "Geneva",
+        "portOfDischarge": "Houston",
+        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
+        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
+        "incoTerms": "DEQ",
+        "weightTerms": "Net Delivered Weights",
+        "arbitration": "Hamburg",
+        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
+      }
+    },
+    {
+      "testCaseId": "TC_CCM_NPE_001",
+      "login": {
+        "url": "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
+        "browser": "edge",
+        "username": "Girishkumar.MR@invensoft.co.in",
+        "password": "Admin#01",
+        "loggedInUser": "Girish"
+      },
+      "general": {
+        "class": "Coffee Farmer Purchase Contract",
+        "pricing": "NPE",
+        "billingLocation": "Default (DND)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "counterparty": "ABC Coffee Supplier (No. 77)",
+        "shipper": "ABC Coffee Supplier (No. 77)",
+        "cpRef1": "SUP-2026-00125",
+        "cpRef2": "PO-ABC-4587",
+        "exchange": "LONDON - ROBUSTA",
+        "exchangePriceCurrencyUom": "USD/MT",
+        "changedExchange": "NEW YORK - ARABICA",
+        "changedExchangePriceCurrencyUom": "USC/LB",
+        "fixationBy": "SELLER'S CALL",
+        "fixationTerms": "Prior to 1st Notice Day",
+        "invoiceCurrency": "EUR",
+        "paymentTerms": "IMMEDIATE",
+        "paymentTermsDescription": "---Advance payment: 100% payment required before order processing or service commencement.",
+        "taxStructure": "GST 18%",
+        "withHoldingTaxStructure": "TAX WHT1"
+      },
+      "deliveryTerms": {
+        "incoTerms": "DWH",
+        "portOfDischarge": "Hamburg",
+        "weightTerms": "Re Weights",
+        "place": "Uganda",
+        "podDescription": "Nhava Sheva Port, Maharashtra, India",
+        "arbitration": "AB",
+        "basisOfSale": "SAS - Repeat",
+        "finalDestination": "Busan",
+        "portOfLoading": "Busan",
+        "termsAndConditions": "The goods must meet the agreed quality.",
+        "polDescription": "Port of Santos, Sao Paulo, Brazil",
+        "countryOfOrigin": "China"
+      },
+      "validatedeliveryTerms": {
+        "portOfDischarge": "Busan",
+        "portOfLoading": "Busan"
+      },
+      "documents": {
+        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
+        "select": [
+          "PREFERENTIAL ENTRY CERTIFICATE",
+          "INSURANCE CERTIFICATE",
+          "WEIGHT AND QUALITY CERTIFICATE",
+          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
+          "FUMIGATION CERTIFICATE",
+          "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE",
+          "PHYTOSANITARY CERTIFICATE",
+          "NON-RADIATION CERTIFICATE",
+          "CERTIFICATE OF ORIGIN"
+        ],
+        "deselect": [
+          "WEIGHT AND QUALITY CERTIFICATE",
+          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
+          "FUMIGATION CERTIFICATE"
+        ]
+      },
+      "remarks": {
+        "remarks": "Delivery should meet the agreed quality specifications.",
+        "instructions": "Price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+      },
+      "contract": {
+        "createdMessage": "CONTRACT CREATED SUCCESSFULLY.",
+        "pendingStatus": "Pending",
+        "pendingMenuItems": "Modify,Copy By Contract,Cancel"
+      },
+      "approval": {
+        "approveButton": "Approve",
+        "approveIcon": "check",
+        "confirmationMessage": "Are you sure that you want to proceed ?",
+        "yesButton": "Yes",
+        "noButton": "No",
+        "approvedMessage": "CONTRACT APPROVED SUCCESSFULLY",
+        "approvedStatus": "Approved",
+        "approvedMenuItems": "Copy By Contract,Amendment"
+      },
+      "modify": {
+        "menuItem": "Modify",
+        "class": "Coffee Vendor Purchase Contract",
+        "billingLocation": "demo (DE)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
+        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
+        "invoiceCurrency": "EUR",
+        "exchangePriceCurrencyUom": "USC/GM",
+        "portOfLoading": "Geneva",
+        "portOfDischarge": "Houston",
+        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
+        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
+        "incoTerms": "DEQ",
+        "weightTerms": "Net Delivered Weights",
+        "arbitration": "Hamburg",
+        "remarks": "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "Modifying price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
+      },
+      "amendment": {
+        "menuItem": "Amendment",
+        "classFieldState": "disabled",
+        "class": "Coffee Vendor Purchase Contract",
+        "pricing": "NPE",
+        "fieldState": "disabled",
+        "Contract No.": "",
+        "Contract Date": "",
+        "Amend No.": "",
+        "billingLocation": "Default (DND)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "counterparty": "India Coffee Farms (No. 12, Kushalnagar)",
+        "shipper": "India Coffee Farms (No. 12, Kushalnagar)",
+        "cpRef1": "SUP-2026-00126",
+        "cpRef2": "PO-ABC-4588",
+        "exchange": "LONDON - ROBUSTA",
+        "exchangePriceCurrencyUom": "USD/MT",
+        "changedExchange": "NEW YORK - ARABICA",
+        "changedExchangePriceCurrencyUom": "USC/LB",
+        "fixationBy": "BUYER'S CALL",
+        "fixationTerms": "All Fixations To Be Limited Earliest 1 Month Prior",
+        "invoiceCurrency": "UGX",
+        "paymentTerms": "Purchase Advance",
+        "paymentTermsDescription": "---Advance payment: 100% payment----",
+        "taxStructure": "GST 18%",
+        "withHoldingTaxStructure": "TAX WHT1",
+        "incoTerms": "DWH",
+        "portOfDischarge": "Hamburg",
+        "weightTerms": "Re Weights",
+        "place": "Uganda",
+        "podDescription": "Nhava Sheva Port, Maharashtra, India",
+        "arbitration": "AB",
+        "basisOfSale": "SAS - Repeat",
+        "finalDestination": "Busan",
+        "portOfLoading": "Busan",
+        "termsAndConditions": "The goods must meet the agreed quality.",
+        "polDescription": "Port of Santos, Sao Paulo, Brazil",
+        "countryOfOrigin": "China",
+        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
+        "select": [
+          "WEIGHT AND QUALITY CERTIFICATE",
+          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
+          "FUMIGATION CERTIFICATE"
+        ],
+        "deselect": [
+          "PREFERENTIAL ENTRY CERTIFICATE",
+          "INSURANCE CERTIFICATE",
+          "WEIGHT AND QUALITY CERTIFICATE"
+        ],
+        "remarks": "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "Amendment price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "pendingStatus": "Pending"
+      },
+      "secondAmendment": {
+        "menuItem": "Amendment",
+        "classFieldState": "disabled",
+        "class": "Coffee Vendor Purchase Contract",
+        "pricing": "NPE",
+        "fieldState": "disabled",
+        "Contract No.": "",
+        "Contract Date": "",
+        "Amend No.": "",
+        "billingLocation": "demo (DE)",
+        "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "pendingStatus": "Pending",
+        "approvedStatus": "Approved"
+      },
+      "productDetails": [
+        {
+          "product": "AC A ",
+          "units": "200",
+          "packing": "50 Kg Jute Bags",
+          "qty": "3434",
+          "uom": "Kg",
+          "noOfLots": "1000",
+          "price": "1220",
+          "targetType": "Arrival",
+          "targetDateRange": "today - today ",
+          "tradeMonth": "Sep-2027",
+          "positionMonth": "Oct-2026",
+          "quality": "quality test",
+          "certificationPremium": "UTZ"
+        }
+      ],
+      "commissionDetails": [
+        {
+          "agentBroker": "Agent (dcsza)",
+          "refNo": "REF-1001",
+          "type": "Value",
+          "value": "2.5",
+          "valueUnit": "EUR/Kg"
+        }
+      ],
+      "commissionDetailsValidation": [
+        {
+          "agentBroker": "Agent (dcsza)",
+          "refNo": "REF-1001",
+          "type1": "Flat Amount",
+          "type2": "Value",
+          "value": "1.5"
+        }
+      ],
+      "contractAmendment": {
+        "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
+        "pendingStatus": "Pending",
+        "approvedStatus": "Approved",
+        "pendingMenuItems": "Copy By Contract,Amendment Cancel",
+        "cancelledMenuItems": "Copy By Contract,Amendment",
+        "amendmentcancelMenuItem": "Amendment Cancel",
+        "reasonconfirmationMessage": "Reason For Cancel.",
+        "cancelconfirmationMessage": "Are you sure that you want to proceed ?",
+        "yesButton": "Yes",
+        "noButton": "No",
+        "confirmButton": "Confirm",
+        "canceledMessage": "CONTRACTS CANCELLED SUCCESSFULLY",
+        "reasonForCancel": "The amendment was created against the wrong counterparty."
+      },
+      "copyByContract": {
+        "menuItem": "Copy By Contract",
+        "class": "Coffee Farmer Purchase Contract",
+        "billingLocation": "demo (DE)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "fixationBy": "SELLER'S CALL",
+        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
+        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
+        "invoiceCurrency": "EUR",
+        "exchangePriceCurrencyUom": "USC/GM",
+        "portOfLoading": "Geneva",
+        "portOfDischarge": "Houston",
+        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
+        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
+        "incoTerms": "DEQ",
+        "weightTerms": "Net Delivered Weights",
+        "arbitration": "Hamburg",
+        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
+      }
+    }, {
+      "testCaseId": "TC_CCM_PTBF_001",
+      "login": {
+        "url": "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
+        "browser": "edge",
+        "username": "Girishkumar.MR@invensoft.co.in",
+        "password": "Admin#01",
+        "loggedInUser": "Girish"
+      },
+      "general": {
+        "class": "Coffee Farmer Purchase Contract",
+        "pricing": "PTBF",
+        "billingLocation": "Default (DND)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "counterparty": "ABC Coffee Supplier (No. 77)",
+        "shipper": "ABC Coffee Supplier (No. 77)",
+        "cpRef1": "SUP-2026-00125",
+        "cpRef2": "PO-ABC-4587",
+        "exchange": "LONDON - ROBUSTA",
+        "exchangePriceCurrencyUom": "USD/MT",
+        "changedExchange": "NEW YORK - ARABICA",
+        "changedExchangePriceCurrencyUom": "USC/LB",
+        "fixationBy": "SELLER'S CALL",
+        "fixationTerms": "Prior to 1st Notice Day",
+        "invoiceCurrency": "EUR",
+        "paymentTerms": "IMMEDIATE",
+        "paymentTermsDescription": "---Advance payment: 100% payment required before order processing or service commencement.",
+        "taxStructure": "GST 18%",
+        "withHoldingTaxStructure": "TAX WHT1"
+      },
+      "deliveryTerms": {
+        "incoTerms": "DWH",
+        "portOfDischarge": "Hamburg",
+        "weightTerms": "Re Weights",
+        "place": "Uganda",
+        "podDescription": "Nhava Sheva Port, Maharashtra, India",
+        "arbitration": "AB",
+        "basisOfSale": "SAS - Repeat",
+        "finalDestination": "Busan",
+        "portOfLoading": "Busan",
+        "termsAndConditions": "The goods must meet the agreed quality.",
+        "polDescription": "Port of Santos, Sao Paulo, Brazil",
+        "countryOfOrigin": "China"
+      },
+      "validatedeliveryTerms": {
+        "portOfDischarge": "Busan",
+        "portOfLoading": "Busan"
+      },
+      "documents": {
+        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
+        "select": [
+          "PREFERENTIAL ENTRY CERTIFICATE",
+          "INSURANCE CERTIFICATE",
+          "WEIGHT AND QUALITY CERTIFICATE",
+          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
+          "FUMIGATION CERTIFICATE",
+          "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE",
+          "PHYTOSANITARY CERTIFICATE",
+          "NON-RADIATION CERTIFICATE",
+          "CERTIFICATE OF ORIGIN"
+        ],
+        "deselect": [
+          "WEIGHT AND QUALITY CERTIFICATE",
+          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
+          "FUMIGATION CERTIFICATE"
+        ]
+      },
+      "remarks": {
+        "remarks": "Delivery should meet the agreed quality specifications.",
+        "instructions": "Price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+      },
+      "contract": {
+        "createdMessage": "CONTRACT CREATED SUCCESSFULLY.",
+        "pendingStatus": "Pending",
+        "pendingMenuItems": "Modify,Copy By Contract,Cancel"
+      },
+      "approval": {
+        "approveButton": "Approve",
+        "approveIcon": "check",
+        "confirmationMessage": "Are you sure that you want to proceed ?",
+        "yesButton": "Yes",
+        "noButton": "No",
+        "approvedMessage": "CONTRACT APPROVED SUCCESSFULLY",
+        "approvedStatus": "Approved",
+        "approvedMenuItems": "Copy By Contract,Amendment"
+      },
+      "modify": {
+        "menuItem": "Modify",
+        "class": "Coffee Vendor Purchase Contract",
+        "billingLocation": "demo (DE)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
+        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
+        "invoiceCurrency": "EUR",
+        "exchangePriceCurrencyUom": "USC/GM",
+        "portOfLoading": "Geneva",
+        "portOfDischarge": "Houston",
+        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
+        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
+        "incoTerms": "DEQ",
+        "weightTerms": "Net Delivered Weights",
+        "arbitration": "Hamburg",
+        "remarks": "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "Modifying price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
+      },
+      "amendment": {
+        "menuItem": "Amendment",
+        "classFieldState": "disabled",
+        "class": "Coffee Vendor Purchase Contract",
+        "pricing": "PTBF",
+        "fieldState": "disabled",
+        "Contract No.": "",
+        "Contract Date": "",
+        "Amend No.": "",
+        "billingLocation": "Default (DND)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "counterparty": "India Coffee Farms (No. 12, Kushalnagar)",
+        "shipper": "India Coffee Farms (No. 12, Kushalnagar)",
+        "cpRef1": "SUP-2026-00126",
+        "cpRef2": "PO-ABC-4588",
+        "exchange": "LONDON - ROBUSTA",
+        "exchangePriceCurrencyUom": "USD/MT",
+        "changedExchange": "NEW YORK - ARABICA",
+        "changedExchangePriceCurrencyUom": "USC/LB",
+        "fixationBy": "BUYER'S CALL",
+        "fixationTerms": "All Fixations To Be Limited Earliest 1 Month Prior",
+        "invoiceCurrency": "UGX",
+        "paymentTerms": "Purchase Advance",
+        "paymentTermsDescription": "---Advance payment: 100% payment----",
+        "taxStructure": "GST 18%",
+        "withHoldingTaxStructure": "TAX WHT1",
+        "incoTerms": "DWH",
+        "portOfDischarge": "Hamburg",
+        "weightTerms": "Re Weights",
+        "place": "Uganda",
+        "podDescription": "Nhava Sheva Port, Maharashtra, India",
+        "arbitration": "AB",
+        "basisOfSale": "SAS - Repeat",
+        "finalDestination": "Busan",
+        "portOfLoading": "Busan",
+        "termsAndConditions": "The goods must meet the agreed quality.",
+        "polDescription": "Port of Santos, Sao Paulo, Brazil",
+        "countryOfOrigin": "China",
+        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
+        "select": [
+          "WEIGHT AND QUALITY CERTIFICATE",
+          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
+          "FUMIGATION CERTIFICATE"
+        ],
+        "deselect": [
+          "PREFERENTIAL ENTRY CERTIFICATE",
+          "INSURANCE CERTIFICATE",
+          "WEIGHT AND QUALITY CERTIFICATE"
+        ],
+        "remarks": "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "Amendment price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "pendingStatus": "Pending"
+      },
+      "secondAmendment": {
+        "menuItem": "Amendment",
+        "classFieldState": "disabled",
+        "class": "Coffee Vendor Purchase Contract",
+        "pricing": "PTBF",
+        "fieldState": "disabled",
+        "Contract No.": "",
+        "Contract Date": "",
+        "Amend No.": "",
+        "billingLocation": "demo (DE)",
+        "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "pendingStatus": "Pending",
+        "approvedStatus": "Approved"
+      },
+      "productDetails": [
+        {
+          "product": "AC A ",
+          "units": "200",
+          "packing": "50 Kg Jute Bags",
+          "qty": "3434",
+          "uom": "Kg",
+          "noOfLots": "1000",
+          "differential": "1000",
+          "price": "1220",
+          "targetType": "Arrival",
+          "targetDateRange": "today - today ",
+          "tradeMonth": "Sep-2027",
+          "positionMonth": "Oct-2026",
+          "quality": "quality test",
+          "certificationPremium": "UTZ"
+        }
+      ],
+      "commissionDetails": [
+        {
+          "agentBroker": "Agent (dcsza)",
+          "refNo": "REF-1001",
+          "type": "Value",
+          "value": "2.5",
+          "valueUnit": "EUR/Kg"
+        }
+      ],
+      "commissionDetailsValidation": [
+        {
+          "agentBroker": "Agent (dcsza)",
+          "refNo": "REF-1001",
+          "type1": "Flat Amount",
+          "type2": "Value",
+          "value": "1.5"
+        }
+      ],
+      "contractAmendment": {
+        "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
+        "pendingStatus": "Pending",
+        "approvedStatus": "Approved",
+        "pendingMenuItems": "Copy By Contract,Amendment Cancel",
+        "cancelledMenuItems": "Copy By Contract,Amendment",
+        "amendmentcancelMenuItem": "Amendment Cancel",
+        "reasonconfirmationMessage": "Reason For Cancel.",
+        "cancelconfirmationMessage": "Are you sure that you want to proceed ?",
+        "yesButton": "Yes",
+        "noButton": "No",
+        "confirmButton": "Confirm",
+        "canceledMessage": "CONTRACTS CANCELLED SUCCESSFULLY",
+        "reasonForCancel": "The amendment was created against the wrong counterparty."
+      },
+      "copyByContract": {
+        "menuItem": "Copy By Contract",
+        "class": "Coffee Farmer Purchase Contract",
+        "billingLocation": "demo (DE)",
+        "shippingLocation": "Default (DND)",
+        "season": "Season 2026 - 2027",
+        "fixationBy": "SELLER'S CALL",
+        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
+        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
+        "invoiceCurrency": "EUR",
+        "exchangePriceCurrencyUom": "USC/GM",
+        "portOfLoading": "Geneva",
+        "portOfDischarge": "Houston",
+        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
+        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
+        "incoTerms": "DEQ",
+        "weightTerms": "Net Delivered Weights",
+        "arbitration": "Hamburg",
+        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
+        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
       }
     }
   ]

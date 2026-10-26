@@ -1,12 +1,10 @@
 package steps;
 
+import invensoft.testdata.*;
 import io.cucumber.java.PendingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import base.DriverFactory;
-import invensoft.testdata.CommissionDetailRow;
-import invensoft.testdata.ContractTestData;
-import invensoft.testdata.ProductDetailRow;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -52,21 +50,56 @@ public class StepsContainer {
     private WebDriverCommonLibrary webDriverCommonLibrary;
     private ConfigReader configReader;
     private ContractTestData currentTestData;
+    private NPEContractTestData npecurrentTestData;
 
     @Given("test data {string} is loaded")
     public void testDataIsLoaded(String testCaseId) throws IOException {
         currentTestData = TestDataReader.getByTestCaseId(testCaseId);
         log.info("Loaded test data: " + testCaseId);
     }
+
+    @Given("NPE test data {string} is loaded")
+    public void npeTestDataIsLoaded(String testCaseId) throws IOException {
+        npecurrentTestData = TestDataReader.getNpeByTestCaseId(testCaseId);
+        log.info("Loaded NPE test data: " + testCaseId);
+    }
+
+    // Shared steps (resolve, open browser, checkbox lists) work for both normal and NPE scenarios.
+    private boolean hasTestData() {
+        return currentTestData != null || npecurrentTestData != null;
+    }
+
+    private String dataValue(String path) {
+        return (npecurrentTestData != null)
+                ? npecurrentTestData.getValue(path)
+                : currentTestData.getValue(path);
+    }
+
+    // Commission rows for the loaded scenario: NPE data when this test case was loaded with the NPE step,
+    // otherwise the normal test data looked up by id.
+    private List<CommissionDetailRow> commissionRowsFor(String testCaseId) throws IOException {
+        if (npecurrentTestData != null && testCaseId != null
+                && testCaseId.equals(npecurrentTestData.getTestCaseId())) {
+            return npecurrentTestData.getCommissionDetails();
+        }
+        return TestDataReader.getByTestCaseId(testCaseId).getCommissionDetails();
+    }
+
+    private List<String> dataList(String path) {
+        return (npecurrentTestData != null)
+                ? npecurrentTestData.getList(path)
+                : currentTestData.getList(path);
+    }
+
     private String resolve(String raw) {
         if (raw == null || !raw.startsWith("@")) {
             return raw;
         }
-        if (currentTestData == null) {
+        if (!hasTestData()) {
             throw new IllegalStateException("'" + raw + "' needs test data, but no test data is loaded. "
-                    + "Add: Given test data \"<TestCaseId>\" is loaded");
+                    + "Add: Given test data \"<TestCaseId>\" is loaded (or: Given NPE test data \"<TestCaseId>\" is loaded)");
         }
-        return currentTestData.getValue(raw.substring(1));
+        return dataValue(raw.substring(1));
     }
     private String resolveLogin(String arg) {
         return (arg != null && arg.startsWith("@")) ? resolve(arg) : ConfigReader.getProperty(arg);
@@ -75,11 +108,11 @@ public class StepsContainer {
     @Given("open browser")
     public void openBrowser() {
         // Browser, like the url, comes from the test data ("login.browser") when a test case is loaded.
-        String browser = (currentTestData != null) ? currentTestData.getValue("login.browser") : ConfigReader.getProperty("browser");
+        String browser = hasTestData() ? dataValue("login.browser") : ConfigReader.getProperty("browser");
         driver = DriverFactory.initializeDriver(browser);
         // Login url comes from the test data when a test case is loaded ("login.url");
         // features that load no test data keep using values.properties.
-        String url = (currentTestData != null) ? currentTestData.getValue("login.url") : ConfigReader.getProperty("url");
+        String url = hasTestData() ? dataValue("login.url") : ConfigReader.getProperty("url");
         webDriverCommonLibrary = new WebDriverCommonLibrary(driver);
         log.info("================================");
         log.info("Launching application");
@@ -465,7 +498,7 @@ public class StepsContainer {
         PageObjectManager.getCreateCommodityContractPage().setTargetDateRange(xpathRowIndex, startDate, endDate);
     }
 
-      @Given("user fills multiple product details for test case {string}")
+    @Given("user fills multiple product details for test case {string}")
     public void userFillsMultipleProductDetailsForTestCase(String testCaseId) throws IOException {
         webDriverCommonLibrary.waitForSetTime(SETTLE_PAUSE_MS);
         try {
@@ -481,13 +514,6 @@ public class StepsContainer {
 
             final String section = "Product Details";
 
-            log.info("========================================");
-            log.info("MULTIPLE PRODUCT DETAILS");
-            log.info("Test Case = " + testCaseId);
-            log.info("JSON Rows = " + rows.size());
-            log.info("========================================");
-
-            // Counts only rows actually created in the UI, so skipped (blank) JSON rows never shift the UI row index.
             int uiRowIndex = -1;
 
             for (int i = 0; i < rows.size(); i++) {
@@ -495,13 +521,6 @@ public class StepsContainer {
                 ProductDetailRow row = rows.get(i);
                 // Here using 0-based index as per java -GK
                 int rowIndex = i;
-
-                log.info("========================================");
-                log.info("PROCESSING PRODUCT ROW");
-                log.info("JSON Row Index = " + rowIndex);
-                log.info("UI Row Number  = " + (rowIndex + 1));
-                log.info("Product        = [" + row.getProduct() + "]");
-                log.info("========================================");
 
                 if (isBlank(row.getProduct())) {
                     log.warn("Skipping row " + rowIndex + " because Product is blank.");
@@ -512,12 +531,9 @@ public class StepsContainer {
                 rowIndex = ++uiRowIndex;
                 /* First JSON row already exist  * Row 0 -> existing UI row   * Row 1 -> click +  * Row 2 -> click + * etc.    */
                 if (rowIndex > 0) {
-                    log.info("Adding UI row for JSON row " + rowIndex);
                     int rowsBefore = page.getProductDetailRows().size();
-                    log.info("Rows before Add = " + rowsBefore);
                     page.addProductDetailRow(section);
                     int rowsAfter = page.getProductDetailRows().size();
-                    log.info("Rows after Add = " + rowsAfter);
                     if (rowsAfter <= rowsBefore) {
                         throw new IllegalStateException("Product Details row was not added. " + "Expected rows > " + rowsBefore + " but found " + rowsAfter);
                     }
@@ -529,6 +545,151 @@ public class StepsContainer {
                 page.userEnterInTheMultipleNumberFieldInTheTable("Qty.", section, rowIndex, row.getQty());
                 page.userEnterInTheMultipleNumberFieldInTheTable("No Of Lots.", section, rowIndex, row.getNoOfLots());
                 page.userEnterInTheMultipleNumberFieldInTheTable("Price", section, rowIndex, row.getPrice());
+
+                if (isNotBlank(row.getTargetType())) {
+                    page.selectMultipleProductDetailValue(section, "Target Type", rowIndex, row.getTargetType());
+                }
+
+//                if (isNotBlank(row.getTradeMonth())) {
+//                    page.selectMultipleDropdownValue(section, "Trade Month", rowIndex, row.getTradeMonth());
+//                }
+
+                if (isNotBlank(row.getTargetDateRange())) {
+                    fillTargetDateRangeFromJson(row.getTargetDateRange(), rowIndex);}
+                log.info("COMPLETED PRODUCT ROW = " + rowIndex);
+
+                if (isNotBlank(row.getQuality())) {
+                    page.enterMultipleFieldValue("Quality", section, rowIndex, row.getQuality());
+                }
+
+//                page.selectPositionMonthValueInTheTable("Position Month", section, rowIndex, row.getPositionMonth());
+//                page.userEnterInTheMultipleQualityTextFieldInTheTable("Quality", section, rowIndex, row.getQuality());
+
+//                  page.createCertificationPremium(section, "Certification & Premium", rowIndex, row.getCertificationPremium());
+
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+
+    @Given("user fills multiple NPE product details for test case {string}")
+    public void userFillsMultipleNPEProductDetailsForTestCase(String testCaseId) throws IOException {
+        webDriverCommonLibrary.waitForSetTime(SETTLE_PAUSE_MS);
+        try {
+            ContractTestData data = TestDataReader.getByTestCaseId(testCaseId);
+            List<ProductDetailRow> rows = data.getProductDetails();
+
+            if (rows == null || rows.isEmpty()) {
+                log.info("No productDetails in test data for '" + testCaseId + "' - skipping Product Details step.");
+                return;
+            }
+
+            CommodityContractManagementPage page = getCommodityContractManagementPage();
+
+            final String section = "Product Details";
+
+            int uiRowIndex = -1;
+
+            for (int i = 0; i < rows.size(); i++) {
+
+                ProductDetailRow row = rows.get(i);
+                // Here using 0-based index as per java -GK
+                int rowIndex = i;
+
+                if (isBlank(row.getProduct())) {
+                    log.warn("Skipping row " + rowIndex + " because Product is blank.");
+                    continue;
+                }
+
+                // From here on rowIndex means the UI row (0-based), not the JSON position.
+                rowIndex = ++uiRowIndex;
+                /* First JSON row already exist  * Row 0 -> existing UI row   * Row 1 -> click +  * Row 2 -> click + * etc.    */
+                if (rowIndex > 0) {
+                    int rowsBefore = page.getProductDetailRows().size();
+                    page.addProductDetailRow(section);
+                    int rowsAfter = page.getProductDetailRows().size();
+                    if (rowsAfter <= rowsBefore) {
+                        throw new IllegalStateException("Product Details row was not added. " + "Expected rows > " + rowsBefore + " but found " + rowsAfter);
+                    }
+                    webDriverCommonLibrary.waitForSetTime(ROW_SETTLE_PAUSE_MS);
+                }
+                page.selectMultipleDropdownValue(section, "Product", rowIndex, row.getProduct());
+                page.userEnterInTheMultipleNumberFieldInTheTable("Units", section, rowIndex, row.getUnits());
+                page.selectMultipleTableType2DropdownValues(section, "Packing", rowIndex, row.getPacking());
+                page.userEnterInTheMultipleNumberFieldInTheTable("Qty.", section, rowIndex, row.getQty());
+                page.userEnterInTheMultipleNumberFieldInTheTable("No Of Lots.", section, rowIndex, row.getNoOfLots());
+//                page.userEnterInTheMultipleNumberFieldInTheTable("Price / Differential", section, rowIndex, row.getPrice());
+
+                if (isNotBlank(row.getTargetType())) {
+                    page.selectMultipleProductDetailValue(section, "Target Type", rowIndex, row.getTargetType());
+                }
+
+//                if (isNotBlank(row.getTradeMonth())) {
+//                    page.selectMultipleDropdownValue(section, "Trade Month", rowIndex, row.getTradeMonth());
+//                }
+
+                if (isNotBlank(row.getTargetDateRange())) {
+                    fillTargetDateRangeFromJson(row.getTargetDateRange(), rowIndex);}
+                log.info("COMPLETED PRODUCT ROW = " + rowIndex);
+
+                if (isNotBlank(row.getQuality())) {
+                    page.enterMultipleFieldValue("Quality", section, rowIndex, row.getQuality());
+                }
+
+//                page.selectPositionMonthValueInTheTable("Position Month", section, rowIndex, row.getPositionMonth());
+//                page.userEnterInTheMultipleQualityTextFieldInTheTable("Quality", section, rowIndex, row.getQuality());
+
+//                  page.createCertificationPremium(section, "Certification & Premium", rowIndex, row.getCertificationPremium());
+
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Given("user fills multiple PTBF product details for test case {string}")
+    public void userFillsMultiplePTBFProductDetailsForTestCase(String testCaseId) throws IOException {
+        webDriverCommonLibrary.waitForSetTime(SETTLE_PAUSE_MS);
+        try {
+            ContractTestData data = TestDataReader.getByTestCaseId(testCaseId);
+            List<ProductDetailRow> rows = data.getProductDetails();
+
+            if (rows == null || rows.isEmpty()) {
+                log.info("No productDetails in test data for '" + testCaseId + "' - skipping Product Details step.");
+                return;
+            }
+            CommodityContractManagementPage page = getCommodityContractManagementPage();
+            final String section = "Product Details";
+            int uiRowIndex = -1;
+            for (int i = 0; i < rows.size(); i++) {
+                ProductDetailRow row = rows.get(i);
+                // Here using 0-based index as per java -GK
+                int rowIndex = i;
+                if (isBlank(row.getProduct())) {
+                    log.warn("Skipping row " + rowIndex + " because Product is blank.");
+                    continue;
+                }
+
+                // From here on rowIndex means the UI row (0-based), not the JSON position.
+                rowIndex = ++uiRowIndex;
+                /* First JSON row already exist  * Row 0 -> existing UI row   * Row 1 -> click +  * Row 2 -> click + * etc.    */
+                if (rowIndex > 0) {
+                    int rowsBefore = page.getProductDetailRows().size();
+                    page.addProductDetailRow(section);
+                    int rowsAfter = page.getProductDetailRows().size();
+                    if (rowsAfter <= rowsBefore) {
+                        throw new IllegalStateException("Product Details row was not added. " + "Expected rows > " + rowsBefore + " but found " + rowsAfter);
+                    }
+                    webDriverCommonLibrary.waitForSetTime(ROW_SETTLE_PAUSE_MS);
+                }
+                page.selectMultipleDropdownValue(section, "Product", rowIndex, row.getProduct());
+                page.userEnterInTheMultipleNumberFieldInTheTable("Units", section, rowIndex, row.getUnits());
+                page.selectMultipleTableType2DropdownValues(section, "Packing", rowIndex, row.getPacking());
+                page.userEnterInTheMultipleNumberFieldInTheTable("Qty.", section, rowIndex, row.getQty());
+                page.userEnterInTheMultipleNumberFieldInTheTable("No Of Lots.", section, rowIndex, row.getNoOfLots());
+                page.userEnterInTheMultipleNumberFieldInTheTable("Differential", section, rowIndex, row.getPrice());
 
                 if (isNotBlank(row.getTargetType())) {
                     page.selectMultipleProductDetailValue(section, "Target Type", rowIndex, row.getTargetType());
@@ -552,13 +713,7 @@ public class StepsContainer {
 //                  page.createCertificationPremium(section, "Certification & Premium", rowIndex, row.getCertificationPremium());
 
             }
-            log.info("========================================");
-            log.info("ALL PRODUCT DETAILS COMPLETED");
-            log.info("Total JSON Rows = " + rows.size());
-            log.info("========================================");
-
         } catch (Exception e) {
-            log.error("ERROR while filling multiple Product Details", e);
             throw e;
         }
     }
@@ -731,8 +886,7 @@ public class StepsContainer {
     public void userFillsMultipleCommissionDetailsForTestCase(String testCaseId) throws IOException {
         webDriverCommonLibrary.waitForSetTime(SETTLE_PAUSE_MS);
         try {
-            ContractTestData data = TestDataReader.getByTestCaseId(testCaseId);
-            List<CommissionDetailRow> rows = data.getCommissionDetails();
+            List<CommissionDetailRow> rows = commissionRowsFor(testCaseId);
 
             if (rows == null || rows.isEmpty()) {
                 log.info("No commissionDetails in test data for '" + testCaseId + "' - skipping Commission Details step.");
@@ -824,7 +978,7 @@ public class StepsContainer {
     @When("the user selects the checkboxes listed in test data {string} under {string}")
     public void theUserSelectsTheCheckboxesListedInTestDataUnder(String path, String group) {
         requireTestData(path);
-        for (String label : currentTestData.getList(path)) {
+        for (String label : dataList(path)) {
             theUserSelectsTheCheckboxUnder(label, group);
         }
     }
@@ -832,15 +986,15 @@ public class StepsContainer {
     @When("the user deselects the checkboxes listed in test data {string} under {string}")
     public void theUserDeselectsTheCheckboxesListedInTestDataUnder(String path, String group) {
         requireTestData(path);
-        for (String label : currentTestData.getList(path)) {
+        for (String label : dataList(path)) {
             theUserDeselectsTheCheckboxUnder(label, group);
         }
     }
 
     private void requireTestData(String path) {
-        if (currentTestData == null) {
+        if (!hasTestData()) {
             throw new IllegalStateException("'" + path + "' needs test data, but no test data is loaded. "
-                    + "Add: Given test data \"<TestCaseId>\" is loaded");
+                    + "Add: Given test data \"<TestCaseId>\" is loaded (or: Given NPE test data \"<TestCaseId>\" is loaded)");
         }
     }
 
@@ -874,23 +1028,23 @@ public class StepsContainer {
     @Then("verify the mandatory validation indicator is displayed for fields {string}")
     public void verifyTheMandatoryValidationIndicatorIsDisplayedForFields(String fields) {
 
-            String[] fieldNames = fields.split(",");
+        String[] fieldNames = fields.split(",");
 
-            for (String field : fieldNames) {
+        for (String field : fieldNames) {
 
-                String fieldName = field.trim();
+            String fieldName = field.trim();
 
-                By mandatoryLocator = By.xpath( "//span[contains(@class,'mandatory')]/preceding-sibling::span[normalize-space()='"+fieldName+"']");
+            By mandatoryLocator = By.xpath( "//span[contains(@class,'mandatory')]/preceding-sibling::span[normalize-space()='"+fieldName+"']");
 
-                webDriverCommonLibrary.highLightTheElement(driver, driver.findElement(mandatoryLocator));
+            webDriverCommonLibrary.highLightTheElement(driver, driver.findElement(mandatoryLocator));
 
-                Assert.assertTrue(webDriverCommonLibrary.isElementDisplayed(mandatoryLocator), "Mandatory validation is not displayed for field: " + fieldName);
-            }
+            Assert.assertTrue(webDriverCommonLibrary.isElementDisplayed(mandatoryLocator), "Mandatory validation is not displayed for field: " + fieldName);
+        }
     }
 
     @Then("apply a static wait for the web element for testing purposes only.")
     public void applyAStaticWaitForTheWebElementForTestingPurposesOnly() {
-      webDriverCommonLibrary.waitForSetTime(4000);
+        webDriverCommonLibrary.waitForSetTime(3000);
     }
 
     @When("user selects {string} from the {string} modified dropdown in the {string} section")
@@ -903,20 +1057,20 @@ public class StepsContainer {
 
     @Then("verify that the {string} field is {string}.")
     public void verifyThatTheFieldIs(String arg0, String arg1) {
-          WebElement element = driver.findElement(By.xpath("//span[normalize-space()='"+arg0+"']/ancestor::div[1]//input['"+arg1+"']"));
-          webDriverCommonLibrary.highLightTheElement(driver,element);
+        WebElement element = driver.findElement(By.xpath("//span[normalize-space()='"+arg0+"']/ancestor::div[1]//input['"+arg1+"']"));
+        webDriverCommonLibrary.highLightTheElement(driver,element);
     }
 
 
     @Then("verify that the {string} field in {string} section with value {string} is {string} and displays {string}")
     public void verifyFieldStateAndValue(String fieldName, String section, String ariaLabel, String expectedState, String expectedValue) {
 
-            expectedState = resolve(expectedState);
-            section = resolve(section);
-            ariaLabel = resolve(ariaLabel);
-            expectedValue = resolve(expectedValue);
+        expectedState = resolve(expectedState);
+        section = resolve(section);
+        ariaLabel = resolve(ariaLabel);
+        expectedValue = resolve(expectedValue);
 
-            getCommodityContractManagementPage().verifyField(section, fieldName, ariaLabel, expectedState, expectedValue);
+        getCommodityContractManagementPage().verifyField(section, fieldName, ariaLabel, expectedState, expectedValue);
     }
 
     @When("user navigates to the required page")
@@ -936,16 +1090,16 @@ public class StepsContainer {
 
     @And("close Popup Using X Button")
     public void closePopupUsingXButton() {
-            By closeButton = By.xpath("//div[contains(@class,'p-dialog')]"
-                    + "//button[contains(@class,'p-dialog-header-close') or @aria-label='Close']");
-            WebElement close = new WebDriverWait(driver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.elementToBeClickable(closeButton));
-            webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, close);
+        By closeButton = By.xpath("//div[contains(@class,'p-dialog')]"
+                + "//button[contains(@class,'p-dialog-header-close') or @aria-label='Close']");
+        WebElement close = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(closeButton));
+        webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, close);
 
-            // Confirm the popup is actually gone, returns instantly if it already is
-            new WebDriverWait(driver, Duration.ofSeconds(5)).until(
-                    ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@class,'p-dialog-mask')]")));
-        }
+        // Confirm the popup is actually gone, returns instantly if it already is
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(
+                ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@class,'p-dialog-mask')]")));
+    }
 
     @And("close pop up using X button")
     public void closePopUpUsingXButton() {
@@ -985,25 +1139,157 @@ public class StepsContainer {
     }
 
     @When("user selects {string} verify {string} value is displayed")
-    public void userSelectsAndVerifiesValueIsDisplayed(
-            String commissionTypeKey,
-            String expectedUnitKey) throws IOException {
-
+    public void userSelectsAndVerifiesValueIsDisplayed(String commissionTypeKey, String expectedUnitKey) throws IOException {
         CommodityContractManagementPage page = getCommodityContractManagementPage();
-
+        String agentBroker = resolve("@commissionDetailsValidation.agentBroker");
         String commissionType = resolve(commissionTypeKey);
         String expectedUnit = resolve(expectedUnitKey);
 
-        page.selectMultipleCommissionDropdownValue(
-                "Commission Details",
-                "Type",
-                0,
-                commissionType);
+        page.selectMultipleCommissionDropdownValueValidation("Commission Details", "Commission Agent / Broker", 0, agentBroker);
+        page.selectMultipleCommissionDropdownValueValidation("Commission Details", "Type", 0, commissionType);
 
-        page.verifyMultipleCommissionValueUnit(
-                "Commission Details",
-                0,
-                expectedUnit);
+        if (!"Flat Amount".equalsIgnoreCase(commissionType)
+                && !"Value".equalsIgnoreCase(commissionType)) {
+            throw new IllegalArgumentException("No currency expectation is defined for commission type: " + commissionType);
+        }
+        page.verifyMultipleCommissionValueUnitValidation("Commission Details", "Value", 0, expectedUnit);
+    }
 
+    @Given("user fills {string} multiple product details for test case {string}")
+    public void userFillsMultipleProductDetailsForTestCase(String arg0, String testCaseId) throws IOException {
+        webDriverCommonLibrary.waitForSetTime(SETTLE_PAUSE_MS);
+
+        NPEContractTestData data = TestDataReader.getNpeByTestCaseId(testCaseId);
+        List<NPEProductDetailRow> rows = data.getNPEProductDetails();
+
+        if (rows == null || rows.isEmpty()) {
+            return;
+        }
+        CommodityContractManagementPage page = getCommodityContractManagementPage();
+        final String section = "Product Details";
+        int uiRowIndex = -1;
+
+        for (int i = 0; i < rows.size(); i++) {
+            NPEProductDetailRow row = rows.get(i);
+
+            if (isBlank(row.getProduct())) {
+                continue;
+            }
+            int rowIndex = ++uiRowIndex;
+            if (rowIndex > 0) {
+                int rowsBefore = page.getProductDetailRows().size();
+                page.addProductDetailRow(section);
+                int rowsAfter = page.getProductDetailRows().size();
+                if (rowsAfter <= rowsBefore) {
+                    throw new IllegalStateException("Product Details row was not added. "
+                            + "Expected rows > " + rowsBefore + " but found " + rowsAfter);
+                }
+                webDriverCommonLibrary.waitForSetTime(ROW_SETTLE_PAUSE_MS);
+            }
+
+            page.selectMultipleDropdownValue(section, "Product", rowIndex, row.getProduct());
+            if (isNotBlank(row.getUnits())) {
+                page.userEnterInTheMultipleNumberFieldInTheTable("Units", section, rowIndex, row.getUnits());
+            }
+            if (isNotBlank(row.getPacking())) {
+                page.selectMultipleTableType2DropdownValues(section, "Packing", rowIndex, row.getPacking());
+            }
+            if (isNotBlank(row.getQty())) {
+                page.userEnterInTheMultipleNumberFieldInTheTable("Qty.", section, rowIndex, row.getQty());
+            }
+            if (isNotBlank(row.getNoOfLots())) {
+                page.userEnterInTheMultipleNumberFieldInTheTable("No Of Lots.", section, rowIndex, row.getNoOfLots());
+            }
+
+            if (isNotBlank(row.getTargetDateRange())) {
+                fillTargetDateRangeFromJson(row.getTargetDateRange(), rowIndex);
+            }
+            if (isNotBlank(row.getQuality())) {
+                page.enterMultipleFieldValue("Quality", section, rowIndex, row.getQuality());
+            }
+        }
+    }
+    @Then("Verify step number {string} section {string} displays the mandatory red badge")
+    public void verifyMandatoryRedBadge(String stepNo, String sectionName) {
+        By expander = By.cssSelector("nav.section-nav button.nav-toggle");
+        WebElement toggle = driver.findElement(expander);
+        if ("false".equals(toggle.getAttribute("aria-expanded"))) {
+            toggle.click();
+        }
+
+        By badge = By.xpath("//span[contains(@class,'nav-label') and normalize-space()='" + sectionName + "']"
+                + "/parent::*[.//span[contains(@class,'step-no') and normalize-space()='" + stepNo + "']]"
+                + "//span[contains(@class,'step-badge')]");
+
+        WebElement el = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(badge));
+
+        String bg = el.getCssValue("background-color");
+        String fg = el.getCssValue("color");
+        System.out.println("badge bg=" + bg + ", text color=" + fg + ", text=" + el.getText());
+
+        Assert.assertTrue(isRedHue(bg) || isRedHue(fg),
+                "Badge is not red for step " + stepNo + ". bg=" + bg + ", color=" + fg);
+        webDriverCommonLibrary.highLightTheElementRed(driver,el);
+    }
+
+    // Accepts any red-dominant shade, including light tints like rgb(254,226,226)
+    private boolean isRedHue(String rgba) {
+        String[] p = rgba.replaceAll("[^0-9,]", "").split(",");
+        int r = Integer.parseInt(p[0].trim());
+        int g = Integer.parseInt(p[1].trim());
+        int b = Integer.parseInt(p[2].trim());
+        return r >= 150 && r - g >= 20 && r - b >= 20;
+    }
+    private boolean isRed(String rgba) {
+        String[] p = rgba.replaceAll("[^0-9,]", "").split(",");
+        int r = Integer.parseInt(p[0]), g = Integer.parseInt(p[1]), b = Integer.parseInt(p[2]);
+        return r > 150 && g < 100 && b < 100;
+    }
+    @Then("Verify step number {string} section {string} displays the green completed icon")
+    public void verifyStepNumberSectionDisplaysTheGreenCompletedIcon(String stepNo, String sectionName) {
+        By navItem = By.xpath("//button[contains(@class,'nav-item')]"
+                + "[.//span[contains(@class,'step-no') and normalize-space()='" + stepNo + "']]"
+                + "[.//span[contains(@class,'nav-label') and normalize-space()='" + sectionName + "']]");
+
+        Duration originalImplicit = driver.manage().timeouts().getImplicitWaitTimeout();
+        driver.manage().timeouts().implicitlyWait(Duration.ZERO);
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+            WebElement item = wait.until(ExpectedConditions.visibilityOfElementLocated(navItem));
+
+            WebElement icon = wait.until(ExpectedConditions.visibilityOfNestedElementsLocatedBy(
+                    item, By.cssSelector("i.step-ok"))).get(0);
+
+            // With implicit wait at zero, these absence checks return instantly
+            Assert.assertTrue(item.findElements(By.cssSelector("span.step-badge")).isEmpty(),
+                    "Error badge still present for step " + stepNo + " - " + sectionName);
+            Assert.assertFalse(item.getAttribute("class").contains("has-error"),
+                    "Step " + stepNo + " still has error state");
+
+            String fg = icon.getCssValue("color");
+            Assert.assertTrue(isGreenHue(fg), "Icon is not green for step " + stepNo + ". color=" + fg);
+
+            // Instant highlight: one JS call, no sleep, no revert
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].style.outline='2px solid green';" +
+                            "arguments[0].style.backgroundColor='rgba(0,200,0,0.15)';", item);
+        } finally {
+            driver.manage().timeouts().implicitlyWait(originalImplicit);
+        }
+    }
+
+    private boolean isGreenHue(String rgba) {
+        String[] p = rgba.replaceAll("[^0-9,]", "").split(",");
+        int r = Integer.parseInt(p[0].trim());
+        int g = Integer.parseInt(p[1].trim());
+        int b = Integer.parseInt(p[2].trim());
+        return g >= 100 && g - r >= 20 && g - b >= 20;
+    }
+
+    @Then("verify that the {string} field is displayed as {string} and disabled")
+    public void verifyThatTheFieldIsDisplayedAsAndDisabled(String arg0, String arg1) {
+        arg1 = resolve(arg1);
+        getCommodityContractManagementPage().highlightSpanByAriaLabel(arg1);
     }
 }
