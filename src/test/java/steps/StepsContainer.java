@@ -1,5 +1,6 @@
 package steps;
 
+import hooks.Hooks;
 import invensoft.testdata.*;
 import io.cucumber.java.PendingException;
 import org.apache.logging.log4j.LogManager;
@@ -19,10 +20,8 @@ import org.testng.Assert;
 import pages.CommodityContractManagementPage;
 import pages.LoginPage;
 import pages.PageObjectManager;
-import utils.ConfigReader;
-import utils.DateExpressionResolver;
-import utils.TestDataReader;
-import utils.WebDriverCommonLibrary;
+import utils.*;
+import java.io.IOException;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -43,6 +42,7 @@ public class StepsContainer {
 
     private static final Logger log = LogManager.getLogger(StepsContainer.class);
 
+    private static final String TEST_DATA_JSON = "src/test/resources/testdata/contractTestData.json";
 
     private String createdContractNumber;
     private LoginPage loginPage;
@@ -54,6 +54,8 @@ public class StepsContainer {
 
     @Given("test data {string} is loaded")
     public void testDataIsLoaded(String testCaseId) throws IOException {
+        TestContext.set(Hooks.TEST_CASE_ID_KEY, testCaseId);
+        TestDataReader.reload();
         currentTestData = TestDataReader.getByTestCaseId(testCaseId);
         log.info("Loaded test data: " + testCaseId);
     }
@@ -92,15 +94,57 @@ public class StepsContainer {
     }
 
     private String resolve(String raw) {
-        if (raw == null || !raw.startsWith("@")) {
-            return raw;
+        if (raw == null) return null;
+
+        if (raw.startsWith("#")) {
+            // "#key" -> properties / runtime value
+            String key = raw.substring(1);
+            return TestContext.has(key)
+                    ? TestContext.get(key)
+                    : ConfigReader.getProperty(key);
         }
+        if (raw.startsWith("*")) {
+            // "*section.field" -> JSON test data for the active test case
+            String testCaseId = TestContext.get(Hooks.TEST_CASE_ID_KEY);
+
+            if (testCaseId == null || testCaseId.isBlank()) {
+                throw new IllegalStateException(
+                        "No test case id set. Use 'test data \"<id>\" is loaded' first.");
+            }
+
+            TestDataReader.reload();
+
+            String path = raw.substring(1);
+            String value;
+
+            try {
+                value = TestDataReader.getValue(testCaseId, path);
+            } catch (IOException e) {
+                throw new IllegalStateException(
+                        "Could not read test data for test case '" + testCaseId + "'", e);
+            }
+
+            System.out.println("testCaseId = " + testCaseId);
+            System.out.println("JSON path = " + path + ", value = " + value);
+
+            if (value == null) {
+                throw new IllegalStateException(
+                        "No value in JSON for '" + path + "' in test case '"
+                                + testCaseId + "'.");
+            }
+
+            return value;
+        }
+
+        if (!raw.startsWith("@")) return raw;
+
         if (!hasTestData()) {
-            throw new IllegalStateException("'" + raw + "' needs test data, but no test data is loaded. "
-                    + "Add: Given test data \"<TestCaseId>\" is loaded (or: Given NPE test data \"<TestCaseId>\" is loaded)");
+            /* existing exception */
         }
+
         return dataValue(raw.substring(1));
     }
+
     private String resolveLogin(String arg) {
         return (arg != null && arg.startsWith("@")) ? resolve(arg) : ConfigReader.getProperty(arg);
     }
@@ -134,14 +178,18 @@ public class StepsContainer {
 
     @When("enter the user password as {string}")
     public void enterTheUserPasswordAs(String arg0) {
+
         String password = resolveLogin(arg0);
+
         loginPage.enterPassword(password);
+        log.info("Password entered successfully");
+
         loginPage.clickLogin();
+        log.info("Login button clicked successfully");
+
         log.info("After Login URL: " + driver.getCurrentUrl());
         log.info("After Login Title: " + driver.getTitle());
-
     }
-
     @Then("the user should be navigated to the dashboard")
     public void theUserShouldBeNavigatedToTheDashboard() {
         boolean isDashboardVisible = loginPage.isDashboardDisplayed();
@@ -199,7 +247,12 @@ public class StepsContainer {
 
     @Then("verifies that the {string} section is displayed")
     public void verifiesThatTheSectionIsDisplayed(String arg0) {
-        getCommodityContractManagementPage().highlightSpanContaining(arg0);
+
+        if ("Product Details".equalsIgnoreCase(arg0)) {
+            getCommodityContractManagementPage().highlighth3Containing(arg0);
+        } else {
+            getCommodityContractManagementPage().highlightSpanContaining(arg0);
+        }
     }
 
     @When("user selects {string} from the {string} dropdown in the {string} section")
@@ -372,6 +425,16 @@ public class StepsContainer {
     @When("the user selects the {string} checkbox under {string}")
     public void theUserSelectsTheCheckboxUnder(String arg0, String arg1) {
         getCommodityContractManagementPage().selectCheckbox(arg0);
+    }
+
+    @When("the user selects the SI {string} checkbox under {string}")
+    public void theUserSelectsTheSICheckboxUnder(String arg0, String arg1) {
+        getCommodityContractManagementPage().selectmodCheckbox(arg0);
+    }
+
+    @When("the user Deselects the SI {string} checkbox under {string}")
+    public void theUserDeSelectsTheSICheckboxUnder(String arg0, String arg1) {
+        getCommodityContractManagementPage().deselectSICheckbox(arg0);
     }
 
     @Then("verify {string}{string} prime icon button is displayed on the Commercial Commodity Contract Management dashboard")
@@ -732,6 +795,15 @@ public class StepsContainer {
         getCommodityContractManagementPage().searchContractNo(recordnumber);
     }
 
+    @Then("search for the json created {string} by {string}")
+    public void searchForJsonTheCreatedBy(String arg0, String arg1) {
+        String key = arg0 + arg1;                       // e.g. CommercialCommodityPOContractNumber
+        String recordNumber = TestContext.has(key)
+                ? TestContext.get(key)                  // captured earlier in this run
+                : dataValue("contractDetails.contractNo");   // fall back to the JSON for this TC
+        getCommodityContractManagementPage().searchContractNo(recordNumber);
+    }
+
     @And("verify {string} is in {string} status")
     public void verifyIsInStatus(String arg0, String arg1) {
         arg1 = resolve(arg1);
@@ -868,8 +940,14 @@ public class StepsContainer {
 
     @Then("verify that the {string} field is displayed as {string}")
     public void verifyThatTheFieldIsDisplayedAs(String arg0, String arg1) {
+
         arg1 = resolve(arg1);
-        getCommodityContractManagementPage().highlightSpanByAriaLabel(arg1);
+        switch (arg0.trim().toLowerCase()) {
+            case "contract no. & date", "billing location", "counterparty name", "counterparty address" ->
+                    getCommodityContractManagementPage().highlightSpanByAriaLabel(arg0.trim(), arg1);
+            default ->
+                    getCommodityContractManagementPage().highlightSpanByAriaLabel(arg1);
+        }
     }
 
     @And("verify that the {string} field is displayed as {string} date by default.")
@@ -969,7 +1047,7 @@ public class StepsContainer {
     @Then("verify the validation message {string} is displayed")
     public void verifyTheValidationMessageIsDisplayed(String arg0) {
 
-        WebElement element = driver.findElement(By.xpath("//div[contains(text(), '"+arg0+"')]"));
+        WebElement element = driver.findElement(By.xpath("//*[contains(text(), '"+arg0+"')]"));
         webDriverCommonLibrary.explicitWait(driver,element);
         webDriverCommonLibrary.scrollIntoTheView(driver,element);
         webDriverCommonLibrary.highLightTheElement(driver,element);
@@ -1027,17 +1105,11 @@ public class StepsContainer {
 
     @Then("verify the mandatory validation indicator is displayed for fields {string}")
     public void verifyTheMandatoryValidationIndicatorIsDisplayedForFields(String fields) {
-
         String[] fieldNames = fields.split(",");
-
         for (String field : fieldNames) {
-
             String fieldName = field.trim();
-
             By mandatoryLocator = By.xpath( "//span[contains(@class,'mandatory')]/preceding-sibling::span[normalize-space()='"+fieldName+"']");
-
             webDriverCommonLibrary.highLightTheElement(driver, driver.findElement(mandatoryLocator));
-
             Assert.assertTrue(webDriverCommonLibrary.isElementDisplayed(mandatoryLocator), "Mandatory validation is not displayed for field: " + fieldName);
         }
     }
@@ -1292,4 +1364,171 @@ public class StepsContainer {
         arg1 = resolve(arg1);
         getCommodityContractManagementPage().highlightSpanByAriaLabel(arg1);
     }
+
+    @Then("verify the {string} mandatory validation indicator is displayed for fields {string}")
+    public void verifyTheMandatoryValidationIndicatorIsDisplayedForFields(String arg0, String fields) {
+        String[] fieldNames = fields.split(",");
+        for (String field : fieldNames) {
+            String fieldName = field.trim();
+            By mandatoryLocator = By.xpath( "(//span[contains(@class,'mandatory')]/preceding-sibling::span[normalize-space()='"+fieldName+"'])[2]");
+            webDriverCommonLibrary.highLightTheElement(driver, driver.findElement(mandatoryLocator));
+            Assert.assertTrue(webDriverCommonLibrary.isElementDisplayed(mandatoryLocator), "Mandatory validation is not displayed for field: " + fieldName);
+        }
+    }
+
+    @Then("capture {string} {string} in json test data")
+    public void captureInJsonTestData(String arg0, String arg1) {
+        if (!"Contract No.".equals(arg1)) {
+            throw new IllegalArgumentException("capture supports only the 'Contract No.' column but got: '" + arg1 + "'");
+        }
+        webDriverCommonLibrary.waitForSetTime(setTime / 2);
+        String contractNo = getCommodityContractManagementPage().getListColumnText(arg1).trim();
+        String key = arg0 + "ContractNumber";
+
+        TestContext.set(key, contractNo);
+
+        if (!TestContext.has(Hooks.TEST_CASE_ID_KEY)) {
+            throw new IllegalStateException("No @TC_ tag found on the scenario, so the JSON entry can't be located");
+        }
+
+        JsonDataWriter.captureValue(
+                "src/test/resources/testdata/contractTestData.json",
+                TestContext.get(Hooks.TEST_CASE_ID_KEY),
+                "contractDetails",
+                "contractNo",
+                contractNo);
+    }
+
+    @Then("the {string} {string} should be {string} date")
+    public void theShouldBeDate(String section, String field, String dateExpression) {
+            webDriverCommonLibrary.verifyDateField(section, field, dateExpression);
+    }
+
+    @Then("verify that the {string} field in {string} section with value {string}")
+    public void verifyThatTheFieldInSectionWithValue(String fieldName, String section, String expectedValue) {
+
+        section = resolve(section);
+        expectedValue = resolve(expectedValue);
+        getCommodityContractManagementPage().verifyField(section,fieldName,expectedValue);
+    }
+
+    @Then("verify that the checklist {string} is selected")
+    public void verifyThatTheChecklistIsSelected(String names) {
+      webDriverCommonLibrary.verifyChecklistState(resolve(names), true);
+    }
+
+    @Then("verify that the checklist {string} is not selected")
+    public void verifyThatTheChecklistIsNotSelected(String names) {
+        webDriverCommonLibrary.verifyChecklistState(resolve(names), false);
+    }
+
+    @Then("user enters {string} in {string} long text field in the {string} section")
+    public void userEntersInLongTextFieldInTheSection(String arg0, String field, String section) {
+        arg0 = resolve(arg0);
+        getCommodityContractManagementPage().enterTextInSectionLongTextArea(section, field, arg0);
+
+    }
+
+    @When("the user enters {string} in row {string} of the {string} table")
+    public void theUserEntersInRowOfTheTable(String arg0, String row, String table) {
+        arg0 = resolve(arg0);
+        WebElement element = driver.findElement(By.xpath("//table[.//th[normalize-space()='"+table+"']]//tr[td[1][normalize-space()='"+row+"']]//input[@type='text']"));
+        webDriverCommonLibrary.scrollIntoTheView(driver,element);
+        webDriverCommonLibrary.explicitWait(driver,element);
+        element.clear();
+        element.sendKeys(arg0);
+
+    }
+
+    @When("the user selects the SI checkboxes listed in test data {string} under {string}")
+    public void theUserSelectsTheSICheckboxesListedInTestDataUnder(String path, String group) {
+        requireTestData(path);
+        for (String label : dataList(path)) {
+            theUserSelectsTheSICheckboxUnder(label, group);
+        }
+    }
+
+    @When("the user deselects the SI checkboxes listed in test data {string} under {string}")
+    public void theUserDeselectsTheSICheckboxesListedInTestDataUnder(String path, String group) {
+        requireTestData(path);
+        for (String label : dataList(path)) {
+            theUserDeSelectsTheSICheckboxUnder(label, group);
+        }
+    }
+
+    @When("the user selects the {string} {string} as {string}")
+    public void theUserSelectsTheAs(String section, String field, String dateExpression) {
+        webDriverCommonLibrary.selectDate(section, field, dateExpression);
+    }
+
+    @When("the user selects {string} {string} as {string}")
+    public void theUserSelectsAs(String section, String field, String dateExpression) {
+        webDriverCommonLibrary.selectDates(section, field, dateExpression);
+    }
+
+
+
+    @When("the user selects the type {string} {string} as {string}")
+    public void theUserSelectsTheTypeAs(String section, String field, String dateExpression) {
+        webDriverCommonLibrary.selectTheDate(section, field, dateExpression);
+    }
+
+    @Then("captures the {string} {string}")
+    public void capturesThe(String arg0, String arg1) {
+        if (!"+arg1+".equals(arg1)) {
+            throw new IllegalArgumentException("capture supports only the 'Contract No.' column but got: '" + arg1 + "'");
+        }
+        webDriverCommonLibrary.waitForSetTime(setTime / 2);
+
+        String contractNo = getCommodityContractManagementPage().getListColumnText(arg1).trim();
+        String key = arg0 + arg1;
+
+        webDriverCommonLibrary.updateTheValueInDataValuePropertiesFile(key, contractNo);
+        webDriverCommonLibrary.updateTheValueInJsonFile(key, arg1);
+    }
+
+    @Then("captures the {string} {string} into properties and json {string} {string}")
+    public void capturesThe(String keyPrefix, String column, String jsonSection, String jsonField) {
+        if (!TestContext.has(Hooks.TEST_CASE_ID_KEY)) {
+            throw new IllegalStateException("No test case id set. Use 'test data \"<id>\" is loaded' first.");
+        }
+        webDriverCommonLibrary.waitForSetTime(setTime / 2);
+
+        String value = getCommodityContractManagementPage().getListColumnText(column).trim();
+        String key = buildKey(keyPrefix, column);
+
+        // 1) TestContext, so later steps in this run can read it directly
+        TestContext.set(key, value);
+
+        // 2) properties file
+        webDriverCommonLibrary.updateTheValueInDataValuePropertiesFile(key, value);
+
+        // 3) JSON test data, at the section and field given in the step
+        JsonDataWriter.captureValue(
+                TEST_DATA_JSON,
+                TestContext.get(Hooks.TEST_CASE_ID_KEY),
+                jsonSection,
+                jsonField,
+                value);
+        TestDataReader.reload();   // needs the reload() method in TestDataReader
+
+        log.info("Captured " + key + " = " + value + " -> properties + " + jsonSection + "." + jsonField);
+    }
+
+    // "CommercialCommodityPO" + "Contract No." -> "CommercialCommodityPOContractNumber"
+    private String buildKey(String prefix, String column) {
+        String suffix = column.trim()
+                .replaceAll("(?i)\\bNo\\.?$", "Number")
+                .replaceAll("[^A-Za-z0-9]", "");
+        return prefix + suffix;
+    }
+
+    @When("user selects {string} custom radio in {string} section")
+    public void userSelectsCustomRadioInSection(String arg0, String arg1) {
+     WebElement radio = driver.findElement(By.xpath("//span[normalize-space()='"+arg0+"']/ancestor::label[contains(@class,'custom-radio')]/preceding-sibling::input[@type='radio']"));
+     webDriverCommonLibrary.scrollIntoTheView(driver,radio);
+     webDriverCommonLibrary.explicitWait(driver,radio);
+     radio.click();
+    }
 }
+

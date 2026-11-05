@@ -1,2658 +1,2645 @@
 {
-  "contractTestData": [
-    {
-      "testCaseId": "TC_CCM_001",
-      "login": {
-        "url": "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
-        "browser": "chrome",
-        "username": "Girishkumar.MR@invensoft.co.in",
-        "password": "Admin#01",
-        "loggedInUser": "Girish"
-      },
-      "general": {
-        "class": "Coffee Farmer Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "ABC Coffee Supplier (No. 77)",
-        "shipper": "ABC Coffee Supplier (No. 77)",
-        "cpRef1": "SUP-2026-00125",
-        "cpRef2": "PO-ABC-4587",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "SELLER'S CALL",
-        "fixationTerms": "Prior to 1st Notice Day",
-        "invoiceCurrency": "EUR",
-        "paymentTerms": "IMMEDIATE",
-        "paymentTermsDescription": "---Advance payment: 100% payment required before order processing or service commencement.",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1"
-      },
-      "deliveryTerms": {
-        "incoTerms": "DWH",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China"
-      },
-      "validatedeliveryTerms": {
-        "portOfDischarge": "Busan",
-        "portOfLoading": "Busan"
-      },
-      "documents": {
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE",
-          "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE",
-          "PHYTOSANITARY CERTIFICATE",
-          "NON-RADIATION CERTIFICATE",
-          "CERTIFICATE OF ORIGIN"
-        ],
-        "deselect": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ]
-      },
-      "remarks": {
-        "remarks": "Delivery should meet the agreed quality specifications.",
-        "instructions": "Price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Pack in 1 MT Big Bags and deliver to the designated warehouse."
-      },
-      "contract": {
-        "createdMessage": "CONTRACT CREATED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "pendingMenuItems": "Modify,Copy By Contract,Cancel"
-      },
-      "approval": {
-        "approveButton": "Approve",
-        "approveIcon": "check",
-        "confirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "approvedMessage": "CONTRACT APPROVED SUCCESSFULLY",
-        "approvedStatus": "Approved",
-        "approvedMenuItems": "Copy By Contract,Amendment"
-      },
-      "modify": {
-        "menuItem": "Modify",
-        "class": "Coffee Vendor Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Modifying price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
-      },
-      "amendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 12, Kushalnagar)",
-        "shipper": "India Coffee Farms (No. 12, Kushalnagar)",
-        "cpRef1": "SUP-2026-00126",
-        "cpRef2": "PO-ABC-4588",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "BUYER'S CALL",
-        "fixationTerms": "All Fixations To Be Limited Earliest 1 Month Prior",
-        "invoiceCurrency": "UGX",
-        "paymentTerms": "Purchase Advance",
-        "paymentTermsDescription": "---Advance payment: 100% payment----",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1",
-        "incoTerms": "DWH",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China",
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ],
-        "deselect": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE"
-        ],
-        "remarks": "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending"
-      },
-      "secondAmendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "demo (DE)",
-        "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved"
-      },
-      "productDetails": [
-        {
-          "product": "AC A ",
-          "units": "200",
-          "packing": "50 Kg Jute Bags",
-          "qty": "3434",
-          "uom": "Kg",
-          "noOfLots": "1000",
-          "price": "1220",
-          "targetType": "Arrival",
-          "targetDateRange": "today - today ",
-          "tradeMonth": "Sep-2027",
-          "positionMonth": "Oct-2026",
-          "quality": "quality test",
-          "certificationPremium": "UTZ"
-        }
-      ],
-      "commissionDetails": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "EUR/Kg"
-        }
-      ],
-      "commissionDetailsValidation": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type1": "Flat Amount",
-          "type2": "Value",
-          "value": "1.5"
-        }
-      ],
-      "contractAmendment": {
-        "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved",
-        "pendingMenuItems": "Copy By Contract,Amendment Cancel",
-        "cancelledMenuItems": "Copy By Contract,Amendment",
-        "amendmentcancelMenuItem": "Amendment Cancel",
-        "reasonconfirmationMessage": "Reason For Cancel.",
-        "cancelconfirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "confirmButton": "Confirm",
-        "canceledMessage": "CONTRACTS CANCELLED SUCCESSFULLY",
-        "reasonForCancel": "The amendment was created against the wrong counterparty."
-      },
-      "copyByContract": {
-        "menuItem": "Copy By Contract",
-        "class": "Coffee Farmer Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "fixationBy": "SELLER'S CALL",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
-      }
+  "contractTestData" : [ {
+    "testCaseId" : "TC_CCM_001",
+    "login" : {
+      "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/",
+      "browser" : "chrome",
+      "username" : "Girishkumar.MR@invensoft.co.in",
+      "password" : "Admin#01",
+      "loggedInUser" : "Girish"
     },
-    {
-      "testCaseId": "TC_CCM_002",
-      "login": {
-        "url": "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
-        "browser": "chrome",
-        "username": "Girishkumar.MR@invensoft.co.in",
-        "password": "Admin#01",
-        "loggedInUser": "Girish"
-      },
-      "general": {
-        "class": "Coffee Farmer Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "ABC Coffee Supplier (No. 77)",
-        "shipper": "ABC Coffee Supplier (No. 77)",
-        "cpRef1": "SUP-2026-00125",
-        "cpRef2": "PO-ABC-4587",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "SELLER'S CALL",
-        "fixationTerms": "Prior to 1st Notice Day",
-        "invoiceCurrency": "EUR",
-        "paymentTerms": "IMMEDIATE",
-        "paymentTermsDescription": "---Advance payment: 100% payment required before order processing or service commencement.",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1"
-      },
-      "deliveryTerms": {
-        "incoTerms": "DDP",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China"
-      },
-      "validatedeliveryTerms": {
-        "portOfDischarge": "Busan",
-        "portOfLoading": "Busan"
-      },
-      "documents": {
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE",
-          "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE",
-          "PHYTOSANITARY CERTIFICATE",
-          "NON-RADIATION CERTIFICATE",
-          "CERTIFICATE OF ORIGIN"
-        ],
-        "deselect": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ]
-      },
-      "remarks": {
-        "remarks": "Delivery should meet the agreed quality specifications.",
-        "instructions": "Price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Pack in 1 MT Big Bags and deliver to the designated warehouse."
-      },
-      "contract": {
-        "createdMessage": "CONTRACT CREATED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "pendingMenuItems": "Modify,Copy By Contract,Cancel"
-      },
-      "approval": {
-        "approveButton": "Approve",
-        "approveIcon": "check",
-        "confirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "approvedMessage": "CONTRACT APPROVED SUCCESSFULLY",
-        "approvedStatus": "Approved",
-        "approvedMenuItems": "Copy By Contract,Amendment"
-      },
-      "modify": {
-        "menuItem": "Modify",
-        "class": "Coffee Vendor Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Modifying price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
-      },
-      "amendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 12, Kushalnagar)",
-        "shipper": "India Coffee Farms (No. 12, Kushalnagar)",
-        "cpRef1": "SUP-2026-00126",
-        "cpRef2": "PO-ABC-4588",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "BUYER'S CALL",
-        "fixationTerms": "All Fixations To Be Limited Earliest 1 Month Prior",
-        "invoiceCurrency": "UGX",
-        "paymentTerms": "Purchase Advance",
-        "paymentTermsDescription": "---Advance payment: 100% payment----",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1",
-        "incoTerms": "DWH",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China",
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ],
-        "deselect": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE"
-        ],
-        "remarks": "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending"
-      },
-      "secondAmendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "demo (DE)",
-        "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved"
-      },
-      "productDetails": [
-        {
-          "product": "AC AB ",
-          "units": "150",
-          "packing": "1 MT Big Bags",
-          "qty": "",
-          "uom": "",
-          "noOfLots": "",
-          "price": "980",
-          "targetType": "Delivery",
-          "targetDateRange": "today+1 - today+1",
-          "tradeMonth": "Sep-2027",
-          "positionMonth": "",
-          "quality": "cappuccino",
-          "certificationPremium": "4C"
-        },
-        {
-          "product": "AC RAW",
-          "units": "200",
-          "packing": "50 Kg Jute Bags",
-          "qty": "",
-          "uom": "",
-          "noOfLots": "",
-          "price": "1220",
-          "targetType": "Arrival",
-          "targetDateRange": "today - today+1",
-          "tradeMonth": "Sep-2027",
-          "positionMonth": "",
-          "quality": "cappuccino",
-          "certificationPremium": "UTZ"
-        },
-        {
-          "product": "AC AAB",
-          "units": "250",
-          "packing": "60 Kg PP Bags",
-          "qty": "",
-          "uom": "",
-          "noOfLots": "",
-          "price": "1350",
-          "targetType": "Delivery",
-          "targetDateRange": "today - today",
-          "tradeMonth": "Sep-2027",
-          "positionMonth": "",
-          "quality": "cappuccino",
-          "certificationPremium": "UTZ"
-        },
-        {
-          "product": "AC BBB ",
-          "units": "200",
-          "packing": "50 Kg Jute Bags",
-          "qty": "",
-          "uom": "",
-          "noOfLots": "",
-          "price": "1220",
-          "targetType": "Arrival",
-          "targetDateRange": "today - today",
-          "tradeMonth": "Sep-2027",
-          "positionMonth": "",
-          "quality": "cappuccino",
-          "certificationPremium": "UTZ"
-        },
-        {
-          "product": "AC PB",
-          "units": "200",
-          "packing": "50 Kg Jute Bags",
-          "qty": "",
-          "uom": "",
-          "noOfLots": "",
-          "price": "1220",
-          "targetType": "Arrival",
-          "targetDateRange": "today - today",
-          "tradeMonth": "Sep-2027",
-          "positionMonth": "",
-          "quality": "cappuccino",
-          "certificationPremium": "Organic"
-        }
-      ],
-      "commissionDetails": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/Gm"
-        }
-      ],
-      "commissionDetailsValidation": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type1": "Flat Amount",
-          "type2": "Value",
-          "value": "1.5"
-        }
-      ],
-      "contractAmendment": {
-        "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved",
-        "pendingMenuItems": "Copy By Contract,Amendment Cancel",
-        "cancelledMenuItems": "Copy By Contract,Amendment",
-        "amendmentcancelMenuItem": "Amendment Cancel",
-        "reasonconfirmationMessage": "Reason For Cancel.",
-        "cancelconfirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "confirmButton": "Confirm",
-        "canceledMessage": "CONTRACT AMENDMENT CANCELED SUCCESSFULLY.",
-        "reasonForCancel": "The amendment was created against the wrong counterparty."
-      },
-      "copyByContract": {
-        "menuItem": "Copy By Contract",
-        "class": "Coffee Farmer Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "fixationBy": "SELLER'S CALL",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
-      }
+    "general" : {
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "cpRef1" : "SUP-2026-00125",
+      "cpRef2" : "PO-ABC-4587",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "SELLER'S CALL",
+      "fixationTerms" : "Prior to 1st Notice Day",
+      "invoiceCurrency" : "EUR",
+      "paymentTerms" : "IMMEDIATE",
+      "paymentTermsDescription" : "---Advance payment: 100% payment required before order processing or service commencement.",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1"
     },
-    {
-      "testCaseId": "TC_CCM_003",
-      "login": {
-        "url": "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
-        "browser": "chrome",
-        "username": "Girishkumar.MR@invensoft.co.in",
-        "password": "Admin#01",
-        "loggedInUser": "Girish"
-      },
-      "general": {
-        "class": "Coffee Farmer Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "ABC Coffee Supplier (No. 77)",
-        "shipper": "ABC Coffee Supplier (No. 77)",
-        "cpRef1": "SUP-2026-00125",
-        "cpRef2": "PO-ABC-4587",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "SELLER'S CALL",
-        "fixationTerms": "Prior to 1st Notice Day",
-        "invoiceCurrency": "EUR",
-        "paymentTerms": "IMMEDIATE",
-        "paymentTermsDescription": "---Advance payment: 100% payment required before order processing or service commencement.",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1"
-      },
-      "deliveryTerms": {
-        "incoTerms": "DDP",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China"
-      },
-      "validatedeliveryTerms": {
-        "portOfDischarge": "Busan",
-        "portOfLoading": "Busan"
-      },
-      "documents": {
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE",
-          "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE",
-          "PHYTOSANITARY CERTIFICATE",
-          "NON-RADIATION CERTIFICATE",
-          "CERTIFICATE OF ORIGIN"
-        ],
-        "deselect": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ]
-      },
-      "remarks": {
-        "remarks": "Delivery should meet the agreed quality specifications.",
-        "instructions": "Price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Pack in 1 MT Big Bags and deliver to the designated warehouse."
-      },
-      "contract": {
-        "createdMessage": "CONTRACT CREATED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "pendingMenuItems": "Modify,Copy By Contract,Cancel"
-      },
-      "approval": {
-        "approveButton": "Approve",
-        "approveIcon": "check",
-        "confirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "approvedMessage": "CONTRACT APPROVED SUCCESSFULLY",
-        "approvedStatus": "Approved",
-        "approvedMenuItems": "Copy By Contract,Amendment"
-      },
-      "modify": {
-        "menuItem": "Modify",
-        "class": "Coffee Vendor Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Modifying price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
-      },
-      "amendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 12, Kushalnagar)",
-        "shipper": "India Coffee Farms (No. 12, Kushalnagar)",
-        "cpRef1": "SUP-2026-00126",
-        "cpRef2": "PO-ABC-4588",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "BUYER'S CALL",
-        "fixationTerms": "All Fixations To Be Limited Earliest 1 Month Prior",
-        "invoiceCurrency": "UGX",
-        "paymentTerms": "Purchase Advance",
-        "paymentTermsDescription": "---Advance payment: 100% payment----",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1",
-        "incoTerms": "DWH",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China",
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ],
-        "deselect": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE"
-        ],
-        "remarks": "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending"
-      },
-      "secondAmendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "demo (DE)",
-        "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved"
-      },
-      "productDetails": [
-        {
-          "product": "AC AAB",
-          "units": "250",
-          "packing": "60 Kg PP Bags",
-          "qty": "",
-          "uom": "",
-          "noOfLots": "",
-          "price": "1350",
-          "targetType": "Delivery",
-          "targetDateRange": "today+2 - today+3",
-          "tradeMonth": "Sep-2027",
-          "positionMonth": "",
-          "quality": "cappuccino",
-          "certificationPremium": "Carbon Compliance"
-        }
-      ],
-      "commissionDetails": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1002",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1003",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1004",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1005",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1006",
-          "type": "Value",
-          "value": "5.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1007",
-          "type": "Value",
-          "value": "5.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1008",
-          "type": "Value",
-          "value": "5.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1009",
-          "type": "Value",
-          "value": "5.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1010",
-          "type": "Value",
-          "value": "5.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1011",
-          "type": "Value",
-          "value": "7.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1012",
-          "type": "Value",
-          "value": "7.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1013",
-          "type": "Value",
-          "value": "7.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1014",
-          "type": "Value",
-          "value": "7.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1015",
-          "type": "Value",
-          "value": "7.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1016",
-          "type": "Value",
-          "value": "10.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1017",
-          "type": "Value",
-          "value": "10.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1018",
-          "type": "Value",
-          "value": "10.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1019",
-          "type": "Value",
-          "value": "10.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1020",
-          "type": "Value",
-          "value": "10.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1021",
-          "type": "Value",
-          "value": "12.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1022",
-          "type": "Value",
-          "value": "12.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1023",
-          "type": "Value",
-          "value": "12.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1024",
-          "type": "Value",
-          "value": "12.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1025",
-          "type": "Value",
-          "value": "12.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1026",
-          "type": "Value",
-          "value": "15.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1027",
-          "type": "Value",
-          "value": "15.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1028",
-          "type": "Value",
-          "value": "15.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1029",
-          "type": "Value",
-          "value": "15.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1030",
-          "type": "Value",
-          "value": "15.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1031",
-          "type": "Value",
-          "value": "17.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1032",
-          "type": "Value",
-          "value": "17.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1033",
-          "type": "Value",
-          "value": "17.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1034",
-          "type": "Value",
-          "value": "17.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1035",
-          "type": "Value",
-          "value": "17.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1036",
-          "type": "Value",
-          "value": "20.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1037",
-          "type": "Value",
-          "value": "20.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1038",
-          "type": "Value",
-          "value": "20.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1039",
-          "type": "Value",
-          "value": "20.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1040",
-          "type": "Value",
-          "value": "20.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1041",
-          "type": "Value",
-          "value": "22.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1042",
-          "type": "Value",
-          "value": "22.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1043",
-          "type": "Value",
-          "value": "22.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1044",
-          "type": "Value",
-          "value": "22.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1045",
-          "type": "Value",
-          "value": "22.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1046",
-          "type": "Value",
-          "value": "25.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1047",
-          "type": "Value",
-          "value": "25.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1048",
-          "type": "Value",
-          "value": "25.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1049",
-          "type": "Value",
-          "value": "25.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1050",
-          "type": "Value",
-          "value": "25.0",
-          "valueUnit": "INR/Gm"
-        }
-      ],
-      "commissionDetailsValidation": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type1": "Flat Amount",
-          "type2": "Value",
-          "value": "1.5"
-        }
-      ],
-      "contractAmendment": {
-        "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved",
-        "pendingMenuItems": "Copy By Contract,Amendment Cancel",
-        "cancelledMenuItems": "Copy By Contract,Amendment",
-        "amendmentcancelMenuItem": "Amendment Cancel",
-        "reasonconfirmationMessage": "Reason For Cancel.",
-        "cancelconfirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "confirmButton": "Confirm",
-        "canceledMessage": "CONTRACT AMENDMENT CANCELED SUCCESSFULLY.",
-        "reasonForCancel": "The amendment was created against the wrong counterparty."
-      },
-      "copyByContract": {
-        "menuItem": "Copy By Contract",
-        "class": "Coffee Farmer Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "fixationBy": "SELLER'S CALL",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
-      }
+    "deliveryTerms" : {
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China"
     },
-    {
-      "testCaseId": "TC_CCM_004",
-      "login": {
-        "url": "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
-        "browser": "edge",
-        "username": "Girishkumar.MR@invensoft.co.in",
-        "password": "Admin#01",
-        "loggedInUser": "Girish"
-      },
-      "general": {
-        "class": "Coffee Farmer Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "ABC Coffee Supplier (No. 77)",
-        "shipper": "ABC Coffee Supplier (No. 77)",
-        "cpRef1": "SUP-2026-00125",
-        "cpRef2": "PO-ABC-4587",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "SELLER'S CALL",
-        "fixationTerms": "Prior to 1st Notice Day",
-        "invoiceCurrency": "EUR",
-        "paymentTerms": "IMMEDIATE",
-        "paymentTermsDescription": "---Advance payment: 100% payment required before order processing or service commencement.",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1"
-      },
-      "deliveryTerms": {
-        "incoTerms": "DDP",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China"
-      },
-      "validatedeliveryTerms": {
-        "portOfDischarge": "Busan",
-        "portOfLoading": "Busan"
-      },
-      "documents": {
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE",
-          "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE",
-          "PHYTOSANITARY CERTIFICATE",
-          "NON-RADIATION CERTIFICATE",
-          "CERTIFICATE OF ORIGIN"
-        ],
-        "deselect": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ]
-      },
-      "remarks": {
-        "remarks": "Delivery should meet the agreed quality specifications.",
-        "instructions": "Price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Pack in 1 MT Big Bags and deliver to the designated warehouse."
-      },
-      "contract": {
-        "createdMessage": "CONTRACT CREATED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "pendingMenuItems": "Modify,Copy By Contract,Cancel"
-      },
-      "approval": {
-        "approveButton": "Approve",
-        "approveIcon": "check",
-        "confirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "approvedMessage": "CONTRACT APPROVED SUCCESSFULLY",
-        "approvedStatus": "Approved",
-        "approvedMenuItems": "Copy By Contract,Amendment"
-      },
-      "modify": {
-        "menuItem": "Modify",
-        "class": "Coffee Vendor Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Modifying price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
-      },
-      "amendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 12, Kushalnagar)",
-        "shipper": "India Coffee Farms (No. 12, Kushalnagar)",
-        "cpRef1": "SUP-2026-00126",
-        "cpRef2": "PO-ABC-4588",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "BUYER'S CALL",
-        "fixationTerms": "All Fixations To Be Limited Earliest 1 Month Prior",
-        "invoiceCurrency": "UGX",
-        "paymentTerms": "Purchase Advance",
-        "paymentTermsDescription": "---Advance payment: 100% payment----",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1",
-        "incoTerms": "DWH",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China",
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ],
-        "deselect": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE"
-        ],
-        "remarks": "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending"
-      },
-      "secondAmendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "FLAT PRICE",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "demo (DE)",
-        "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved"
-      },
-      "productDetails": [
-        {
-          "product": "AC AAB",
-          "units": "250",
-          "packing": "60 Kg PP Bags",
-          "qty": "",
-          "uom": "",
-          "noOfLots": "",
-          "price": "1350",
-          "targetType": "Delivery",
-          "targetDateRange": "today+2 - today+3",
-          "tradeMonth": "Sep-2027",
-          "positionMonth": "",
-          "quality": "cappuccino",
-          "certificationPremium": "Carbon Compliance"
-        }
-      ],
-      "commissionDetails": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1002",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1003",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1004",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1005",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1006",
-          "type": "Value",
-          "value": "5.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1007",
-          "type": "Value",
-          "value": "5.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1008",
-          "type": "Value",
-          "value": "5.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1009",
-          "type": "Value",
-          "value": "5.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1010",
-          "type": "Value",
-          "value": "5.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1011",
-          "type": "Value",
-          "value": "7.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1012",
-          "type": "Value",
-          "value": "7.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1013",
-          "type": "Value",
-          "value": "7.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1014",
-          "type": "Value",
-          "value": "7.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1015",
-          "type": "Value",
-          "value": "7.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1016",
-          "type": "Value",
-          "value": "10.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1017",
-          "type": "Value",
-          "value": "10.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1018",
-          "type": "Value",
-          "value": "10.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1019",
-          "type": "Value",
-          "value": "10.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1020",
-          "type": "Value",
-          "value": "10.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1021",
-          "type": "Value",
-          "value": "12.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1022",
-          "type": "Value",
-          "value": "12.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1023",
-          "type": "Value",
-          "value": "12.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1024",
-          "type": "Value",
-          "value": "12.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1025",
-          "type": "Value",
-          "value": "12.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1026",
-          "type": "Value",
-          "value": "15.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1027",
-          "type": "Value",
-          "value": "15.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1028",
-          "type": "Value",
-          "value": "15.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1029",
-          "type": "Value",
-          "value": "15.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1030",
-          "type": "Value",
-          "value": "15.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1031",
-          "type": "Value",
-          "value": "17.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1032",
-          "type": "Value",
-          "value": "17.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1033",
-          "type": "Value",
-          "value": "17.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1034",
-          "type": "Value",
-          "value": "17.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1035",
-          "type": "Value",
-          "value": "17.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1036",
-          "type": "Value",
-          "value": "20.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1037",
-          "type": "Value",
-          "value": "20.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1038",
-          "type": "Value",
-          "value": "20.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1039",
-          "type": "Value",
-          "value": "20.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1040",
-          "type": "Value",
-          "value": "20.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1041",
-          "type": "Value",
-          "value": "22.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1042",
-          "type": "Value",
-          "value": "22.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1043",
-          "type": "Value",
-          "value": "22.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1044",
-          "type": "Value",
-          "value": "22.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1045",
-          "type": "Value",
-          "value": "22.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1046",
-          "type": "Value",
-          "value": "25.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1047",
-          "type": "Value",
-          "value": "25.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1048",
-          "type": "Value",
-          "value": "25.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1049",
-          "type": "Value",
-          "value": "25.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1050",
-          "type": "Value",
-          "value": "25.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1051",
-          "type": "Value",
-          "value": "27.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1052",
-          "type": "Value",
-          "value": "27.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1053",
-          "type": "Value",
-          "value": "27.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1054",
-          "type": "Value",
-          "value": "27.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1055",
-          "type": "Value",
-          "value": "27.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1056",
-          "type": "Value",
-          "value": "30.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1057",
-          "type": "Value",
-          "value": "30.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1058",
-          "type": "Value",
-          "value": "30.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1059",
-          "type": "Value",
-          "value": "30.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1060",
-          "type": "Value",
-          "value": "30.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1061",
-          "type": "Value",
-          "value": "32.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1062",
-          "type": "Value",
-          "value": "32.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1063",
-          "type": "Value",
-          "value": "32.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1064",
-          "type": "Value",
-          "value": "32.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1065",
-          "type": "Value",
-          "value": "32.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1066",
-          "type": "Value",
-          "value": "35.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1067",
-          "type": "Value",
-          "value": "35.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1068",
-          "type": "Value",
-          "value": "35.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1069",
-          "type": "Value",
-          "value": "35.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1070",
-          "type": "Value",
-          "value": "35.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1071",
-          "type": "Value",
-          "value": "37.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1072",
-          "type": "Value",
-          "value": "37.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1073",
-          "type": "Value",
-          "value": "37.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1074",
-          "type": "Value",
-          "value": "37.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1075",
-          "type": "Value",
-          "value": "37.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1076",
-          "type": "Value",
-          "value": "40.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1077",
-          "type": "Value",
-          "value": "40.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1078",
-          "type": "Value",
-          "value": "40.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1079",
-          "type": "Value",
-          "value": "40.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1080",
-          "type": "Value",
-          "value": "40.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1081",
-          "type": "Value",
-          "value": "42.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1082",
-          "type": "Value",
-          "value": "42.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1083",
-          "type": "Value",
-          "value": "42.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1084",
-          "type": "Value",
-          "value": "42.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1085",
-          "type": "Value",
-          "value": "42.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1086",
-          "type": "Value",
-          "value": "45.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1087",
-          "type": "Value",
-          "value": "45.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1088",
-          "type": "Value",
-          "value": "45.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1089",
-          "type": "Value",
-          "value": "45.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1090",
-          "type": "Value",
-          "value": "45.0",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1091",
-          "type": "Value",
-          "value": "47.5",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1092",
-          "type": "Value",
-          "value": "47.5",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1093",
-          "type": "Value",
-          "value": "47.5",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1094",
-          "type": "Value",
-          "value": "47.5",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1095",
-          "type": "Value",
-          "value": "47.5",
-          "valueUnit": "INR/Gm"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1096",
-          "type": "Value",
-          "value": "50.0",
-          "valueUnit": "INR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1097",
-          "type": "Value",
-          "value": "50.0",
-          "valueUnit": "EUR/Kg"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1098",
-          "type": "Value",
-          "value": "50.0",
-          "valueUnit": "INR/MT"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1099",
-          "type": "Value",
-          "value": "50.0",
-          "valueUnit": "INR/LB"
-        },
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1100",
-          "type": "Value",
-          "value": "50.0",
-          "valueUnit": "INR/Gm"
-        }
-      ],
-      "commissionDetailsValidation": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type1": "Flat Amount",
-          "type2": "Value",
-          "value": "1.5"
-        }
-      ],
-      "contractAmendment": {
-        "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved",
-        "pendingMenuItems": "Copy By Contract,Amendment Cancel",
-        "cancelledMenuItems": "Copy By Contract,Amendment",
-        "amendmentcancelMenuItem": "Amendment Cancel",
-        "reasonconfirmationMessage": "Reason For Cancel.",
-        "cancelconfirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "confirmButton": "Confirm",
-        "canceledMessage": "CONTRACT AMENDMENT CANCELED SUCCESSFULLY.",
-        "reasonForCancel": "The amendment was created against the wrong counterparty."
-      },
-      "copyByContract": {
-        "menuItem": "Copy By Contract",
-        "class": "Coffee Farmer Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "fixationBy": "SELLER'S CALL",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
-      }
+    "validatedeliveryTerms" : {
+      "portOfDischarge" : "Busan",
+      "portOfLoading" : "Busan"
     },
-    {
-      "testCaseId": "TC_CCM_NPE_001",
-      "login": {
-        "url": "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
-        "browser": "edge",
-        "username": "Girishkumar.MR@invensoft.co.in",
-        "password": "Admin#01",
-        "loggedInUser": "Girish"
-      },
-      "general": {
-        "class": "Coffee Farmer Purchase Contract",
-        "pricing": "NPE",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "ABC Coffee Supplier (No. 77)",
-        "shipper": "ABC Coffee Supplier (No. 77)",
-        "cpRef1": "SUP-2026-00125",
-        "cpRef2": "PO-ABC-4587",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "SELLER'S CALL",
-        "fixationTerms": "Prior to 1st Notice Day",
-        "invoiceCurrency": "EUR",
-        "paymentTerms": "IMMEDIATE",
-        "paymentTermsDescription": "---Advance payment: 100% payment required before order processing or service commencement.",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1"
-      },
-      "deliveryTerms": {
-        "incoTerms": "DWH",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China"
-      },
-      "validatedeliveryTerms": {
-        "portOfDischarge": "Busan",
-        "portOfLoading": "Busan"
-      },
-      "documents": {
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE",
-          "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE",
-          "PHYTOSANITARY CERTIFICATE",
-          "NON-RADIATION CERTIFICATE",
-          "CERTIFICATE OF ORIGIN"
-        ],
-        "deselect": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ]
-      },
-      "remarks": {
-        "remarks": "Delivery should meet the agreed quality specifications.",
-        "instructions": "Price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Pack in 1 MT Big Bags and deliver to the designated warehouse."
-      },
-      "contract": {
-        "createdMessage": "CONTRACT CREATED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "pendingMenuItems": "Modify,Copy By Contract,Cancel"
-      },
-      "approval": {
-        "approveButton": "Approve",
-        "approveIcon": "check",
-        "confirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "approvedMessage": "CONTRACT APPROVED SUCCESSFULLY",
-        "approvedStatus": "Approved",
-        "approvedMenuItems": "Copy By Contract,Amendment"
-      },
-      "modify": {
-        "menuItem": "Modify",
-        "class": "Coffee Vendor Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Modifying price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
-      },
-      "amendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "NPE",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 12, Kushalnagar)",
-        "shipper": "India Coffee Farms (No. 12, Kushalnagar)",
-        "cpRef1": "SUP-2026-00126",
-        "cpRef2": "PO-ABC-4588",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "BUYER'S CALL",
-        "fixationTerms": "All Fixations To Be Limited Earliest 1 Month Prior",
-        "invoiceCurrency": "UGX",
-        "paymentTerms": "Purchase Advance",
-        "paymentTermsDescription": "---Advance payment: 100% payment----",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1",
-        "incoTerms": "DWH",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China",
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ],
-        "deselect": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE"
-        ],
-        "remarks": "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending"
-      },
-      "secondAmendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "NPE",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "demo (DE)",
-        "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved"
-      },
-      "productDetails": [
-        {
-          "product": "AC A ",
-          "units": "200",
-          "packing": "50 Kg Jute Bags",
-          "qty": "3434",
-          "uom": "Kg",
-          "noOfLots": "1000",
-          "price": "1220",
-          "targetType": "Arrival",
-          "targetDateRange": "today - today ",
-          "tradeMonth": "Sep-2027",
-          "positionMonth": "Oct-2026",
-          "quality": "quality test",
-          "certificationPremium": "UTZ"
-        }
-      ],
-      "commissionDetails": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "EUR/Kg"
-        }
-      ],
-      "commissionDetailsValidation": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type1": "Flat Amount",
-          "type2": "Value",
-          "value": "1.5"
-        }
-      ],
-      "contractAmendment": {
-        "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved",
-        "pendingMenuItems": "Copy By Contract,Amendment Cancel",
-        "cancelledMenuItems": "Copy By Contract,Amendment",
-        "amendmentcancelMenuItem": "Amendment Cancel",
-        "reasonconfirmationMessage": "Reason For Cancel.",
-        "cancelconfirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "confirmButton": "Confirm",
-        "canceledMessage": "CONTRACTS CANCELLED SUCCESSFULLY",
-        "reasonForCancel": "The amendment was created against the wrong counterparty."
-      },
-      "copyByContract": {
-        "menuItem": "Copy By Contract",
-        "class": "Coffee Farmer Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "fixationBy": "SELLER'S CALL",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
-      }
-    }, {
-      "testCaseId": "TC_CCM_PTBF_001",
-      "login": {
-        "url": "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
-        "browser": "edge",
-        "username": "Girishkumar.MR@invensoft.co.in",
-        "password": "Admin#01",
-        "loggedInUser": "Girish"
-      },
-      "general": {
-        "class": "Coffee Farmer Purchase Contract",
-        "pricing": "PTBF",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "ABC Coffee Supplier (No. 77)",
-        "shipper": "ABC Coffee Supplier (No. 77)",
-        "cpRef1": "SUP-2026-00125",
-        "cpRef2": "PO-ABC-4587",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "SELLER'S CALL",
-        "fixationTerms": "Prior to 1st Notice Day",
-        "invoiceCurrency": "EUR",
-        "paymentTerms": "IMMEDIATE",
-        "paymentTermsDescription": "---Advance payment: 100% payment required before order processing or service commencement.",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1"
-      },
-      "deliveryTerms": {
-        "incoTerms": "DWH",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China"
-      },
-      "validatedeliveryTerms": {
-        "portOfDischarge": "Busan",
-        "portOfLoading": "Busan"
-      },
-      "documents": {
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE",
-          "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE",
-          "PHYTOSANITARY CERTIFICATE",
-          "NON-RADIATION CERTIFICATE",
-          "CERTIFICATE OF ORIGIN"
-        ],
-        "deselect": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ]
-      },
-      "remarks": {
-        "remarks": "Delivery should meet the agreed quality specifications.",
-        "instructions": "Price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Pack in 1 MT Big Bags and deliver to the designated warehouse."
-      },
-      "contract": {
-        "createdMessage": "CONTRACT CREATED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "pendingMenuItems": "Modify,Copy By Contract,Cancel"
-      },
-      "approval": {
-        "approveButton": "Approve",
-        "approveIcon": "check",
-        "confirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "approvedMessage": "CONTRACT APPROVED SUCCESSFULLY",
-        "approvedStatus": "Approved",
-        "approvedMenuItems": "Copy By Contract,Amendment"
-      },
-      "modify": {
-        "menuItem": "Modify",
-        "class": "Coffee Vendor Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Modifying price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "modifiedMessage": "CONTRACT MODIFIED SUCCESSFULLY."
-      },
-      "amendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "PTBF",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "Default (DND)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "counterparty": "India Coffee Farms (No. 12, Kushalnagar)",
-        "shipper": "India Coffee Farms (No. 12, Kushalnagar)",
-        "cpRef1": "SUP-2026-00126",
-        "cpRef2": "PO-ABC-4588",
-        "exchange": "LONDON - ROBUSTA",
-        "exchangePriceCurrencyUom": "USD/MT",
-        "changedExchange": "NEW YORK - ARABICA",
-        "changedExchangePriceCurrencyUom": "USC/LB",
-        "fixationBy": "BUYER'S CALL",
-        "fixationTerms": "All Fixations To Be Limited Earliest 1 Month Prior",
-        "invoiceCurrency": "UGX",
-        "paymentTerms": "Purchase Advance",
-        "paymentTermsDescription": "---Advance payment: 100% payment----",
-        "taxStructure": "GST 18%",
-        "withHoldingTaxStructure": "TAX WHT1",
-        "incoTerms": "DWH",
-        "portOfDischarge": "Hamburg",
-        "weightTerms": "Re Weights",
-        "place": "Uganda",
-        "podDescription": "Nhava Sheva Port, Maharashtra, India",
-        "arbitration": "AB",
-        "basisOfSale": "SAS - Repeat",
-        "finalDestination": "Busan",
-        "portOfLoading": "Busan",
-        "termsAndConditions": "The goods must meet the agreed quality.",
-        "polDescription": "Port of Santos, Sao Paulo, Brazil",
-        "countryOfOrigin": "China",
-        "documentSet": "CERTIFICATES REQUIRED FOR ECC",
-        "select": [
-          "WEIGHT AND QUALITY CERTIFICATE",
-          "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES",
-          "FUMIGATION CERTIFICATE"
-        ],
-        "deselect": [
-          "PREFERENTIAL ENTRY CERTIFICATE",
-          "INSURANCE CERTIFICATE",
-          "WEIGHT AND QUALITY CERTIFICATE"
-        ],
-        "remarks": "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending"
-      },
-      "secondAmendment": {
-        "menuItem": "Amendment",
-        "classFieldState": "disabled",
-        "class": "Coffee Vendor Purchase Contract",
-        "pricing": "PTBF",
-        "fieldState": "disabled",
-        "Contract No.": "",
-        "Contract Date": "",
-        "Amend No.": "",
-        "billingLocation": "demo (DE)",
-        "remarks": "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "Second amendment price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved"
-      },
-      "productDetails": [
-        {
-          "product": "AC A ",
-          "units": "200",
-          "packing": "50 Kg Jute Bags",
-          "qty": "3434",
-          "uom": "Kg",
-          "noOfLots": "1000",
-          "differential": "1000",
-          "price": "1220",
-          "targetType": "Arrival",
-          "targetDateRange": "today - today ",
-          "tradeMonth": "Sep-2027",
-          "positionMonth": "Oct-2026",
-          "quality": "quality test",
-          "certificationPremium": "UTZ"
-        }
-      ],
-      "commissionDetails": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type": "Value",
-          "value": "2.5",
-          "valueUnit": "EUR/Kg"
-        }
-      ],
-      "commissionDetailsValidation": [
-        {
-          "agentBroker": "Agent (dcsza)",
-          "refNo": "REF-1001",
-          "type1": "Flat Amount",
-          "type2": "Value",
-          "value": "1.5"
-        }
-      ],
-      "contractAmendment": {
-        "amendedMessage": "CONTRACT AMENDED SUCCESSFULLY.",
-        "pendingStatus": "Pending",
-        "approvedStatus": "Approved",
-        "pendingMenuItems": "Copy By Contract,Amendment Cancel",
-        "cancelledMenuItems": "Copy By Contract,Amendment",
-        "amendmentcancelMenuItem": "Amendment Cancel",
-        "reasonconfirmationMessage": "Reason For Cancel.",
-        "cancelconfirmationMessage": "Are you sure that you want to proceed ?",
-        "yesButton": "Yes",
-        "noButton": "No",
-        "confirmButton": "Confirm",
-        "canceledMessage": "CONTRACTS CANCELLED SUCCESSFULLY",
-        "reasonForCancel": "The amendment was created against the wrong counterparty."
-      },
-      "copyByContract": {
-        "menuItem": "Copy By Contract",
-        "class": "Coffee Farmer Purchase Contract",
-        "billingLocation": "demo (DE)",
-        "shippingLocation": "Default (DND)",
-        "season": "Season 2026 - 2027",
-        "fixationBy": "SELLER'S CALL",
-        "counterparty": "India Coffee Farms (No. 10, Chikmagalur)",
-        "shipper": "India Coffee Farms (No. 10, Chikmagalur)",
-        "invoiceCurrency": "EUR",
-        "exchangePriceCurrencyUom": "USC/GM",
-        "portOfLoading": "Geneva",
-        "portOfDischarge": "Houston",
-        "termsAndConditions": "Modifying the goods must meet the agreed quality and packaging standards.",
-        "polDescription": "Modifying Port of Santos, Sao Paulo, Brazil",
-        "incoTerms": "DEQ",
-        "weightTerms": "Net Delivered Weights",
-        "arbitration": "Hamburg",
-        "remarks": "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
-        "instructions": "CopyByContract price confirmed with supplier; pending manager approval.",
-        "internalRemarks": "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
-        "contractcreatedMessage": "CONTRACT CREATED SUCCESSFULLY."
-      }
+    "documents" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE", "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE", "PHYTOSANITARY CERTIFICATE", "NON-RADIATION CERTIFICATE", "CERTIFICATE OF ORIGIN" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ]
+    },
+    "remarks" : {
+      "remarks" : "Delivery should meet the agreed quality specifications.",
+      "instructions" : "Price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+    },
+    "contract" : {
+      "createdMessage" : "CONTRACT CREATED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "pendingMenuItems" : "Modify,Copy By Contract,Cancel"
+    },
+    "approval" : {
+      "approveButton" : "Approve",
+      "approveIcon" : "check",
+      "confirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "approvedMessage" : "CONTRACT APPROVED SUCCESSFULLY",
+      "approvedStatus" : "Approved",
+      "approvedMenuItems" : "Copy By Contract,Amendment"
+    },
+    "modify" : {
+      "menuItem" : "Modify",
+      "class" : "Coffee Vendor Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Modifying price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "amendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "shipper" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "cpRef1" : "SUP-2026-00126",
+      "cpRef2" : "PO-ABC-4588",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "BUYER'S CALL",
+      "fixationTerms" : "All Fixations To Be Limited Earliest 1 Month Prior",
+      "invoiceCurrency" : "UGX",
+      "paymentTerms" : "Purchase Advance",
+      "paymentTermsDescription" : "---Advance payment: 100% payment----",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1",
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China",
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ],
+      "deselect" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE" ],
+      "remarks" : "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending"
+    },
+    "secondAmendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "demo (DE)",
+      "remarks" : "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Second amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved"
+    },
+    "productDetails" : [ {
+      "product" : "AC A ",
+      "units" : "200",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "3434",
+      "uom" : "Kg",
+      "noOfLots" : "1000",
+      "price" : "1220",
+      "targetType" : "Arrival",
+      "targetDateRange" : "today - today ",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "Oct-2026",
+      "quality" : "quality test",
+      "certificationPremium" : "UTZ"
+    } ],
+    "commissionDetails" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "EUR/Kg"
+    } ],
+    "commissionDetailsValidation" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type1" : "Flat Amount",
+      "type2" : "Value",
+      "value" : "1.5"
+    } ],
+    "contractAmendment" : {
+      "amendedMessage" : "CONTRACT AMENDED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved",
+      "pendingMenuItems" : "Copy By Contract,Amendment Cancel",
+      "cancelledMenuItems" : "Copy By Contract,Amendment",
+      "amendmentcancelMenuItem" : "Amendment Cancel",
+      "reasonconfirmationMessage" : "Reason For Cancel.",
+      "cancelconfirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "confirmButton" : "Confirm",
+      "canceledMessage" : "CONTRACTS CANCELLED SUCCESSFULLY",
+      "reasonForCancel" : "The amendment was created against the wrong counterparty."
+    },
+    "copyByContract" : {
+      "menuItem" : "Copy By Contract",
+      "class" : "Coffee Farmer Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "fixationBy" : "SELLER'S CALL",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "CopyByContract price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "contractcreatedMessage" : "CONTRACT CREATED SUCCESSFULLY."
     }
-  ]
+  }, {
+    "testCaseId" : "TC_CCM_002",
+    "login" : {
+      "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
+      "browser" : "chrome",
+      "username" : "Girishkumar.MR@invensoft.co.in",
+      "password" : "Admin#01",
+      "loggedInUser" : "Girish"
+    },
+    "general" : {
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "cpRef1" : "SUP-2026-00125",
+      "cpRef2" : "PO-ABC-4587",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "SELLER'S CALL",
+      "fixationTerms" : "Prior to 1st Notice Day",
+      "invoiceCurrency" : "EUR",
+      "paymentTerms" : "IMMEDIATE",
+      "paymentTermsDescription" : "---Advance payment: 100% payment required before order processing or service commencement.",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1"
+    },
+    "deliveryTerms" : {
+      "incoTerms" : "DDP",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China"
+    },
+    "validatedeliveryTerms" : {
+      "portOfDischarge" : "Busan",
+      "portOfLoading" : "Busan"
+    },
+    "documents" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE", "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE", "PHYTOSANITARY CERTIFICATE", "NON-RADIATION CERTIFICATE", "CERTIFICATE OF ORIGIN" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ]
+    },
+    "remarks" : {
+      "remarks" : "Delivery should meet the agreed quality specifications.",
+      "instructions" : "Price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+    },
+    "contract" : {
+      "createdMessage" : "CONTRACT CREATED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "pendingMenuItems" : "Modify,Copy By Contract,Cancel"
+    },
+    "approval" : {
+      "approveButton" : "Approve",
+      "approveIcon" : "check",
+      "confirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "approvedMessage" : "CONTRACT APPROVED SUCCESSFULLY",
+      "approvedStatus" : "Approved",
+      "approvedMenuItems" : "Copy By Contract,Amendment"
+    },
+    "modify" : {
+      "menuItem" : "Modify",
+      "class" : "Coffee Vendor Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Modifying price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "amendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Vendor Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "shipper" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "cpRef1" : "SUP-2026-00126",
+      "cpRef2" : "PO-ABC-4588",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "BUYER'S CALL",
+      "fixationTerms" : "All Fixations To Be Limited Earliest 1 Month Prior",
+      "invoiceCurrency" : "UGX",
+      "paymentTerms" : "Purchase Advance",
+      "paymentTermsDescription" : "---Advance payment: 100% payment----",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1",
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China",
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ],
+      "deselect" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE" ],
+      "remarks" : "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending"
+    },
+    "secondAmendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Vendor Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "demo (DE)",
+      "remarks" : "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Second amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved"
+    },
+    "productDetails" : [ {
+      "product" : "AC AB ",
+      "units" : "150",
+      "packing" : "1 MT Big Bags",
+      "qty" : "",
+      "uom" : "",
+      "noOfLots" : "",
+      "price" : "980",
+      "targetType" : "Delivery",
+      "targetDateRange" : "today+1 - today+1",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "",
+      "quality" : "cappuccino",
+      "certificationPremium" : "4C"
+    }, {
+      "product" : "AC RAW",
+      "units" : "200",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "",
+      "uom" : "",
+      "noOfLots" : "",
+      "price" : "1220",
+      "targetType" : "Arrival",
+      "targetDateRange" : "today - today+1",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "",
+      "quality" : "cappuccino",
+      "certificationPremium" : "UTZ"
+    }, {
+      "product" : "AC AAB",
+      "units" : "250",
+      "packing" : "60 Kg PP Bags",
+      "qty" : "",
+      "uom" : "",
+      "noOfLots" : "",
+      "price" : "1350",
+      "targetType" : "Delivery",
+      "targetDateRange" : "today - today",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "",
+      "quality" : "cappuccino",
+      "certificationPremium" : "UTZ"
+    }, {
+      "product" : "AC BBB ",
+      "units" : "200",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "",
+      "uom" : "",
+      "noOfLots" : "",
+      "price" : "1220",
+      "targetType" : "Arrival",
+      "targetDateRange" : "today - today",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "",
+      "quality" : "cappuccino",
+      "certificationPremium" : "UTZ"
+    }, {
+      "product" : "AC PB",
+      "units" : "200",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "",
+      "uom" : "",
+      "noOfLots" : "",
+      "price" : "1220",
+      "targetType" : "Arrival",
+      "targetDateRange" : "today - today",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "",
+      "quality" : "cappuccino",
+      "certificationPremium" : "Organic"
+    } ],
+    "commissionDetails" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/Gm"
+    } ],
+    "commissionDetailsValidation" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type1" : "Flat Amount",
+      "type2" : "Value",
+      "value" : "1.5"
+    } ],
+    "contractAmendment" : {
+      "amendedMessage" : "CONTRACT AMENDED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved",
+      "pendingMenuItems" : "Copy By Contract,Amendment Cancel",
+      "cancelledMenuItems" : "Copy By Contract,Amendment",
+      "amendmentcancelMenuItem" : "Amendment Cancel",
+      "reasonconfirmationMessage" : "Reason For Cancel.",
+      "cancelconfirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "confirmButton" : "Confirm",
+      "canceledMessage" : "CONTRACT AMENDMENT CANCELED SUCCESSFULLY.",
+      "reasonForCancel" : "The amendment was created against the wrong counterparty."
+    },
+    "copyByContract" : {
+      "menuItem" : "Copy By Contract",
+      "class" : "Coffee Farmer Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "fixationBy" : "SELLER'S CALL",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "CopyByContract price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "contractcreatedMessage" : "CONTRACT CREATED SUCCESSFULLY."
+    }
+  }, {
+    "testCaseId" : "TC_CCM_003",
+    "login" : {
+      "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
+      "browser" : "chrome",
+      "username" : "Girishkumar.MR@invensoft.co.in",
+      "password" : "Admin#01",
+      "loggedInUser" : "Girish"
+    },
+    "general" : {
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "cpRef1" : "SUP-2026-00125",
+      "cpRef2" : "PO-ABC-4587",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "SELLER'S CALL",
+      "fixationTerms" : "Prior to 1st Notice Day",
+      "invoiceCurrency" : "EUR",
+      "paymentTerms" : "IMMEDIATE",
+      "paymentTermsDescription" : "---Advance payment: 100% payment required before order processing or service commencement.",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1"
+    },
+    "deliveryTerms" : {
+      "incoTerms" : "DDP",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China"
+    },
+    "validatedeliveryTerms" : {
+      "portOfDischarge" : "Busan",
+      "portOfLoading" : "Busan"
+    },
+    "documents" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE", "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE", "PHYTOSANITARY CERTIFICATE", "NON-RADIATION CERTIFICATE", "CERTIFICATE OF ORIGIN" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ]
+    },
+    "remarks" : {
+      "remarks" : "Delivery should meet the agreed quality specifications.",
+      "instructions" : "Price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+    },
+    "contract" : {
+      "createdMessage" : "CONTRACT CREATED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "pendingMenuItems" : "Modify,Copy By Contract,Cancel"
+    },
+    "approval" : {
+      "approveButton" : "Approve",
+      "approveIcon" : "check",
+      "confirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "approvedMessage" : "CONTRACT APPROVED SUCCESSFULLY",
+      "approvedStatus" : "Approved",
+      "approvedMenuItems" : "Copy By Contract,Amendment"
+    },
+    "modify" : {
+      "menuItem" : "Modify",
+      "class" : "Coffee Vendor Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Modifying price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "amendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Vendor Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "shipper" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "cpRef1" : "SUP-2026-00126",
+      "cpRef2" : "PO-ABC-4588",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "BUYER'S CALL",
+      "fixationTerms" : "All Fixations To Be Limited Earliest 1 Month Prior",
+      "invoiceCurrency" : "UGX",
+      "paymentTerms" : "Purchase Advance",
+      "paymentTermsDescription" : "---Advance payment: 100% payment----",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1",
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China",
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ],
+      "deselect" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE" ],
+      "remarks" : "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending"
+    },
+    "secondAmendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Vendor Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "demo (DE)",
+      "remarks" : "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Second amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved"
+    },
+    "productDetails" : [ {
+      "product" : "AC AAB",
+      "units" : "250",
+      "packing" : "60 Kg PP Bags",
+      "qty" : "",
+      "uom" : "",
+      "noOfLots" : "",
+      "price" : "1350",
+      "targetType" : "Delivery",
+      "targetDateRange" : "today+2 - today+3",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "",
+      "quality" : "cappuccino",
+      "certificationPremium" : "Carbon Compliance"
+    } ],
+    "commissionDetails" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1002",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1003",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1004",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1005",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1006",
+      "type" : "Value",
+      "value" : "5.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1007",
+      "type" : "Value",
+      "value" : "5.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1008",
+      "type" : "Value",
+      "value" : "5.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1009",
+      "type" : "Value",
+      "value" : "5.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1010",
+      "type" : "Value",
+      "value" : "5.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1011",
+      "type" : "Value",
+      "value" : "7.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1012",
+      "type" : "Value",
+      "value" : "7.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1013",
+      "type" : "Value",
+      "value" : "7.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1014",
+      "type" : "Value",
+      "value" : "7.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1015",
+      "type" : "Value",
+      "value" : "7.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1016",
+      "type" : "Value",
+      "value" : "10.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1017",
+      "type" : "Value",
+      "value" : "10.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1018",
+      "type" : "Value",
+      "value" : "10.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1019",
+      "type" : "Value",
+      "value" : "10.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1020",
+      "type" : "Value",
+      "value" : "10.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1021",
+      "type" : "Value",
+      "value" : "12.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1022",
+      "type" : "Value",
+      "value" : "12.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1023",
+      "type" : "Value",
+      "value" : "12.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1024",
+      "type" : "Value",
+      "value" : "12.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1025",
+      "type" : "Value",
+      "value" : "12.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1026",
+      "type" : "Value",
+      "value" : "15.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1027",
+      "type" : "Value",
+      "value" : "15.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1028",
+      "type" : "Value",
+      "value" : "15.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1029",
+      "type" : "Value",
+      "value" : "15.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1030",
+      "type" : "Value",
+      "value" : "15.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1031",
+      "type" : "Value",
+      "value" : "17.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1032",
+      "type" : "Value",
+      "value" : "17.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1033",
+      "type" : "Value",
+      "value" : "17.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1034",
+      "type" : "Value",
+      "value" : "17.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1035",
+      "type" : "Value",
+      "value" : "17.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1036",
+      "type" : "Value",
+      "value" : "20.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1037",
+      "type" : "Value",
+      "value" : "20.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1038",
+      "type" : "Value",
+      "value" : "20.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1039",
+      "type" : "Value",
+      "value" : "20.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1040",
+      "type" : "Value",
+      "value" : "20.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1041",
+      "type" : "Value",
+      "value" : "22.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1042",
+      "type" : "Value",
+      "value" : "22.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1043",
+      "type" : "Value",
+      "value" : "22.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1044",
+      "type" : "Value",
+      "value" : "22.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1045",
+      "type" : "Value",
+      "value" : "22.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1046",
+      "type" : "Value",
+      "value" : "25.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1047",
+      "type" : "Value",
+      "value" : "25.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1048",
+      "type" : "Value",
+      "value" : "25.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1049",
+      "type" : "Value",
+      "value" : "25.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1050",
+      "type" : "Value",
+      "value" : "25.0",
+      "valueUnit" : "INR/Gm"
+    } ],
+    "commissionDetailsValidation" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type1" : "Flat Amount",
+      "type2" : "Value",
+      "value" : "1.5"
+    } ],
+    "contractAmendment" : {
+      "amendedMessage" : "CONTRACT AMENDED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved",
+      "pendingMenuItems" : "Copy By Contract,Amendment Cancel",
+      "cancelledMenuItems" : "Copy By Contract,Amendment",
+      "amendmentcancelMenuItem" : "Amendment Cancel",
+      "reasonconfirmationMessage" : "Reason For Cancel.",
+      "cancelconfirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "confirmButton" : "Confirm",
+      "canceledMessage" : "CONTRACT AMENDMENT CANCELED SUCCESSFULLY.",
+      "reasonForCancel" : "The amendment was created against the wrong counterparty."
+    },
+    "copyByContract" : {
+      "menuItem" : "Copy By Contract",
+      "class" : "Coffee Farmer Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "fixationBy" : "SELLER'S CALL",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "CopyByContract price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "contractcreatedMessage" : "CONTRACT CREATED SUCCESSFULLY."
+    }
+  }, {
+    "testCaseId" : "TC_CCM_004",
+    "login" : {
+      "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
+      "browser" : "edge",
+      "username" : "Girishkumar.MR@invensoft.co.in",
+      "password" : "Admin#01",
+      "loggedInUser" : "Girish"
+    },
+    "general" : {
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "cpRef1" : "SUP-2026-00125",
+      "cpRef2" : "PO-ABC-4587",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "SELLER'S CALL",
+      "fixationTerms" : "Prior to 1st Notice Day",
+      "invoiceCurrency" : "EUR",
+      "paymentTerms" : "IMMEDIATE",
+      "paymentTermsDescription" : "---Advance payment: 100% payment required before order processing or service commencement.",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1"
+    },
+    "deliveryTerms" : {
+      "incoTerms" : "DDP",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China"
+    },
+    "validatedeliveryTerms" : {
+      "portOfDischarge" : "Busan",
+      "portOfLoading" : "Busan"
+    },
+    "documents" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE", "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE", "PHYTOSANITARY CERTIFICATE", "NON-RADIATION CERTIFICATE", "CERTIFICATE OF ORIGIN" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ]
+    },
+    "remarks" : {
+      "remarks" : "Delivery should meet the agreed quality specifications.",
+      "instructions" : "Price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+    },
+    "contract" : {
+      "createdMessage" : "CONTRACT CREATED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "pendingMenuItems" : "Modify,Copy By Contract,Cancel"
+    },
+    "approval" : {
+      "approveButton" : "Approve",
+      "approveIcon" : "check",
+      "confirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "approvedMessage" : "CONTRACT APPROVED SUCCESSFULLY",
+      "approvedStatus" : "Approved",
+      "approvedMenuItems" : "Copy By Contract,Amendment"
+    },
+    "modify" : {
+      "menuItem" : "Modify",
+      "class" : "Coffee Vendor Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Modifying price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "amendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Vendor Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "shipper" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "cpRef1" : "SUP-2026-00126",
+      "cpRef2" : "PO-ABC-4588",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "BUYER'S CALL",
+      "fixationTerms" : "All Fixations To Be Limited Earliest 1 Month Prior",
+      "invoiceCurrency" : "UGX",
+      "paymentTerms" : "Purchase Advance",
+      "paymentTermsDescription" : "---Advance payment: 100% payment----",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1",
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China",
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ],
+      "deselect" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE" ],
+      "remarks" : "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending"
+    },
+    "secondAmendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Vendor Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "demo (DE)",
+      "remarks" : "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Second amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved"
+    },
+    "productDetails" : [ {
+      "product" : "AC AAB",
+      "units" : "250",
+      "packing" : "60 Kg PP Bags",
+      "qty" : "",
+      "uom" : "",
+      "noOfLots" : "",
+      "price" : "1350",
+      "targetType" : "Delivery",
+      "targetDateRange" : "today+2 - today+3",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "",
+      "quality" : "cappuccino",
+      "certificationPremium" : "Carbon Compliance"
+    } ],
+    "commissionDetails" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1002",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1003",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1004",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1005",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1006",
+      "type" : "Value",
+      "value" : "5.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1007",
+      "type" : "Value",
+      "value" : "5.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1008",
+      "type" : "Value",
+      "value" : "5.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1009",
+      "type" : "Value",
+      "value" : "5.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1010",
+      "type" : "Value",
+      "value" : "5.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1011",
+      "type" : "Value",
+      "value" : "7.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1012",
+      "type" : "Value",
+      "value" : "7.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1013",
+      "type" : "Value",
+      "value" : "7.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1014",
+      "type" : "Value",
+      "value" : "7.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1015",
+      "type" : "Value",
+      "value" : "7.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1016",
+      "type" : "Value",
+      "value" : "10.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1017",
+      "type" : "Value",
+      "value" : "10.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1018",
+      "type" : "Value",
+      "value" : "10.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1019",
+      "type" : "Value",
+      "value" : "10.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1020",
+      "type" : "Value",
+      "value" : "10.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1021",
+      "type" : "Value",
+      "value" : "12.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1022",
+      "type" : "Value",
+      "value" : "12.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1023",
+      "type" : "Value",
+      "value" : "12.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1024",
+      "type" : "Value",
+      "value" : "12.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1025",
+      "type" : "Value",
+      "value" : "12.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1026",
+      "type" : "Value",
+      "value" : "15.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1027",
+      "type" : "Value",
+      "value" : "15.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1028",
+      "type" : "Value",
+      "value" : "15.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1029",
+      "type" : "Value",
+      "value" : "15.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1030",
+      "type" : "Value",
+      "value" : "15.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1031",
+      "type" : "Value",
+      "value" : "17.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1032",
+      "type" : "Value",
+      "value" : "17.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1033",
+      "type" : "Value",
+      "value" : "17.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1034",
+      "type" : "Value",
+      "value" : "17.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1035",
+      "type" : "Value",
+      "value" : "17.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1036",
+      "type" : "Value",
+      "value" : "20.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1037",
+      "type" : "Value",
+      "value" : "20.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1038",
+      "type" : "Value",
+      "value" : "20.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1039",
+      "type" : "Value",
+      "value" : "20.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1040",
+      "type" : "Value",
+      "value" : "20.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1041",
+      "type" : "Value",
+      "value" : "22.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1042",
+      "type" : "Value",
+      "value" : "22.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1043",
+      "type" : "Value",
+      "value" : "22.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1044",
+      "type" : "Value",
+      "value" : "22.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1045",
+      "type" : "Value",
+      "value" : "22.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1046",
+      "type" : "Value",
+      "value" : "25.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1047",
+      "type" : "Value",
+      "value" : "25.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1048",
+      "type" : "Value",
+      "value" : "25.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1049",
+      "type" : "Value",
+      "value" : "25.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1050",
+      "type" : "Value",
+      "value" : "25.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1051",
+      "type" : "Value",
+      "value" : "27.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1052",
+      "type" : "Value",
+      "value" : "27.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1053",
+      "type" : "Value",
+      "value" : "27.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1054",
+      "type" : "Value",
+      "value" : "27.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1055",
+      "type" : "Value",
+      "value" : "27.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1056",
+      "type" : "Value",
+      "value" : "30.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1057",
+      "type" : "Value",
+      "value" : "30.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1058",
+      "type" : "Value",
+      "value" : "30.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1059",
+      "type" : "Value",
+      "value" : "30.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1060",
+      "type" : "Value",
+      "value" : "30.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1061",
+      "type" : "Value",
+      "value" : "32.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1062",
+      "type" : "Value",
+      "value" : "32.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1063",
+      "type" : "Value",
+      "value" : "32.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1064",
+      "type" : "Value",
+      "value" : "32.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1065",
+      "type" : "Value",
+      "value" : "32.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1066",
+      "type" : "Value",
+      "value" : "35.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1067",
+      "type" : "Value",
+      "value" : "35.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1068",
+      "type" : "Value",
+      "value" : "35.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1069",
+      "type" : "Value",
+      "value" : "35.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1070",
+      "type" : "Value",
+      "value" : "35.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1071",
+      "type" : "Value",
+      "value" : "37.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1072",
+      "type" : "Value",
+      "value" : "37.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1073",
+      "type" : "Value",
+      "value" : "37.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1074",
+      "type" : "Value",
+      "value" : "37.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1075",
+      "type" : "Value",
+      "value" : "37.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1076",
+      "type" : "Value",
+      "value" : "40.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1077",
+      "type" : "Value",
+      "value" : "40.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1078",
+      "type" : "Value",
+      "value" : "40.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1079",
+      "type" : "Value",
+      "value" : "40.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1080",
+      "type" : "Value",
+      "value" : "40.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1081",
+      "type" : "Value",
+      "value" : "42.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1082",
+      "type" : "Value",
+      "value" : "42.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1083",
+      "type" : "Value",
+      "value" : "42.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1084",
+      "type" : "Value",
+      "value" : "42.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1085",
+      "type" : "Value",
+      "value" : "42.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1086",
+      "type" : "Value",
+      "value" : "45.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1087",
+      "type" : "Value",
+      "value" : "45.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1088",
+      "type" : "Value",
+      "value" : "45.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1089",
+      "type" : "Value",
+      "value" : "45.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1090",
+      "type" : "Value",
+      "value" : "45.0",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1091",
+      "type" : "Value",
+      "value" : "47.5",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1092",
+      "type" : "Value",
+      "value" : "47.5",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1093",
+      "type" : "Value",
+      "value" : "47.5",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1094",
+      "type" : "Value",
+      "value" : "47.5",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1095",
+      "type" : "Value",
+      "value" : "47.5",
+      "valueUnit" : "INR/Gm"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1096",
+      "type" : "Value",
+      "value" : "50.0",
+      "valueUnit" : "INR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1097",
+      "type" : "Value",
+      "value" : "50.0",
+      "valueUnit" : "EUR/Kg"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1098",
+      "type" : "Value",
+      "value" : "50.0",
+      "valueUnit" : "INR/MT"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1099",
+      "type" : "Value",
+      "value" : "50.0",
+      "valueUnit" : "INR/LB"
+    }, {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1100",
+      "type" : "Value",
+      "value" : "50.0",
+      "valueUnit" : "INR/Gm"
+    } ],
+    "commissionDetailsValidation" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type1" : "Flat Amount",
+      "type2" : "Value",
+      "value" : "1.5"
+    } ],
+    "contractAmendment" : {
+      "amendedMessage" : "CONTRACT AMENDED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved",
+      "pendingMenuItems" : "Copy By Contract,Amendment Cancel",
+      "cancelledMenuItems" : "Copy By Contract,Amendment",
+      "amendmentcancelMenuItem" : "Amendment Cancel",
+      "reasonconfirmationMessage" : "Reason For Cancel.",
+      "cancelconfirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "confirmButton" : "Confirm",
+      "canceledMessage" : "CONTRACT AMENDMENT CANCELED SUCCESSFULLY.",
+      "reasonForCancel" : "The amendment was created against the wrong counterparty."
+    },
+    "copyByContract" : {
+      "menuItem" : "Copy By Contract",
+      "class" : "Coffee Farmer Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "fixationBy" : "SELLER'S CALL",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "CopyByContract price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "contractcreatedMessage" : "CONTRACT CREATED SUCCESSFULLY."
+    }
+  }, {
+    "testCaseId" : "TC_CCM_NPE_001",
+    "login" : {
+      "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
+      "browser" : "edge",
+      "username" : "Girishkumar.MR@invensoft.co.in",
+      "password" : "Admin#01",
+      "loggedInUser" : "Girish"
+    },
+    "general" : {
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "NPE",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "cpRef1" : "SUP-2026-00125",
+      "cpRef2" : "PO-ABC-4587",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "SELLER'S CALL",
+      "fixationTerms" : "Prior to 1st Notice Day",
+      "invoiceCurrency" : "EUR",
+      "paymentTerms" : "IMMEDIATE",
+      "paymentTermsDescription" : "---Advance payment: 100% payment required before order processing or service commencement.",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1"
+    },
+    "deliveryTerms" : {
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China"
+    },
+    "validatedeliveryTerms" : {
+      "portOfDischarge" : "Busan",
+      "portOfLoading" : "Busan"
+    },
+    "documents" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE", "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE", "PHYTOSANITARY CERTIFICATE", "NON-RADIATION CERTIFICATE", "CERTIFICATE OF ORIGIN" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ]
+    },
+    "remarks" : {
+      "remarks" : "Delivery should meet the agreed quality specifications.",
+      "instructions" : "Price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+    },
+    "contract" : {
+      "createdMessage" : "CONTRACT CREATED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "pendingMenuItems" : "Modify,Copy By Contract,Cancel"
+    },
+    "approval" : {
+      "approveButton" : "Approve",
+      "approveIcon" : "check",
+      "confirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "approvedMessage" : "CONTRACT APPROVED SUCCESSFULLY",
+      "approvedStatus" : "Approved",
+      "approvedMenuItems" : "Copy By Contract,Amendment"
+    },
+    "modify" : {
+      "menuItem" : "Modify",
+      "class" : "Coffee Vendor Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Modifying price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "amendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "NPE",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "shipper" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "cpRef1" : "SUP-2026-00126",
+      "cpRef2" : "PO-ABC-4588",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "BUYER'S CALL",
+      "fixationTerms" : "All Fixations To Be Limited Earliest 1 Month Prior",
+      "invoiceCurrency" : "UGX",
+      "paymentTerms" : "Purchase Advance",
+      "paymentTermsDescription" : "---Advance payment: 100% payment----",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1",
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China",
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ],
+      "deselect" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE" ],
+      "remarks" : "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending"
+    },
+    "secondAmendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "NPE",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "demo (DE)",
+      "remarks" : "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Second amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved"
+    },
+    "productDetails" : [ {
+      "product" : "AC A ",
+      "units" : "200",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "3434",
+      "uom" : "Kg",
+      "noOfLots" : "1000",
+      "price" : "1220",
+      "targetType" : "Arrival",
+      "targetDateRange" : "today - today ",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "Oct-2026",
+      "quality" : "quality test",
+      "certificationPremium" : "UTZ"
+    } ],
+    "commissionDetails" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "EUR/Kg"
+    } ],
+    "commissionDetailsValidation" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type1" : "Flat Amount",
+      "type2" : "Value",
+      "value" : "1.5"
+    } ],
+    "contractAmendment" : {
+      "amendedMessage" : "CONTRACT AMENDED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved",
+      "pendingMenuItems" : "Copy By Contract,Amendment Cancel",
+      "cancelledMenuItems" : "Copy By Contract,Amendment",
+      "amendmentcancelMenuItem" : "Amendment Cancel",
+      "reasonconfirmationMessage" : "Reason For Cancel.",
+      "cancelconfirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "confirmButton" : "Confirm",
+      "canceledMessage" : "CONTRACTS CANCELLED SUCCESSFULLY",
+      "reasonForCancel" : "The amendment was created against the wrong counterparty."
+    },
+    "copyByContract" : {
+      "menuItem" : "Copy By Contract",
+      "class" : "Coffee Farmer Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "fixationBy" : "SELLER'S CALL",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "CopyByContract price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "contractcreatedMessage" : "CONTRACT CREATED SUCCESSFULLY."
+    }
+  }, {
+    "testCaseId" : "TC_CCM_PTBF_001",
+    "login" : {
+      "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
+      "browser" : "edge",
+      "username" : "Girishkumar.MR@invensoft.co.in",
+      "password" : "Admin#01",
+      "loggedInUser" : "Girish"
+    },
+    "general" : {
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "PTBF",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "cpRef1" : "SUP-2026-00125",
+      "cpRef2" : "PO-ABC-4587",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "SELLER'S CALL",
+      "fixationTerms" : "Prior to 1st Notice Day",
+      "invoiceCurrency" : "EUR",
+      "paymentTerms" : "IMMEDIATE",
+      "paymentTermsDescription" : "---Advance payment: 100% payment required before order processing or service commencement.",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1"
+    },
+    "deliveryTerms" : {
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China"
+    },
+    "validatedeliveryTerms" : {
+      "portOfDischarge" : "Busan",
+      "portOfLoading" : "Busan"
+    },
+    "documents" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE", "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE", "PHYTOSANITARY CERTIFICATE", "NON-RADIATION CERTIFICATE", "CERTIFICATE OF ORIGIN" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ]
+    },
+    "remarks" : {
+      "remarks" : "Delivery should meet the agreed quality specifications.",
+      "instructions" : "Price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+    },
+    "contract" : {
+      "createdMessage" : "CONTRACT CREATED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "pendingMenuItems" : "Modify,Copy By Contract,Cancel"
+    },
+    "approval" : {
+      "approveButton" : "Approve",
+      "approveIcon" : "check",
+      "confirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "approvedMessage" : "CONTRACT APPROVED SUCCESSFULLY",
+      "approvedStatus" : "Approved",
+      "approvedMenuItems" : "Copy By Contract,Amendment"
+    },
+    "modify" : {
+      "menuItem" : "Modify",
+      "class" : "Coffee Farmer Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Modifying price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "amendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "PTBF",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "Default (DND)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "shipper" : "India Coffee Farms (No. 12, Kushalnagar)",
+      "cpRef1" : "SUP-2026-00126",
+      "cpRef2" : "PO-ABC-4588",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "BUYER'S CALL",
+      "fixationTerms" : "All Fixations To Be Limited Earliest 1 Month Prior",
+      "invoiceCurrency" : "UGX",
+      "paymentTerms" : "Purchase Advance",
+      "paymentTermsDescription" : "---Advance payment: 100% payment----",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1",
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China",
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ],
+      "deselect" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE" ],
+      "remarks" : "Amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending"
+    },
+    "secondAmendment" : {
+      "menuItem" : "Amendment",
+      "classFieldState" : "disabled",
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "PTBF",
+      "fieldState" : "disabled",
+      "Contract No." : "",
+      "Contract Date" : "",
+      "Amend No." : "",
+      "billingLocation" : "demo (DE)",
+      "remarks" : "Second amendment delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Second amendment price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Second amendment pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved"
+    },
+    "productDetails" : [ {
+      "product" : "AC A ",
+      "units" : "200",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "3434",
+      "uom" : "Kg",
+      "noOfLots" : "1000",
+      "differential" : "1000",
+      "price" : "1220",
+      "targetType" : "Arrival",
+      "targetDateRange" : "today - today ",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "Oct-2026",
+      "quality" : "quality test",
+      "certificationPremium" : "UTZ"
+    } ],
+    "commissionDetails" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "EUR/Kg"
+    } ],
+    "commissionDetailsValidation" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type1" : "Flat Amount",
+      "type2" : "Value",
+      "value" : "1.5"
+    } ],
+    "contractAmendment" : {
+      "amendedMessage" : "CONTRACT AMENDED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "approvedStatus" : "Approved",
+      "pendingMenuItems" : "Copy By Contract,Amendment Cancel",
+      "cancelledMenuItems" : "Copy By Contract,Amendment",
+      "amendmentcancelMenuItem" : "Amendment Cancel",
+      "reasonconfirmationMessage" : "Reason For Cancel.",
+      "cancelconfirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "confirmButton" : "Confirm",
+      "canceledMessage" : "CONTRACTS CANCELLED SUCCESSFULLY",
+      "reasonForCancel" : "The amendment was created against the wrong counterparty."
+    },
+    "copyByContract" : {
+      "menuItem" : "Copy By Contract",
+      "class" : "Coffee Farmer Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "fixationBy" : "SELLER'S CALL",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "CopyByContract delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "CopyByContract price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "CopyByContract pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "contractcreatedMessage" : "CONTRACT CREATED SUCCESSFULLY."
+    }
+  }, {
+    "testCaseId" : "TC_CCM_SI_001",
+    "login" : {
+      "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
+      "browser" : "chrome",
+      "username" : "Girishkumar.MR@invensoft.co.in",
+      "password" : "Admin#01",
+      "loggedInUser" : "Girish"
+    },
+    "general" : {
+      "class" : "Coffee Vendor Purchase Contract with SI",
+      "pricing" : "FLAT PRICE",
+      "billingLocation" : "No. 122 (MSL2)",
+      "shippingLocation" : "No. 122 (MSL2)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "counterpartyAddress" : "No. 77",
+      "billingLocationPO" : "No. 122",
+      "counterpartyNamePO" : "ABC Coffee Supplier",
+      "cpRef1" : "SUP-2026-00125",
+      "cpRef2" : "PO-ABC-4587",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "SELLER'S CALL",
+      "fixationTerms" : "Prior to 1st Notice Day",
+      "invoiceCurrency" : "EUR",
+      "paymentTerms" : "IMMEDIATE",
+      "paymentTermsDescription" : "---Advance payment: 100% payment required before order processing or service commencement.",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1"
+    },
+    "productDetails" : [ {
+      "product" : "AC A ",
+      "units" : "200",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "10000",
+      "uom" : "Kg",
+      "noOfLots" : "1000",
+      "price" : "1220",
+      "targetType" : "Arrival",
+      "targetDateRange" : "today - today ",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "Oct-2026",
+      "quality" : "quality test",
+      "certificationPremium" : "UTZ"
+    } ],
+    "commissionDetails" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "EUR/Kg"
+    } ],
+    "commissionDetailsValidation" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type1" : "Flat Amount",
+      "type2" : "Value",
+      "value" : "1.5"
+    } ],
+    "deliveryTerms" : {
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China"
+    },
+    "modify" : {
+      "menuItem" : "Modify",
+      "class" : "Coffee Vendor Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "No. 122 (MSL2)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Modifying price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "validatedeliveryTerms" : {
+      "portOfDischarge" : "Busan",
+      "portOfLoading" : "Busan"
+    },
+    "documents" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE", "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE", "PHYTOSANITARY CERTIFICATE", "NON-RADIATION CERTIFICATE", "CERTIFICATE OF ORIGIN" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ]
+    },
+    "modifyDocuments" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "WEIGHT AND QUALITY CERTIFICATE" ],
+      "deselect" : [ "INSURANCE CERTIFICATE", "PREFERENTIAL ENTRY CERTIFICATE" ]
+    },
+    "remarks" : {
+      "remarks" : "Delivery should meet the agreed quality specifications.",
+      "instructions" : "Price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+    },
+    "contract" : {
+      "createdMessage" : "CONTRACT CREATED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "pendingMenuItems" : "Modify,Copy By Contract,Cancel"
+    },
+    "approval" : {
+      "approveButton" : "Approve",
+      "approveIcon" : "check",
+      "confirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "approvedMessage" : "CONTRACT APPROVED SUCCESSFULLY",
+      "approvedStatus" : "Approved",
+      "approvedMenuItems" : "Copy By Contract,Amendment"
+    },
+    "contractShippingDetails" : {
+      "contractNo" : "PO-2051",
+      "shippingInstruction" : "P-SI-0146",
+      "approvedShippingInstruction" : ""
+    },
+    "contractSelection" : {
+      "contractNoAndDate" : "PO-0027 & 24 Jun 2026",
+      "counterpartyName" : "ABC Coffee Supplier",
+      "billingLocation" : "100, MG Road",
+      "counterpartyAddress" : "No. 77"
+    },
+    "instructionDetails" : {
+      "instructionType" : "AUTO",
+      "instructionNo" : "AUTO",
+      "date" : "28-10-2026",
+      "bookingRefNo" : "BK-20261029-001",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "shipToLocation" : "No. 122 (MSL2)",
+      "product" : "AC A",
+      "balanceQtyToInstruct" : "",
+      "balanceQty" : "",
+      "units" : "11",
+      "packing" : "1 MT Big Bags",
+      "qty" : "10000",
+      "qtyValidationMessage" : "Qty. Must Be Less Than Or Equal To Balance Qty",
+      "fromDate" : "28-10-2026",
+      "toDate" : "28-10-2026"
+    },
+    "shipmentDetails" : {
+      "shippingLine" : "Shipping Line 2 (SL2)",
+      "forwardingAgent" : "Transporter (busan)",
+      "freightTerms" : "Terms",
+      "portOfLoading" : "",
+      "portOfDischarge" : "",
+      "finalDestination" : "",
+      "containerStatus" : "LCL/FCL",
+      "etaAtLoadPort" : "",
+      "etaAtDischargePort" : "",
+      "etd" : "",
+      "noOfContainers" : "20",
+      "consignee" : "Consignee 2 (CN2)",
+      "consigneeDescription" : "Global Coffee Trading Ltd.",
+      "notify1" : "Notify 1 (NT1)",
+      "notify1Description" : "---Global Shipping Services Ltd.",
+      "notify2" : "Notify 2 (NT2)",
+      "notify2Description" : "---Ocean Freight Solutions Pvt. Ltd.",
+      "notify3" : "Notify 3 (NT3)",
+      "notify3Description" : "---Notify Party 1 as per Contract"
+    },
+    "bagMarks" : [ {
+      "bagMark1" : "ABC COFFEE"
+    }, {
+      "bagMark2" : "PRODUCT OF INDIA"
+    }, {
+      "bagMark3" : "CONTRACT PO-0027"
+    }, {
+      "bagMark4" : "CROP YEAR 2026-2027"
+    }, {
+      "bagMark5" : "NET WEIGHT 60 KG"
+    } ],
+    "remarksAndInstructions" : {
+      "remarks" : "Please ensure the coffee bags are properly packed and inspected before shipment.",
+      "instructions" : "Ship the goods within the specified shipment period. Verify bag marks, quantity, and shipping documents before dispatch."
+    },
+    "contractDetails" : {
+      "contractNo" : "PO-2051"
+    },
+    "modifyinstructionDetails" : {
+      "date" : "28-10-2026",
+      "bookingRefNo" : "BK-20261029-002",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "shipToLocation" : "No. 122 (MSL2)",
+      "product" : "AC A",
+      "balanceQtyToInstruct" : "",
+      "balanceQty" : "",
+      "units" : "12",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "10000",
+      "qtyValidationMessage" : "Qty. Must Be Less Than Or Equal To Balance Qty",
+      "fromDate" : "28-10-2026",
+      "toDate" : "28-10-2026",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "modifyshipmentDetails" : {
+      "shippingLine" : "Maersk (SL1)",
+      "forwardingAgent" : "Purchase agent (00)",
+      "freightTerms" : "Terms",
+      "portOfLoading" : "Busan",
+      "portOfDischarge" : "Geneva",
+      "finalDestination" : "",
+      "containerStatus" : "FCL/FCL",
+      "etaAtLoadPort" : "",
+      "etaAtDischargePort" : "",
+      "etd" : "",
+      "noOfContainers" : "10",
+      "consignee" : "Consignee 2 (CN2)",
+      "consigneeDescription" : "modify Global Coffee Trading Ltd.",
+      "notify1" : "Notify 1 (NT1)",
+      "notify1Description" : "modify Global Shipping Services Ltd.",
+      "notify2" : "Notify 2 (NT2)",
+      "notify2Description" : "modify Ocean Freight Solutions Pvt. Ltd.",
+      "notify3" : "Notify 3 (NT3)",
+      "notify3Description" : "modifyNotify Party 1 as per Contract"
+    },
+    "modifybagMarks" : [ {
+      "bagMark1" : "Modified ABC COFFEE"
+    }, {
+      "bagMark2" : "Modified PRODUCT OF INDIA"
+    }, {
+      "bagMark3" : "Modified CONTRACT PO-0027"
+    }, {
+      "bagMark4" : "Modified CROP YEAR 2026-2027"
+    }, {
+      "bagMark5" : "Modified NET WEIGHT 60 KG"
+    } ],
+    "modifyRemarksAndInstructions" : {
+      "remarks" : "Modified Please ensure the coffee bags are properly packed and inspected before shipment.",
+      "instructions" : "Modified Ship the goods within the specified shipment period. Verify bag marks, quantity, and shipping documents before dispatch."
+    },
+    "modifyDocument" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "INSURANCE CERTIFICATE", "PREFERENTIAL ENTRY CERTIFICATE" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE" ]
+    }
+  } ],
+  "approval" : {
+    "approveButton": "Approve",
+    "approveIcon": "check",
+    "confirmationMessage": "Are you sure that you want to proceed ?",
+    "yesButton": "Yes",
+    "noButton": "No",
+    "approvedMessage": "CONTRACT APPROVED SUCCESSFULLY",
+    "approvedStatus": "Approved",
+    "approvedMenuItems": "Cancel,Modify"
+
+  },
+{
+  "testCaseId": "TC_GRN_001",
+  "grnBasicDetails": {
+    "captureGRN": "Single GRN per Truck",
+    "grnNo": "AUTO",
+    "date": "",
+    "location": "No. 122 (MSL2)",
+    "counterparty": "ABC Coffee Supplier (No. 77)",
+    "cpReferenceNo": "CPR-120",
+    "cpReferenceDate": "",
+    "otherReferenceNo": "REF-989",
+    "otherReferenceDate": "",
+    "remarks": "Truck received at warehouse with all supporting documents verified.",
+    "recordWeight": "25000"
+  },
+  {
+    "grnTruckDetails": {
+      "transporter": "Purchase agent",
+      "truckManufacture": "Tata Motors",
+      "truckPlateNumber": "KA01AB1234",
+      "truckColor": "White",
+      "tareWeight": "12000",
+      "registrationCertificate": "TEST-RC-GRN-001.pdf",
+      "companyRefNumber": "ABC/GRN/2026/0045",
+      "transporterReferenceNumber": "ABC/TRN/2026/0089",
+      "driverName": "Rajesh Kumar",
+      "driverLicenseNo": "KA0120260012345"
+    },
+    "grnProductDetails": [
+      {
+        "batchNumber": "Auto",
+        "contractSI": "SI-0027",
+        "product": "AC A ",
+        "balance": "25000",
+        "season": "2026-2027",
+        "warehouseZone": "Mys-Loc-2-WH 1 -- ML2-Zone1",
+        "units": "200",
+        "packing": "60 Kg Jute Bags",
+        "grossQty": "25000",
+        "netQty": "24500",
+        "fetchWeight": "24500",
+        "sustainabilityDetails": "",
+        "action": ""
+      }
+    ],
+    "remarks": "Truck received at warehouse. Product quality and supporting documents verified.",
+    "recordWeight": "24500"
+  }
+}
 }

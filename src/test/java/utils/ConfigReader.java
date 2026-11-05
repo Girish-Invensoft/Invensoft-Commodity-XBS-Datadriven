@@ -7,8 +7,8 @@ import java.util.Properties;
 
 public class ConfigReader {
 
-    private static final String PROPERTY_FILE_PATH = "src/test/resources/values.properties";
     private static final String CONFIG_FILE = "config/values.properties";
+    private static final String PROPERTY_FILE_PATH = "src/test/resources/" + CONFIG_FILE;
     private static Properties properties;
 
     static {
@@ -77,4 +77,6 @@ public class ConfigReader {
             throw new RuntimeException("Unable to update values.properties", e);
         }
     }
+
+
 }

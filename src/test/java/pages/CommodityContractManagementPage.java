@@ -12,6 +12,9 @@ import org.testng.Assert;
 import utils.DateExpressionResolver;
 import utils.WebDriverCommonLibrary;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
@@ -116,6 +119,7 @@ public class CommodityContractManagementPage{
         // ============CLICK DROPDOWN=============  //
         webDriverCommonLibrary.explicitWait(driver, dropdown);
         webDriverCommonLibrary.scrollIntoTheView(driver, dropdown);
+        webDriverCommonLibrary.waitForLoadingOverlay();
         dropdown.click();
 
         // =========SEARCH BOX ============== //
@@ -189,31 +193,67 @@ public class CommodityContractManagementPage{
 //        }
 //    }
 
-    public void selectModifiedDropdownValue(String section, String field, String value) {
+    public void selectModifiedDropdownValue(
+            String section, String field, String value) {
+
         WebElement dropdown;
 
-        if (section.equalsIgnoreCase("Product Details") && field.equalsIgnoreCase("Product")) {
-            dropdown = driver.findElement(By.xpath("//div[@formarrayname='item_details']"
-                    + "//tbody/tr[1]/td[2]//p-dropdown//span[@role='combobox']"));
+        if (section.equalsIgnoreCase("Product Details")
+                && field.equalsIgnoreCase("Product")) {
+            dropdown = driver.findElement(By.xpath(
+                    "//div[@formarrayname='item_details']"
+                            + "//tbody/tr[1]/td[2]//p-dropdown//span[@role='combobox']"));
         } else {
             dropdown = findNormalDropdown(section, field);
         }
+
         webDriverCommonLibrary.scrollIntoTheView(driver, dropdown);
         webDriverCommonLibrary.clickWithOverlayRetry(dropdown);
 
-        // Scope to the open panel so old/hidden overlays are not picked up
+
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//div[contains(@class,'p-dropdown-panel')]//input[@role='searchbox']")));
+
+        // Wait for the open, visible panel; this avoids matching an old hidden panel.
+        WebElement panel = wait.until(d -> d.findElements(By.xpath(
+                        "//div[contains(@class,'p-dropdown-panel')]"))
+                .stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .orElse(null));
+
+        WebElement searchBox = wait.until(d -> {
+            List<WebElement> boxes = panel.findElements(
+                    By.xpath(".//input[@role='searchbox']"));
+            return boxes.stream()
+                    .filter(WebElement::isDisplayed)
+                    .findFirst()
+                    .orElse(null);
+        });
+
         searchBox.click();
         searchBox.clear();
         searchBox.sendKeys(value);
 
-        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[contains(@class,'p-dropdown-panel')]"
-                        + "//li[@role='option' and normalize-space()='" + value + "']")));
-        webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, option);
+        System.out.println("Dropdown search value: ["
+                + searchBox.getAttribute("value") + "]");
+
+        By optionLocator = By.xpath(
+                ".//li[@role='option' and normalize-space(.)="
+                        + xpathLiteral(value) + "]");
+
+        WebElement option = wait.until(d -> {
+            List<WebElement> options = panel.findElements(optionLocator);
+            return options.stream()
+                    .filter(WebElement::isDisplayed)
+                    .filter(WebElement::isEnabled)
+                    .findFirst()
+                    .orElse(null);
+        });
+
+        System.out.println("Option selected: [" + option.getText().trim() + "]");
+        option.click();
     }
+
 
     private WebElement findNormalDropdown(String section, String field) {
         // Works for both empty and already-filled dropdowns (label does not change)
@@ -278,7 +318,6 @@ public class CommodityContractManagementPage{
             driver.manage().timeouts().implicitlyWait(Duration.ZERO);
 
             try {
-
                 dropdownLocator = new WebDriverWait(driver, Duration.ofSeconds(10))
                         .ignoring(StaleElementReferenceException.class)
                         .until(d -> {
@@ -289,14 +328,12 @@ public class CommodityContractManagementPage{
                                     return insideField;
                                 }
                             }
-
                             // 2. If not found, try above-field dropdown
                             for (WebElement e : d.findElements(aboveField)) {
                                 if (e.isDisplayed() && e.isEnabled()) {
                                     return aboveField;
                                 }
                             }
-
                             return null;
                         });
 
@@ -2138,10 +2175,32 @@ public class CommodityContractManagementPage{
         webDriverCommonLibrary.highLightTheElement(driver, driver.findElement(primeIconButtonLocator(icon)));
     }
 
+//    public void highlightSpanContaining(String text) {
+//        WebElement element = driver.findElement(By.xpath("//span[contains(normalize-space(),'" + text + "')]"));
+//        webDriverCommonLibrary.highLightTheElement(driver, element);
+//    }
+
     public void highlightSpanContaining(String text) {
-        WebElement element = driver.findElement(By.xpath("//span[contains(normalize-space(),'" + text + "')]"));
+        By locator = By.xpath("//span[contains(normalize-space(),'" + text + "')]");
+
+        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(d -> d.findElements(locator).stream()
+                        .filter(WebElement::isDisplayed)
+                        .findFirst()
+                        .orElse(null));
+
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block:'center'});", element);
+
         webDriverCommonLibrary.highLightTheElement(driver, element);
     }
+
+
+    public void highlighth3Containing(String text) {
+        WebElement element = driver.findElement(By.xpath("//h3[contains(normalize-space(),'" + text + "')]"));
+        webDriverCommonLibrary.highLightTheElement(driver, element);
+    }
+
 
     public void highlightTableSection(String heading) {
         WebElement element = driver.findElement(By.xpath("//*[normalize-space()='" + heading + "']"));
@@ -2193,6 +2252,16 @@ public class CommodityContractManagementPage{
         longTextArea.sendKeys(value);
     }
 
+    public void enterTextInSectionLongTextArea(String section, String field, String value) {
+        WebElement longTextArea = driver.findElement(By.xpath("//span[normalize-space()='"+section+"']/following::span[normalize-space()='"+field+"']/../..//textarea"));
+        webDriverCommonLibrary.explicitWait(driver, longTextArea);
+        webDriverCommonLibrary.scrollIntoTheView(driver, longTextArea);
+        webDriverCommonLibrary.explicitWaitVisibility(driver, longTextArea);
+        longTextArea.click();
+        longTextArea.clear();
+        longTextArea.sendKeys(value);
+    }
+
     public void enterPopupTextTextArea(String label, String value) {
         By loc = By.xpath("//span[normalize-space()='" + label + "']/following::textarea");
         WebElement popupTextArea = webDriverCommonLibrary.waitForFirstVisible(loc, 15);
@@ -2211,9 +2280,38 @@ public class CommodityContractManagementPage{
         checkbox.click();
     }
 
+    public void selectmodCheckbox(String label) {
+        By locator = By.xpath("//div[contains(@class,'field')]"
+                + "[normalize-space(translate(., '\u00A0', ' '))='" + label.trim() + "']"
+                + "/input[@type='checkbox']");
+
+        WebElement checkbox = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.presenceOfElementLocated(locator));
+
+        webDriverCommonLibrary.explicitWait(driver, checkbox);
+        webDriverCommonLibrary.scrollIntoTheView(driver, checkbox);
+        webDriverCommonLibrary.highLightTheElement(driver, checkbox);
+        checkbox.click();
+    }
+
+
     /** Clicks a checkbox whose label text contains this text (kept as the original: contains, not exact). */
     public void deselectCheckbox(String label) {
         WebElement checkbox = driver.findElement(By.xpath("//label[contains(@class,'doc-check')][normalize-space(span)='"+label+"']/input[@type='checkbox']"));
+        webDriverCommonLibrary.explicitWait(driver, checkbox);
+        webDriverCommonLibrary.scrollIntoTheView(driver, checkbox);
+        webDriverCommonLibrary.highLightTheElement(driver, checkbox);
+        checkbox.click();
+    }
+
+    public void deselectSICheckbox(String label) {
+        By locator = By.xpath("//div[contains(@class,'field')]"
+                + "[normalize-space(translate(., '\u00A0', ' '))='" + label.trim() + "']"
+                + "/input[@type='checkbox']");
+
+        WebElement checkbox = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.presenceOfElementLocated(locator));
+
         webDriverCommonLibrary.explicitWait(driver, checkbox);
         webDriverCommonLibrary.scrollIntoTheView(driver, checkbox);
         webDriverCommonLibrary.highLightTheElement(driver, checkbox);
@@ -2246,6 +2344,14 @@ public class CommodityContractManagementPage{
         webDriverCommonLibrary.highLightTheElement(driver, element);
         webDriverCommonLibrary.waitForSetTime(2000);
     }
+
+    public void highlightSpanByAriaLabel(String arg1,String arg2) {
+        WebElement element = driver.findElement(By.xpath("//span[contains(normalize-space(), '" + arg1 + "')]/following-sibling::span[contains(normalize-space(), '" + arg2 + "')]"));
+        webDriverCommonLibrary.scrollIntoTheView(driver, element);
+        webDriverCommonLibrary.explicitWait(driver, element);
+        webDriverCommonLibrary.highLightTheElement(driver, element);
+    }
+
 
     public void highlightDisabledSpanByAriaLabel(String ariaLabel) {
         WebElement element = driver.findElement(By.xpath("//div[contains(@class,'p-disabled')]/..//span[@aria-label='"+ariaLabel+"']"));
@@ -2651,7 +2757,7 @@ public class CommodityContractManagementPage{
 
     public void logout() {
         By userMenu = By.xpath("//div[@class='p-toolbar-group-end']//i[contains(@class,'bi-person-circle')]");
-        By logoutButton = By.xpath("//span[normalize-space()='Logout']");
+        By logoutButton = By.xpath("//span[normalize-space()='Log Out']");
 
         WebElement userMenuIcon = driver.findElement(userMenu);
         webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, userMenuIcon);
@@ -2708,6 +2814,14 @@ public class CommodityContractManagementPage{
         WebElement field = getField(section, fieldName, ariaLabel);
         webDriverCommonLibrary.waitForSetTime(2000);
         webDriverCommonLibrary.verifyFieldState(field, fieldName, expectedState);
+        webDriverCommonLibrary.highLightTheElement(driver, field);
+        verifyFieldValue(field, fieldName, expectedValue);
+    }
+
+
+    public void verifyField(String section, String fieldName, String expectedValue) {
+        WebElement field = getField(section,fieldName,expectedValue);
+//        webDriverCommonLibrary.waitForSetTime(2000);
         webDriverCommonLibrary.highLightTheElement(driver, field);
         verifyFieldValue(field, fieldName, expectedValue);
     }

@@ -5,6 +5,7 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -17,14 +18,13 @@ import org.testng.Assert;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.*;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.YearMonth;
-import java.util.List;
 import java.util.function.Function;
 
 import static java.lang.Thread.currentThread;
@@ -37,10 +37,31 @@ public class WebDriverCommonLibrary {
     private static final ObjectMapper MAPPER =
             new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     private static final By LOADING_OVERLAY = By.cssSelector(".loading-overlay");
+    private final By contractDateInput = By.xpath(
+            "//label[starts-with(normalize-space(.),'Date')]/following::input[@role='combobox'][1]");
 
+    private static final DateTimeFormatter APP_DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    private static String xp(String s) {   // safe XPath literal, handles apostrophes
+        return s.contains("'") ? "concat('" + s.replace("'", "', \"'\", '") + "')" : "'" + s + "'";
+    }
+
+   public By dateFieldLocator(String section, String field) {
+        return By.xpath("//label[@class='selected-label' and normalize-space(translate(.,'*',''))='"+field+"']/preceding-sibling::p-calendar//input");
+    }
+
+    public By dateCCMFieldLocator(String section, String field) {
+        return By.xpath("//*[contains(normalize-space(translate(.,'*','')),'"+field+"')]/preceding-sibling::p-calendar//input");
+    }
+
+    public By dateFieldLocatorSet(String section, String field) {
+        return By.xpath("//span[contains(@class,'p-float-label')][label[normalize-space(translate(.,'*',''))='"+field+"']]//input");
+    }
+    private static final ZoneId APP_ZONE = ZoneId.of("Asia/Kolkata");
     public WebDriverCommonLibrary(WebDriver driver) {
         this.driver = driver;
     }
+
 
     public WebElement explicitWait(WebDriver driver, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
@@ -412,23 +433,23 @@ public class WebDriverCommonLibrary {
         trigger.click();
     }
 
-    public void addWatermark(WebDriver driver, String watermarkText) {
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        String script = "var watermark = document.createElement('div');" +
-                "watermark.innerHTML = '" + watermarkText + "';" +
-                "watermark.style.position = 'fixed';" +
-                "watermark.style.bottom = '20px';" +
-                "watermark.style.right = '20px';" +
-                "watermark.style.zIndex = '999999';" +
-                "watermark.style.opacity = '0.6';" +
-                "watermark.style.fontSize = '14px';" +
-                "watermark.style.fontWeight = 'bold';" +
-                "watermark.style.pointerEvents = 'none';" +
-                "document.body.appendChild(watermark);";
-        js.executeScript(script);
-    }
+//    public void addWatermark(WebDriver driver, String watermarkText) {
+//
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//
+//        String script = "var watermark = document.createElement('div');" +
+//                "watermark.innerHTML = '" + watermarkText + "';" +
+//                "watermark.style.position = 'fixed';" +
+//                "watermark.style.bottom = '20px';" +
+//                "watermark.style.right = '20px';" +
+//                "watermark.style.zIndex = '999999';" +
+//                "watermark.style.opacity = '0.6';" +
+//                "watermark.style.fontSize = '14px';" +
+//                "watermark.style.fontWeight = 'bold';" +
+//                "watermark.style.pointerEvents = 'none';" +
+//                "document.body.appendChild(watermark);";
+//        js.executeScript(script);
+//    }
 
     public WebElement waitForElementToBeClickable(WebDriver driver, By locator) {
         WebElement ele = new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.elementToBeClickable(locator));
@@ -522,34 +543,69 @@ public class WebDriverCommonLibrary {
         }
     }
 
+
     public void waitForLoadingOverlay() {
+
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(3))
-                    .pollingEvery(Duration.ofMillis(50))
+            new WebDriverWait(driver, Duration.ofSeconds(30))
+                    .pollingEvery(Duration.ofMillis(100))
                     .until(d -> (Boolean) ((JavascriptExecutor) d).executeScript(
-                            "const o=document.querySelector('div.loading-overlay');" +
-                                    "if(!o) return true;" +
-                                    "const s=getComputedStyle(o), r=o.getBoundingClientRect();" +
-                                    "return s.display==='none' || s.visibility==='hidden' || s.opacity==='0'" +
-                                    " || s.pointerEvents==='none' || r.width===0 || r.height===0;"));
+                            "const o = document.querySelector('div.loading-overlay');" +
+                                    "if (!o) return true;" +
+                                    "const s = getComputedStyle(o);" +
+                                    "const r = o.getBoundingClientRect();" +
+                                    "return s.display === 'none' ||" +
+                                    "s.visibility === 'hidden' ||" +
+                                    "s.opacity === '0' ||" +
+                                    "s.pointerEvents === 'none' ||" +
+                                    "r.width === 0 || r.height === 0;"
+                    ));
+
+            System.out.println("Loading overlay disappeared successfully.");
+
         } catch (TimeoutException e) {
-            System.out.println("WARN: loading overlay still present after 10s");
+
+            throw new TimeoutException(
+                    "Loading overlay is still active after 30 seconds. " +
+                            "Dropdown interaction cancelled.",
+                    e
+            );
         }
     }
 
+
+
     public void clickWithOverlayRetry(WebElement element) {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+        // Wait before the first click
+        waitForLoadingOverlay();
+
         try {
+            wait.until(ExpectedConditions.elementToBeClickable(element));
             element.click();
+
         } catch (ElementClickInterceptedException e) {
-            System.out.println("Click intercepted. Waiting for loading overlay...");
+
+            System.out.println("Click intercepted. Retrying after overlay wait...");
+            debugClickInterceptedElement(element);
             waitForLoadingOverlay();
+
             try {
+                wait.until(ExpectedConditions.elementToBeClickable(element));
                 element.click();
+
             } catch (StaleElementReferenceException stale) {
-                throw new StaleElementReferenceException("Element became stale after loading overlay disappeared.", stale);
+
+                throw new StaleElementReferenceException(
+                        "Dropdown became stale during retry.",
+                        stale
+                );
             }
         }
     }
+
 
     public void waitForOverlayToDisappear(WebDriver driver) {
         new WebDriverWait(driver, Duration.ofSeconds(30)).until(d ->
@@ -625,6 +681,364 @@ public class WebDriverCommonLibrary {
                     }
                     return null;
                 });
+    }
+
+    public void addWatermark(WebDriver driver, String text) {
+        String logoBase64 = loadLogoBase64("/images/xbs-logo.png");
+
+        String script =
+                "var old = document.getElementById('qa-watermark'); if (old) old.remove();" +
+                        "var w = document.createElement('div'); w.id = 'qa-watermark';" +
+                        "w.style.cssText = 'position:fixed;right:16px;bottom:16px;z-index:2147483647;" +
+                        "pointer-events:none;display:flex;align-items:center;gap:8px;opacity:0.6;" +
+                        "background:rgba(255,255,255,0.9);padding:6px 10px;border-radius:6px;" +
+                        "font:12px Arial,sans-serif;color:#333;';" +
+                        "var img = document.createElement('img');" +
+                        "img.src = 'data:image/png;base64,' + arguments[0];" +
+                        "img.style.height = '28px';" +
+                        "var t = document.createElement('span'); t.textContent = arguments[1];" +
+                        "w.appendChild(img); w.appendChild(t); document.body.appendChild(w);";
+
+        ((JavascriptExecutor) driver).executeScript(script, logoBase64, text);
+    }
+
+    private String loadLogoBase64(String resourcePath) {
+        try (InputStream is = getClass().getResourceAsStream(resourcePath)) {
+            if (is == null) {
+                throw new IllegalStateException("Logo not found on classpath: " + resourcePath);
+            }
+            return Base64.getEncoder().encodeToString(is.readAllBytes());
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
+
+    public void verifyDateField(String section, String field, String dateExpression) {
+        By locator = dateFieldLocator(section, field);
+
+        LocalDate expectedBefore = DateExpressionResolver.resolve(dateExpression);
+
+        String shown = "";
+        try {
+            shown = new WebDriverWait(driver, Duration.ofSeconds(10)).until(d -> {
+                String v = d.findElement(locator).getAttribute("value");
+                return (v != null && !v.isBlank()) ? v.trim() : null;
+            });
+        } catch (TimeoutException ignored) { }
+
+        WebElement dateInput = driver.findElement(dateFieldLocator(section, field));
+        highLightTheElement(driver,dateInput);
+        LocalDate expectedAfter = DateExpressionResolver.resolve(dateExpression);
+
+        Assert.assertFalse(shown.isEmpty(), "[" + section + "] '" + field + "' is empty");
+
+        LocalDate actual;
+        try {
+            actual = LocalDate.parse(shown, APP_DATE_FORMAT);
+        } catch (DateTimeParseException e) {
+            throw new AssertionError("[" + section + "] '" + field + "' shows '" + shown
+                    + "', expected format dd-MM-yyyy");
+        }
+
+        Assert.assertTrue(actual.equals(expectedBefore) || actual.equals(expectedAfter),
+                "[" + section + "] '" + field + "' shows " + actual + " but '" + dateExpression
+                        + "' resolves to " + expectedAfter);
+    }
+
+    private By checklistInputLocator(String name) {
+        return By.xpath("//div[normalize-space(translate(., '\u00a0', ' '))=" + xp(name) + "]/input[@type='checkbox']");
+    }
+
+    public void verifyChecklistState(String names, boolean expectedSelected) {
+
+        List<String> failures = new ArrayList<>();
+
+        for (String name : names.split(",")) {
+
+            String item = name.trim();
+
+            if (item.isEmpty()) {
+                continue;
+            }
+
+            By locator = checklistInputLocator(item);
+
+            try {
+                new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .until(ExpectedConditions.presenceOfElementLocated(locator));
+
+            } catch (TimeoutException e) {
+
+                failures.add(
+                        "'" + item + "' not found on the page. "
+                                + "Checkboxes present: " + listCheckboxLabels()
+                );
+
+                continue;
+            }
+
+            List<WebElement> matches = driver.findElements(locator);
+
+            if (matches.isEmpty()) {
+                failures.add("'" + item + "' checkbox was not found.");
+                continue;
+            }
+
+            WebElement checkbox = matches.get(0);
+
+            if (!checkbox.isDisplayed()) {
+                failures.add(
+                        "'" + item + "' is present but hidden. "
+                                + "Check whether the correct tab or panel is open."
+                );
+                continue;
+            }
+
+            boolean selected = checkbox.isSelected();
+
+            // Green = selected; red = not selected.
+            if (selected) {
+                highLightCheckboxAndLabel(driver, checkbox);
+            } else {
+                highLightUncheckedCheckboxAndLabel(driver, checkbox);
+            }
+
+            // Verify the actual checkbox state against the expected state.
+            if (selected != expectedSelected) {
+                failures.add(
+                        "'" + item + "' is "
+                                + (selected ? "selected" : "not selected")
+                                + ", expected "
+                                + (expectedSelected ? "selected" : "not selected")
+                );
+            }
+        }
+
+        Assert.assertTrue(
+                failures.isEmpty(),
+                "Checklist verification failed: " + String.join("; ", failures)
+        );
+    }
+
+    /**
+     * Green highlight for a selected checkbox.
+     */
+    public void highLightCheckboxAndLabel(
+            WebDriver driver, WebElement checkbox) {
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center', inline:'nearest'});"
+//                        + "arguments[0].style.outline='3px solid #00C853';"
+                        + "arguments[0].style.outlineOffset='3px';"
+                        + "arguments[0].style.boxShadow='0 0 8px #00C853';"
+                        + "var p = arguments[0].parentElement;"
+                        + "if (p) {"
+//                        + "p.style.outline='2px solid #00C853';"
+                        + "p.style.outlineOffset='3px';"
+                        + "p.style.backgroundColor='rgba(0,200,83,0.15)';"
+                        + "}",
+                checkbox
+        );
+    }
+
+    /**
+     * Red highlight for a checkbox that is not selected.
+     */
+    public void highLightUncheckedCheckboxAndLabel(
+            WebDriver driver, WebElement checkbox) {
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center', inline:'nearest'});"
+//                        + "arguments[0].style.outline='3px solid #FF1744';"
+                        + "arguments[0].style.outlineOffset='3px';"
+                        + "arguments[0].style.boxShadow='0 0 8px #FF1744';"
+                        + "var p = arguments[0].parentElement;"
+                        + "if (p) {"
+//                        + "p.style.outline='2px solid #FF1744';"
+                        + "p.style.outlineOffset='3px';"
+                        + "p.style.backgroundColor='rgba(255,23,68,0.15)';"
+                        + "}",
+                checkbox
+        );
+    }
+
+    /**
+     * Lists checkbox parent text for failure messages.
+     */
+    private String listCheckboxLabels() {
+
+        List<String> labels = new ArrayList<>();
+
+        for (WebElement element : driver.findElements(
+                By.xpath("//input[@type='checkbox']/parent::div"))) {
+
+            if (labels.size() == 15) {
+                labels.add("...");
+                break;
+            }
+
+            try {
+                String text = element.getAttribute("textContent");
+
+                if (text == null) {
+                    text = "";
+                }
+
+                labels.add(
+                        "[" + text.replace('\u00a0', '~').trim()
+                                + (element.isDisplayed() ? "" : " (hidden)") + "]"
+                );
+
+            } catch (StaleElementReferenceException ignored) {
+                // Ignore elements that disappear during inspection.
+            }
+        }
+
+        return labels.size() + " listed: " + labels;
+    }
+
+    public void selectDate(String section, String field, String dateExpression) {
+        By locator = dateFieldLocator(section, field);
+
+        LocalDate target = DateExpressionResolver.resolve(dateExpression);
+        String text = target.format(APP_DATE_FORMAT);
+
+        WebElement input = findDisplayed(locator, Duration.ofSeconds(10));
+
+        // If this datepicker is already open, dismiss it before clicking the input.
+        if ("true".equals(input.getAttribute("aria-expanded"))) {
+            input.sendKeys(Keys.ESCAPE);
+        }
+
+        input.click();
+        input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
+        input.sendKeys(Keys.ESCAPE);
+
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(2), Duration.ofMillis(100))
+                    .until(d -> text.equals(input.getAttribute("value").trim()));
+        } catch (TimeoutException e) {
+            throw new AssertionError(
+                    "[" + section + "] '" + field + "' should be " + text
+                            + " ('" + dateExpression + "') but shows '"
+                            + input.getAttribute("value") + "'",
+                    e);
+        }
+    }
+
+    public void selectDates(String section, String field, String dateExpression) {
+        By locator = dateCCMFieldLocator(section, field);
+
+        LocalDate target = DateExpressionResolver.resolve(dateExpression);
+        String text = target.format(APP_DATE_FORMAT);
+
+        WebElement input = findDisplayed(locator, Duration.ofSeconds(10));
+
+        // If this datepicker is already open, dismiss it before clicking the input.
+        if ("true".equals(input.getAttribute("aria-expanded"))) {
+            input.sendKeys(Keys.ESCAPE);
+        }
+
+        input.click();
+        input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
+        input.sendKeys(Keys.ESCAPE);
+
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(2), Duration.ofMillis(100))
+                    .until(d -> text.equals(input.getAttribute("value").trim()));
+        } catch (TimeoutException e) {
+            throw new AssertionError(
+                    "[" + section + "] '" + field + "' should be " + text
+                            + " ('" + dateExpression + "') but shows '"
+                            + input.getAttribute("value") + "'",
+                    e);
+        }
+    }
+    private WebElement findDisplayed(By locator, Duration timeout) {
+        return new WebDriverWait(driver, timeout).until(d -> {
+            for (WebElement el : d.findElements(locator)) {
+                try {
+                    if (el.isDisplayed() && el.isEnabled()) {
+                        return el;
+                    }
+                } catch (StaleElementReferenceException ignored) { }
+            }
+            return null;   // keep polling
+        });
+    }
+
+    public void selectTheDate(String section, String field, String dateExpression) {
+
+        By locator = dateFieldLocatorSet(section, field);
+        LocalDate target = DateExpressionResolver.resolve(dateExpression);
+        String text = target.format(APP_DATE_FORMAT);
+
+        long start = System.currentTimeMillis();
+
+        WebElement input = findDisplayed(locator, Duration.ofSeconds(3));
+        highLightTheElement(driver, input);
+
+        input.click();
+        input.sendKeys(Keys.chord(Keys.CONTROL, "a"), text);
+        input.sendKeys(Keys.ENTER);          // commits typed value, closes overlay in PrimeNG
+
+        closeCalendarPopup();                // guaranteed close, selector-independent
+
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(2), Duration.ofMillis(100))
+                    .until(d -> text.equals(input.getAttribute("value").trim()));
+        } catch (TimeoutException e) {
+            throw new AssertionError("[" + section + "] '" + field + "' should be " + text
+                    + " ('" + dateExpression + "') but shows '" + input.getAttribute("value") + "'", e);
+        }
+        System.out.println("Date verified in " + (System.currentTimeMillis() - start) + " ms");
+    }
+
+    private void closeCalendarPopup() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        // Visible check using any common PrimeNG overlay class
+        String isOpenJs =
+                "return Array.from(document.querySelectorAll("
+                        + "'.p-datepicker, .p-datepicker-panel, p-calendar .p-overlay'))"
+                        + ".some(e => e.offsetParent !== null);";
+
+        if (Boolean.TRUE.equals(js.executeScript(isOpenJs))) {
+            // Outside click: PrimeNG listens for document clicks and hides the overlay
+            js.executeScript("document.activeElement && document.activeElement.blur();"
+                    + "document.body.click();");
+        }
+
+        // Short poll, no Selenium element lookup
+        long end = System.currentTimeMillis() + 2000;
+        while (System.currentTimeMillis() < end
+                && Boolean.TRUE.equals(js.executeScript(isOpenJs))) {
+            try { Thread.sleep(100); } catch (InterruptedException ignored) { }
+        }
+    }
+
+    public void debugClickInterceptedElement(WebElement element) {
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        Object result = js.executeScript(
+                "const r = arguments[0].getBoundingClientRect();" +
+                        "const x = r.left + r.width / 2;" +
+                        "const y = r.top + r.height / 2;" +
+                        "const e = document.elementFromPoint(x, y);" +
+                        "return {" +
+                        "target: arguments[0].outerHTML," +
+                        "receiver: e ? e.outerHTML : 'NULL'," +
+                        "x: x, y: y" +
+                        "};",
+                element
+        );
+
+        System.out.println("CLICK INTERCEPTION DEBUG: " + result);
     }
 
 }

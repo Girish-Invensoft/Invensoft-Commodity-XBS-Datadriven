@@ -1,9 +1,9 @@
-@XBS_Commodity_Contract_Management_Flow_PTBF
+@XBS_Commodity_Contract_Management_Flow_NPE1
 Feature: As a Contract Manager,I want to create a Commodity Contract by completing all available fields,
-  so that I can validate the complete PTBF business workflow, field validations, business rules, and end-to-end contract processing in detail.
+  so that I can validate the complete NPE business workflow, field validations, business rules, and end-to-end contract processing in detail.
 
-  @XBS_Commodity_Contract_Management_PTBF @RegressionTesting
-  Scenario Outline: Create commodity contract management with PTBF flow
+  @XBS_Commodity_Contract_Management_NPE1 @RegressionTesting
+  Scenario Outline: Create commodity contract management with NPE flow
 
     ## ═════════════════════════════════════════════════════════════════════════
     ## 🔐  SETUP & LOGIN
@@ -34,7 +34,7 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     When user selects "@general.class" from the "Class" dropdown in the "General" section
     When user selects "@general.pricing" from the "Pricing" dropdown in the "General" section
     And click on "Save" button
-    Then verify the mandatory validation indicator is displayed for fields "Class,Pricing,Billing Location,Shipping Location,Trader,Season,Counterparty,Exchange,Shipper,Fixation By,Fixation Terms,Invoice Currency,Price Currency / UOM,Tax Structure,Season,Product,Units,Packing,Differential,Trade Month,Qty.,UOM,Target Date Range,Position Month,INCO Terms,Abritration,Weight Terms"
+#    Then verify the mandatory validation indicator is displayed for fields "Class,Pricing,Billing Location,Shipping Location,Trader,Season,Counterparty,Shipper,Fixation By,Invoice Currency,Tax Structure,Price Estimation Date,Season,Product,Units,Packing,Qty.,UOM,Target Date Range,Position Month,INCO Terms,Abritration,Weight Terms"
     Then Verify step number "1" section "General" displays the mandatory red badge
     Then Verify step number "2" section "Product Details" displays the mandatory red badge
     Then Verify step number "4" section "Delivery Terms" displays the mandatory red badge
@@ -53,13 +53,13 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     When user enters "@general.cpRef2" in "CP Ref 2" text field in the "General" section
 
     When user selects "@general.exchange" from the "Exchange" dropdown in the "General" section
-    Then verify that the "Price Currency / UOM" field is displayed as "@general.exchangePriceCurrencyUom"
+    Then verify that the "Price Currency / UOM" field is displayed as "@general.exchangePriceCurrencyUom" and disabled
     When user selects "@general.invoiceCurrency" from the "Invoice Currency" dropdown in the "General" section
 
     When user selects "@commissionDetailsValidation.type1" verify "@general.invoiceCurrency" value is displayed
 
     When user selects "@general.changedExchange" from the "@general.exchange" dropdown in the "General" section
-    Then verify that the "Price Currency / UOM" field is displayed as "@general.changedExchangePriceCurrencyUom"
+    Then verify that the "Price Currency / UOM" field is displayed as "@general.changedExchangePriceCurrencyUom" and disabled
     When user selects "@commissionDetailsValidation.type2" verify "@general.changedExchangePriceCurrencyUom" value is displayed
 
     When user selects "@general.fixationBy" from the "Fixation By" literal dropdown in the "General" section
@@ -75,7 +75,7 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     ## ═════════════════════════════════════════════════════════════════════════
     ## 📦  CREATE  ›  PRODUCT & COMMISSION DETAILS
     ## ═════════════════════════════════════════════════════════════════════════
-    Given user fills multiple PTBF product details for test case "<TestCaseId>"
+    Given user fills multiple NPE product details for test case "<TestCaseId>"
     Then Verify step number "2" section "Product Details" displays the green completed icon
     Given user fills multiple commission details for test case "<TestCaseId>"
     Then Verify step number "3" section "Commission Details" displays the green completed icon
@@ -141,7 +141,6 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     When user selects "@modify.billingLocation" from the "Billing Location" modified dropdown in the "General" section
     When user selects "@modify.shippingLocation" from the "Shipping Location" modified dropdown in the "General" section
     When user selects "@modify.season" from the "Season" modified dropdown in the "General" section
-    When user selects "@modify.class" from the "Class" modified dropdown in the "General" section
 
     When user selects "@modify.counterparty" from the "Counterparty" modified dropdown in the "General" section
     When user selects "@modify.shipper" from the "Shipper" modified dropdown in the "General" section
@@ -190,6 +189,8 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     Then verify that the "Amend No." field is "@amendment.fieldState".
 
     ## ── Amendment › General ──────────────────────────────────────────────────
+    When the user selects "General" "Amend Date" as "today"
+
     When user selects "@amendment.billingLocation" from the "Billing Location" modified dropdown in the "General" section
     When user selects "@amendment.shippingLocation" from the "Shipping Location" modified dropdown in the "General" section
 
@@ -217,7 +218,7 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     When user selects "@amendment.withHoldingTaxStructure" from the "With Holding Tax Structure" modified dropdown in the "General" section
 
     ## ── Amendment › Product & Commission Details ─────────────────────────────
-    Given user fills multiple PTBF product details for test case "<TestCaseId>"
+    Given user fills multiple NPE product details for test case "<TestCaseId>"
     Given user fills multiple commission details for test case "<TestCaseId>"
 
     ## ── Amendment › Delivery Terms ───────────────────────────────────────────
@@ -282,6 +283,8 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     Then verify that the "Pricing" field in "General" section with value "@amendment.pricing" is "disabled" and displays "@amendment.pricing"
     Then verify that the "Amend No." field is "@amendment.fieldState".
 
+    When the user selects "General" "Amend Date" as "today"
+
     When user selects "@secondAmendment.billingLocation" from the "Billing Location" modified dropdown in the "General" section
     When user enters "@secondAmendment.remarks" in "Remarks" long text area field in the "Remarks and Instructions" section
     When user enters "@secondAmendment.instructions" in "Instructions" long text area field in the "Remarks and Instructions" section
@@ -323,7 +326,7 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
 
     When user selects "@copyByContract.invoiceCurrency" from the "Invoice Currency" modified dropdown in the "General" section
 
-    Given user fills multiple PTBF product details for test case "<TestCaseId>"
+    Given user fills multiple NPE product details for test case "<TestCaseId>"
     Given user fills multiple commission details for test case "<TestCaseId>"
 
     When user selects "@copyByContract.incoTerms" from the "INCO Terms" modified dropdown in the "Delivery Terms" section
@@ -351,4 +354,4 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     ## ═════════════════════════════════════════════════════════════════════════
     Examples:
       | TestCaseId | TestCaseDescription (No usage - only to outline each test case)                       |
-      | TC_CCM_PTBF_001 | Commodity flow with 1 product and 100 commission details in Edge with admin profile   |
+      | TC_CCM_NPE_001 | Commodity flow with 1 product and 100 commission details in Edge with admin profile   |

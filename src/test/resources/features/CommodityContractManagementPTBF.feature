@@ -1,9 +1,10 @@
-@XBS_Commodity_Contract_Management_Flow
+@XBS_Commodity_Contract_Management_Flow_PTBF
 Feature: As a Contract Manager,I want to create a Commodity Contract by completing all available fields,
-  so that I can validate the complete business workflow, field validations, business rules, and end-to-end contract processing in detail.
+  so that I can validate the complete PTBF business workflow, field validations, business rules, and end-to-end contract processing in detail.
 
-  @XBS_Commodity_Contract_Management_Flow_With_Approver_Modify_Amendment@RegressionTesting
-  Scenario Outline: Create commodity contract management with approver
+  @XBS_Commodity_Contract_Management_PTBF @RegressionTesting
+  Scenario Outline: Create commodity contract management with PTBF flow
+
     ## ═════════════════════════════════════════════════════════════════════════
     ## 🔐  SETUP & LOGIN
     ## ═════════════════════════════════════════════════════════════════════════
@@ -29,16 +30,20 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     ## ⚠️  MANDATORY FIELD VALIDATION
     ## ═════════════════════════════════════════════════════════════════════════
 
+    Then verify the mandatory validation indicator is displayed for fields "Class,Pricing"
+    When user selects "@general.class" from the "Class" dropdown in the "General" section
+    When user selects "@general.pricing" from the "Pricing" dropdown in the "General" section
     And click on "Save" button
-    Then verify the mandatory validation indicator is displayed for fields "Class,Pricing,Billing Location,Shipping Location,Trader,Season,Counterparty,Shipper,Invoice Currency,Price Currency / UOM,Tax Structure,Season,Product,Units,Packing,Qty.,UOM,Price,Target Date Range,Position Month,INCO Terms,Abritration,Weight Terms"
+
+    Then verify the mandatory validation indicator is displayed for fields "Class,Pricing,Billing Location,Shipping Location,Trader,Season,Counterparty,Exchange,Shipper,Fixation By,Fixation Terms,Invoice Currency,Price Currency / UOM,Tax Structure,Season,Product,Units,Packing,Differential,Trade Month,Qty.,UOM,Target Date Range,Position Month,INCO Terms,Abritration,Weight Terms"
+
     Then Verify step number "1" section "General" displays the mandatory red badge
     Then Verify step number "2" section "Product Details" displays the mandatory red badge
     Then Verify step number "4" section "Delivery Terms" displays the mandatory red badge
     ## ═════════════════════════════════════════════════════════════════════════
     ## 📝  CREATE  ›  GENERAL SECTION
     ## ═════════════════════════════════════════════════════════════════════════
-    When user selects "@general.class" from the "Class" dropdown in the "General" section
-    When user selects "@general.pricing" from the "Pricing" dropdown in the "General" section
+
     When user selects "@general.billingLocation" from the "Billing Location" dropdown in the "General" section
     When user selects "@general.shippingLocation" from the "Shipping Location" dropdown in the "General" section
     Then verify that the "Trader" field is automatically populated based on the logged-in "@login.loggedInUser"
@@ -46,6 +51,7 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
 
     When user selects "@general.counterparty" from the "Counterparty" dropdown in the "General" section
     When user selects "@general.shipper" from the "Shipper" dropdown in the "General" section
+
     When user enters "@general.cpRef1" in "CP Ref 1" text field in the "General" section
     When user enters "@general.cpRef2" in "CP Ref 2" text field in the "General" section
 
@@ -57,23 +63,22 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
 
     When user selects "@general.changedExchange" from the "@general.exchange" dropdown in the "General" section
     Then verify that the "Price Currency / UOM" field is displayed as "@general.changedExchangePriceCurrencyUom"
-
     When user selects "@commissionDetailsValidation.type2" verify "@general.changedExchangePriceCurrencyUom" value is displayed
 
     When user selects "@general.fixationBy" from the "Fixation By" literal dropdown in the "General" section
     When user selects "@general.fixationTerms" from the "Fixation Terms" dropdown in the "General" section
 
-    ###When user selects "@general.invoiceCurrency" from the "Invoice Currency" dropdown in the "General" section
+#    When user selects "@general.invoiceCurrency" from the "Invoice Currency" dropdown in the "General" section
     When user selects "@general.paymentTerms" from the "Payment Terms" dropdown in the "General" section
     When user enters "@general.paymentTermsDescription" in "Payment Terms Description" long text area field in the "General" section
     When user selects "@general.taxStructure" from the "Tax Structure" dropdown in the "General" section
     When user selects "@general.withHoldingTaxStructure" from the "With Holding Tax Structure" dropdown in the "General" section
 
     Then Verify step number "1" section "General" displays the green completed icon
-#    ## ═════════════════════════════════════════════════════════════════════════
-#    ## 📦  CREATE  ›  PRODUCT & COMMISSION DETAILS
     ## ═════════════════════════════════════════════════════════════════════════
-    Given user fills multiple product details for test case "<TestCaseId>"
+    ## 📦  CREATE  ›  PRODUCT & COMMISSION DETAILS
+    ## ═════════════════════════════════════════════════════════════════════════
+    Given user fills multiple PTBF product details for test case "<TestCaseId>"
     Then Verify step number "2" section "Product Details" displays the green completed icon
     Given user fills multiple commission details for test case "<TestCaseId>"
     Then Verify step number "3" section "Commission Details" displays the green completed icon
@@ -121,6 +126,7 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     ## 💾  SAVE & VERIFY CREATED CONTRACT
     ## ═════════════════════════════════════════════════════════════════════════
     And click on "Save" button
+
     And verify the message "@contract.createdMessage" is displayed
     Then capture "CommercialCommodityPO" "Contract No."
     Then user captures the created contract number
@@ -139,7 +145,6 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     When user selects "@modify.billingLocation" from the "Billing Location" modified dropdown in the "General" section
     When user selects "@modify.shippingLocation" from the "Shipping Location" modified dropdown in the "General" section
     When user selects "@modify.season" from the "Season" modified dropdown in the "General" section
-    When user selects "@modify.class" from the "Class" modified dropdown in the "General" section
 
     When user selects "@modify.counterparty" from the "Counterparty" modified dropdown in the "General" section
     When user selects "@modify.shipper" from the "Shipper" modified dropdown in the "General" section
@@ -188,6 +193,7 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     Then verify that the "Amend No." field is "@amendment.fieldState".
 
     ## ── Amendment › General ──────────────────────────────────────────────────
+    When the user selects "General" "Amend Date" as "today"
     When user selects "@amendment.billingLocation" from the "Billing Location" modified dropdown in the "General" section
     When user selects "@amendment.shippingLocation" from the "Shipping Location" modified dropdown in the "General" section
 
@@ -215,7 +221,7 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     When user selects "@amendment.withHoldingTaxStructure" from the "With Holding Tax Structure" modified dropdown in the "General" section
 
     ## ── Amendment › Product & Commission Details ─────────────────────────────
-    Given user fills multiple product details for test case "<TestCaseId>"
+    Given user fills multiple PTBF product details for test case "<TestCaseId>"
     Given user fills multiple commission details for test case "<TestCaseId>"
 
     ## ── Amendment › Delivery Terms ───────────────────────────────────────────
@@ -280,6 +286,8 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     Then verify that the "Pricing" field in "General" section with value "@amendment.pricing" is "disabled" and displays "@amendment.pricing"
     Then verify that the "Amend No." field is "@amendment.fieldState".
 
+    When the user selects "General" "Amend Date" as "today"
+
     When user selects "@secondAmendment.billingLocation" from the "Billing Location" modified dropdown in the "General" section
     When user enters "@secondAmendment.remarks" in "Remarks" long text area field in the "Remarks and Instructions" section
     When user enters "@secondAmendment.instructions" in "Instructions" long text area field in the "Remarks and Instructions" section
@@ -321,7 +329,7 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
 
     When user selects "@copyByContract.invoiceCurrency" from the "Invoice Currency" modified dropdown in the "General" section
 
-    Given user fills multiple product details for test case "<TestCaseId>"
+    Given user fills multiple PTBF product details for test case "<TestCaseId>"
     Given user fills multiple commission details for test case "<TestCaseId>"
 
     When user selects "@copyByContract.incoTerms" from the "INCO Terms" modified dropdown in the "Delivery Terms" section
@@ -349,7 +357,4 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     ## ═════════════════════════════════════════════════════════════════════════
     Examples:
       | TestCaseId | TestCaseDescription (No usage - only to outline each test case)                       |
-      | TC_CCM_001 | Commodity flow with 1 product and 1 commission detail in Edge with admin profile      |
-#     | TC_CCM_002 | Commodity flow with 5 products and 5 commission details in Chrome with admin profile  |
-#     | TC_CCM_003 | Commodity flow with 1 product and 50 commission details in Firefox with admin profile |
-#     | TC_CCM_004 | Commodity flow with 1 product and 100 commission details in Edge with admin profile   |
+      | TC_CCM_PTBF_001 | Commodity flow with 1 product and 100 commission details in Edge with admin profile   |

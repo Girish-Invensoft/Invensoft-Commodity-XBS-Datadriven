@@ -31,6 +31,76 @@ public class ContractTestData {
     private Map<String, Object> copyByContract;
     private Map<String, Object> secondAmendment;
 
+    // Shipment Instruction: contract details
+    private Map<String, Object> contractDetails;
+    private Map<String, Object> contractShippingDetails;
+    private Map<String, Object> contractSelection;
+
+    // Shipment Instruction: instruction and shipment sections
+    private Map<String, Object> instructionDetails;
+    private Map<String, Object> shipmentDetails;
+    private Map<String, Object> modifyDocuments;
+
+    // Bag marks: JSON array of objects
+    private List<Map<String, Object>> bagMarks;
+
+    // Remarks and instructions
+    private Map<String, Object> remarksAndInstructions;
+
+    // Modified Shipment Instruction: instruction and shipment sections
+    private Map<String, Object> modifyinstructionDetails;
+    private Map<String, Object> modifyshipmentDetails;
+    private Map<String, Object> modifyDocument;
+
+    // Bag marks: JSON array of objects
+    private List<Map<String, Object>> modifybagMarks;
+
+    // Remarks and instructions
+    private Map<String, Object> modifyRemarksAndInstructions;
+
+    public Map<String, Object> getModifyinstructionDetails() {
+        return modifyinstructionDetails;
+    }
+
+    public void setModifyinstructionDetails(
+            Map<String, Object> modifyinstructionDetails) {
+        this.modifyinstructionDetails = modifyinstructionDetails;
+    }
+
+    public Map<String, Object> getModifyshipmentDetails() {
+        return modifyshipmentDetails;
+    }
+
+    public void setModifyshipmentDetails(
+            Map<String, Object> modifyshipmentDetails) {
+        this.modifyshipmentDetails = modifyshipmentDetails;
+    }
+
+    public Map<String, Object> getModifyDocument() {
+        return modifyDocument;
+    }
+
+    public void setModifyDocument(Map<String, Object> modifyDocument) {
+        this.modifyDocument = modifyDocument;
+    }
+
+    public List<Map<String, Object>> getModifybagMarks() {
+        return modifybagMarks;
+    }
+
+    public void setModifybagMarks(List<Map<String, Object>> modifybagMarks) {
+        this.modifybagMarks = modifybagMarks;
+    }
+
+    public Map<String, Object> getModifyRemarksAndInstructions() {
+        return modifyRemarksAndInstructions;
+    }
+
+    public void setModifyRemarksAndInstructions(
+            Map<String, Object> modifyRemarksAndInstructions) {
+        this.modifyRemarksAndInstructions = modifyRemarksAndInstructions;
+    }
+
     public String getTestCaseId() {
         return testCaseId;
     }
@@ -47,8 +117,6 @@ public class ContractTestData {
         this.productDetails = productDetails;
     }
 
-
-
     public List<CommissionDetailRow> getCommissionDetails() {
         return commissionDetails;
     }
@@ -64,6 +132,73 @@ public class ContractTestData {
     public void setCommissionDetailsValidation(List<CommissionDetailValidationRow> commissionDetailsValidation) {
         this.commissionDetailsValidation = commissionDetailsValidation;
     }
+
+    public Map<String, Object> getContractDetails() {
+        return contractDetails;
+    }
+
+    public void setContractDetails(Map<String, Object> contractDetails) {
+        this.contractDetails = contractDetails;
+    }
+
+    public Map<String, Object> getContractShippingDetails() {
+        return contractShippingDetails;
+    }
+
+    public void setContractShippingDetails(Map<String, Object> contractShippingDetails) {
+        this.contractShippingDetails = contractShippingDetails;
+    }
+
+
+    public Map<String, Object> getContractSelection() {
+        return contractSelection;
+    }
+
+    public void setContractSelection(Map<String, Object> contractSelection) {
+        this.contractSelection = contractSelection;
+    }
+
+    public Map<String, Object> getInstructionDetails() {
+        return instructionDetails;
+    }
+
+    public void setInstructionDetails(Map<String, Object> instructionDetails) {
+        this.instructionDetails = instructionDetails;
+    }
+
+    public Map<String, Object> getShipmentDetails() {
+        return shipmentDetails;
+    }
+
+    public void setShipmentDetails(Map<String, Object> shipmentDetails) {
+        this.shipmentDetails = shipmentDetails;
+    }
+
+    public Map<String, Object> getModifyDocuments() {
+        return modifyDocuments;
+    }
+
+    public void setModifyDocuments(Map<String, Object> modifyDocuments) {
+        this.modifyDocuments = modifyDocuments;
+    }
+
+    public List<Map<String, Object>> getBagMarks() {
+        return bagMarks;
+    }
+
+    public void setBagMarks(List<Map<String, Object>> bagMarks) {
+        this.bagMarks = bagMarks;
+    }
+
+    public Map<String, Object> getRemarksAndInstructions() {
+        return remarksAndInstructions;
+    }
+
+    public void setRemarksAndInstructions(
+            Map<String, Object> remarksAndInstructions) {
+        this.remarksAndInstructions = remarksAndInstructions;
+    }
+
 
     public Map<String, Object> getLogin() {
         return login;
@@ -171,13 +306,24 @@ public class ContractTestData {
 
     /**
      * Looks up a single text value by "section.key", e.g. "general.class" or "deliveryTerms.incoTerms".
+     * Section names are case-insensitive, so "modifyInstructiondetails.bookingRefNo" and
+     * "modifyinstructionDetails.bookingRefNo" both work. Keys inside a section stay case-sensitive.
      * Also supports the list section commissionDetailsValidation:
      * "commissionDetailsValidation.type1" (first row) or "commissionDetailsValidation[1].type1" (second row).
+     * The list sections bagMarks and modifybagMarks: "bagMarks.bagMark2" finds that key in any row,
+     * "bagMarks[1].bagMark2" reads row 1 only (same for modifybagMarks).
      * Fails with a clear message (listing the available keys) if the section or key is missing or blank.
      */
     public String getValue(String path) {
-        if (path != null && path.startsWith("commissionDetailsValidation")) {
+        String lowerPath = (path == null) ? null : path.toLowerCase();
+        if (lowerPath != null && lowerPath.startsWith("commissiondetailsvalidation")) {
             return commissionValidationValue(path);
+        }
+        if (lowerPath != null && lowerPath.startsWith("modifybagmarks")) {
+            return bagMarkValue(path, "modifybagMarks", modifybagMarks);
+        }
+        if (lowerPath != null && lowerPath.startsWith("bagmarks")) {
+            return bagMarkValue(path, "bagMarks", bagMarks);
         }
         Object value = lookup(path);
         if (!(value instanceof String) || ((String) value).trim().isEmpty()) {
@@ -237,11 +383,21 @@ public class ContractTestData {
         CommissionDetailValidationRow row = commissionDetailsValidation.get(index);
         String value;
         switch (field) {
-            case "agentBroker": value = row.getAgentBroker(); break;
-            case "refNo":       value = row.getRefNo();       break;
-            case "type1":       value = row.getType1();       break;
-            case "type2":       value = row.getType2();       break;
-            case "value":       value = row.getValue();       break;
+            case "agentBroker":
+                value = row.getAgentBroker();
+                break;
+            case "refNo":
+                value = row.getRefNo();
+                break;
+            case "type1":
+                value = row.getType1();
+                break;
+            case "type2":
+                value = row.getType2();
+                break;
+            case "value":
+                value = row.getValue();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown commissionDetailsValidation field '" + field
                         + "'. Use agentBroker, refNo, type1, type2, value.");
@@ -250,6 +406,64 @@ public class ContractTestData {
             throw new IllegalStateException("Test data '" + testCaseId + "': '" + path + "' is missing or blank.");
         }
         return value;
+    }
+
+    /**
+     * Reads one bag mark value from a bag mark list (bagMarks or modifybagMarks).
+     * "bagMarks.bagMark2" finds that key in whichever row holds it (each row may have just one key);
+     * "bagMarks[1].bagMark2" reads row 1 only.
+     */
+    private String bagMarkValue(String path, String label, List<Map<String, Object>> rows) {
+        int dot = path.indexOf('.');
+        if (dot < 0 || dot == path.length() - 1) {
+            throw new IllegalArgumentException("Path must look like '" + label + "[n].field' but was: " + path);
+        }
+        String head = path.substring(0, dot);
+        String field = path.substring(dot + 1);
+
+        int index = 0;
+        int open = head.indexOf('[');
+        if (open >= 0) {
+            int close = head.indexOf(']');
+            if (close < open) {
+                throw new IllegalArgumentException("Malformed row index in: " + path);
+            }
+            index = Integer.parseInt(head.substring(open + 1, close).trim());
+        }
+
+        if (rows == null || rows.isEmpty()) {
+            throw new IllegalStateException("Test data '" + testCaseId + "' has no " + label + ".");
+        }
+
+        Object value = null;
+        if (open >= 0) {
+            // label[n].field: read exactly that row.
+            if (index < 0 || index >= rows.size()) {
+                throw new IllegalStateException("Test data '" + testCaseId + "' has no " + label + " row " + index);
+            }
+            Map<String, Object> row = rows.get(index);
+            value = (row == null) ? null : row.get(field);
+        } else {
+            // label.field: each row may hold a single key (bagMark1, bagMark2, ...), so search every row.
+            for (Map<String, Object> row : rows) {
+                if (row != null && row.containsKey(field)) {
+                    value = row.get(field);
+                    break;
+                }
+            }
+        }
+
+        if (!(value instanceof String) || ((String) value).trim().isEmpty()) {
+            List<String> availableKeys = new ArrayList<>();
+            for (Map<String, Object> row : rows) {
+                if (row != null) {
+                    availableKeys.addAll(row.keySet());
+                }
+            }
+            throw new IllegalStateException("Test data '" + testCaseId + "': '" + path
+                    + "' is missing, blank or not a text value. Available " + label + " keys: " + availableKeys);
+        }
+        return (String) value;
     }
 
     private Object lookup(String path) {
@@ -264,25 +478,90 @@ public class ContractTestData {
         }
         String name = path.substring(0, dot);
         Map<String, Object> section;
-        switch (name) {
-            case "login":                 section = login;                 break;
-            case "general":               section = general;               break;
-            case "deliveryTerms":         section = deliveryTerms;         break;
-            case "documents":             section = documents;             break;
-            case "remarks":               section = remarks;               break;
-            case "contract":              section = contract;              break;
-            case "approval":              section = approval;              break;
-            case "modify":                section = modify;                break;
-            case "amendment":             section = amendment;             break;
-            case "contractAmendment":     section = contractAmendment;     break;
-            case "validatedeliveryTerms": section = validatedeliveryTerms; break;
-            case "copyByContract":        section = copyByContract;        break;
-            case "secondAmendment":       section = secondAmendment;       break;
+        // Section names are matched case-insensitively: every case label below is lower case.
+        switch (name.toLowerCase()) {
+            case "login":
+                section = login;
+                break;
+            case "general":
+                section = general;
+                break;
+            case "deliveryterms":
+                section = deliveryTerms;
+                break;
+            case "documents":
+                section = documents;
+                break;
+            case "remarks":
+                section = remarks;
+                break;
+            case "contract":
+                section = contract;
+                break;
+            case "approval":
+                section = approval;
+                break;
+            case "modify":
+                section = modify;
+                break;
+            case "amendment":
+                section = amendment;
+                break;
+            case "contractamendment":
+                section = contractAmendment;
+                break;
+            case "validatedeliveryterms":
+                section = validatedeliveryTerms;
+                break;
+            case "copybycontract":
+                section = copyByContract;
+                break;
+            case "secondamendment":
+                section = secondAmendment;
+                break;
+            case "contractdetails":
+                section = contractDetails;
+                break;
+            case "contractshippingdetails":
+                section = contractShippingDetails;
+                break;
+            case "contractselection":
+                section = contractSelection;
+                break;
+            case "instructiondetails":
+                section = instructionDetails;
+                break;
+            case "shipmentdetails":
+                section = shipmentDetails;
+                break;
+            case "remarksandinstructions":
+                section = remarksAndInstructions;
+                break;
+            case "modifydocuments":
+                section = modifyDocuments;
+                break;
+            case "modifyinstructiondetails":
+                section = modifyinstructionDetails;
+                break;
+            case "modifyshipmentdetails":
+                section = modifyshipmentDetails;
+                break;
+            case "modifydocument":
+                section = modifyDocument;
+                break;
+            case "modifyremarksandinstructions":
+                section = modifyRemarksAndInstructions;
+                break;
+            // bagMarks and modifybagMarks are lists of rows, so they are read through bagMarkValue(), not as a section.
+
             default:
                 throw new IllegalArgumentException("Unknown test data section '" + name + "' in '" + path
-                        + "'. Use login, general, deliveryTerms, documents, remarks, contract, approval, modify, "
+                        + "'. Use (case-insensitive) login, general, deliveryTerms, documents, remarks, contract, approval, modify, "
                         + "amendment, contractAmendment, validatedeliveryTerms, copyByContract, secondAmendment, "
-                        + "or commissionDetailsValidation[n].field.");
+                        + "contractDetails, contractShippingDetails, contractSelection, instructionDetails, shipmentDetails, "
+                        + "remarksAndInstructions, modifyDocuments, modifyDocument, modifyinstructionDetails, "
+                        + "modifyshipmentDetails, modifyRemarksAndInstructions, "
+                        + "commissionDetailsValidation[n].field, bagMarks[n].field, or modifybagMarks[n].field.");
         }
         if (section == null) {
             throw new IllegalStateException("Test data '" + testCaseId + "' has no '" + name + "' section.");
