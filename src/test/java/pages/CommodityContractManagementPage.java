@@ -2914,28 +2914,48 @@ public class CommodityContractManagementPage{
     }
     /** Opens the row actions menu under the column and clicks the given menu item. */
     public void selectRowMenuItem(String item, String columnName) {
-
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.pollingEvery(Duration.ofMillis(200));
+        wait.ignoring(StaleElementReferenceException.class);
         By buttonLocator = listRowActionButtonLocator(columnName);
-
-        wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
-        try {
-            WebElement button = driver.findElement(buttonLocator);
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
-            // Re-find the button after scroll because the table can re-render
-            button = wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
-            System.out.println("Button text = [" + button.getText() + "]");
-            button.click();
-        } catch (StaleElementReferenceException e) {
-            System.out.println("Row action button became stale. Re-locating...");
-            WebElement button = wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
-            button.click();
-        }
-        // Wait for requested menu item
         By menuLocator = menuItemLocator(item);
-        WebElement menuElement = wait.until(ExpectedConditions.elementToBeClickable(menuLocator));
-        menuElement.click();
-       }
+
+        wait.until(d -> {
+            if (firstDisplayed(menuLocator) != null) {
+                return true;
+            }
+
+            WebElement button = firstDisplayed(buttonLocator);
+            if (button == null || !button.isEnabled()) {
+                return false;
+            }
+
+            ((JavascriptExecutor) d).executeScript(
+                    "arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
+
+            // Scrolling can refresh the table, so always click a freshly located button.
+            button = firstDisplayed(buttonLocator);
+            if (button == null || !button.isEnabled()) {
+                return false;
+            }
+            button.click();
+            return true;
+        });
+
+        wait.until(d -> {
+            for (WebElement menuElement : d.findElements(menuLocator)) {
+                try {
+                    if (menuElement.isDisplayed() && menuElement.isEnabled()) {
+                        menuElement.click();
+                        return true;
+                    }
+                } catch (StaleElementReferenceException ignored) {
+                    // Retry with a fresh menu item after the menu re-renders.
+                }
+            }
+            return false;
+        });
+    }
 
 //    public void selectRowMenuItem(String item, String columnName) {
 //        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));

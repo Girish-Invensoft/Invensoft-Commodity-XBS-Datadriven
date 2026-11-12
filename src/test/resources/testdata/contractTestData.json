@@ -2469,8 +2469,8 @@
       "approvedMenuItems" : "Copy By Contract,Amendment"
     },
     "contractShippingDetails" : {
-      "contractNo" : "PO-2135",
-      "shippingInstruction" : "P-SI-0169",
+      "contractNo" : "PO-2198",
+      "shippingInstruction" : "P-SI-0187",
       "approvedShippingInstruction" : ""
     },
     "contractSelection" : {
@@ -2533,7 +2533,7 @@
       "instructions" : "Ship the goods within the specified shipment period. Verify bag marks, quantity, and shipping documents before dispatch."
     },
     "contractDetails" : {
-      "contractNo" : "PO-2135"
+      "contractNo" : "PO-2198"
     },
     "modifyinstructionDetails" : {
       "date" : "28-10-2026",
@@ -2719,7 +2719,7 @@
       "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
     },
     "contractDetails" : {
-      "contractNo" : "PO-2175",
+      "contractNo" : "PO-2199",
       "shippingInstruction" : "P-SI-0146",
       "approvedShippingInstruction" : "",
       "approvedcontractNo" : "PO-2052",
@@ -2751,7 +2751,7 @@
       "driverLicenseNo" : "KA0120260012345"
     },
     "grnProductDetails" : {
-      "contractSI" : "PO-2175"
+      "contractSI" : "PO-2199"
     },
     "batchDetails" : [ {
       "grnProductDetails" : "AUTO",
@@ -2769,7 +2769,7 @@
       "action" : ""
     } ],
     "contractRecords" : {
-      "approvedcontractNo" : "PO-2175"
+      "approvedcontractNo" : "PO-2199"
     }
   }, {
     "testCaseId" : "TC_GRN_SI_001",
@@ -2906,10 +2906,10 @@
       "approvedMenuItems" : "Copy By Contract,Amendment"
     },
     "contractShippingDetails" : {
-      "contractNo" : "PO-2171",
-      "shippingInstruction" : "P-SI-0181",
-      "approvedShippingInstruction" : "P-SI-0181",
-      "grnN0" : "GRN-1225"
+      "contractNo" : "PO-2202",
+      "shippingInstruction" : "P-SI-0189",
+      "approvedShippingInstruction" : "P-SI-0189",
+      "grnN0" : "GRN-1229"
     },
     "contractSelection" : {
       "contractNoAndDate" : "PO-0027 & 24 Jun 2026",
@@ -2971,7 +2971,7 @@
       "instructions" : "Ship the goods within the specified shipment period. Verify bag marks, quantity, and shipping documents before dispatch."
     },
     "contractDetails" : {
-      "contractNo" : "PO-2171"
+      "contractNo" : "PO-2202"
     },
     "modifyinstructionDetails" : {
       "date" : "28-10-2026",
@@ -3073,16 +3073,6 @@
       "fetchWeight" : "",
       "sustainabilityDetails" : "",
       "action" : ""
-    }, {
-      "grnProductDetails" : "AUTO",
-      "contractSI" : "#RandomApprovedShippingInstructionSINumber",
-      "product" : "AC A",
-      "season" : "Season 2026 - 2027",
-      "warehouseZone" : "ML2-Zone2",
-      "units" : "50",
-      "packing" : "50 Kg Jute Bags",
-      "grossQty" : "20",
-      "netQty" : "20"
     } ]
   } ]
 }
