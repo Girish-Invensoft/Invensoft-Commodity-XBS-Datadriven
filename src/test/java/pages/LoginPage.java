@@ -43,9 +43,7 @@ public class LoginPage {
                     }
                     return null;
                 });
-                ((JavascriptExecutor) driver).executeScript(
-                        "arguments[0].scrollIntoView({block:'center', inline:'nearest'});", usernameField);
-                usernameField.click();
+                wait.until(ExpectedConditions.visibilityOf(usernameField));
                 usernameField.clear();
                 usernameField.sendKeys(username);
                 return;

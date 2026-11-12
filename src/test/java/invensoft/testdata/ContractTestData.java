@@ -1,10 +1,18 @@
 package invensoft.testdata;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class ContractTestData {
+
+    private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
 
     private String testCaseId;
     private List<ProductDetailRow> productDetails;
@@ -40,6 +48,12 @@ public class ContractTestData {
     private Map<String, Object> instructionDetails;
     private Map<String, Object> shipmentDetails;
     private Map<String, Object> modifyDocuments;
+
+    // Goods Receipt Note sections
+    private Map<String, Object> grnBasicDetails;
+    private Map<String, Object> grnTruckDetails;
+    private List<Map<String, Object>> grnProductDetails;
+    private List<Map<String, Object>> batchDetails;
 
     // Bag marks: JSON array of objects
     private List<Map<String, Object>> bagMarks;
@@ -172,6 +186,53 @@ public class ContractTestData {
 
     public void setShipmentDetails(Map<String, Object> shipmentDetails) {
         this.shipmentDetails = shipmentDetails;
+    }
+
+    public Map<String, Object> getGrnBasicDetails() {
+        return grnBasicDetails;
+    }
+
+    public void setGrnBasicDetails(Map<String, Object> grnBasicDetails) {
+        this.grnBasicDetails = grnBasicDetails;
+    }
+
+    public Map<String, Object> getGrnTruckDetails() {
+        return grnTruckDetails;
+    }
+
+    public void setGrnTruckDetails(Map<String, Object> grnTruckDetails) {
+        this.grnTruckDetails = grnTruckDetails;
+    }
+
+    public List<Map<String, Object>> getGrnProductDetails() {
+        return grnProductDetails;
+    }
+
+    @JsonSetter("grnProductDetails")
+    public void setGrnProductDetails(JsonNode grnProductDetails) {
+        this.grnProductDetails = null;
+        if (grnProductDetails == null || grnProductDetails.isNull()) {
+            return;
+        }
+        if (grnProductDetails.isArray()) {
+            this.grnProductDetails = JSON_MAPPER.convertValue(
+                    grnProductDetails, new TypeReference<List<Map<String, Object>>>() {});
+        } else if (grnProductDetails.isObject()) {
+            Map<String, Object> reference = JSON_MAPPER.convertValue(
+                    grnProductDetails, new TypeReference<Map<String, Object>>() {});
+            this.grnProductDetails = Collections.singletonList(reference);
+        } else {
+            throw new IllegalArgumentException(
+                    "'grnProductDetails' must be an array of rows or an object reference.");
+        }
+    }
+
+    public List<Map<String, Object>> getBatchDetails() {
+        return batchDetails;
+    }
+
+    public void setBatchDetails(List<Map<String, Object>> batchDetails) {
+        this.batchDetails = batchDetails;
     }
 
     public Map<String, Object> getModifyDocuments() {
@@ -310,6 +371,7 @@ public class ContractTestData {
      * "modifyinstructionDetails.bookingRefNo" both work. Keys inside a section stay case-sensitive.
      * Also supports the list section commissionDetailsValidation:
      * "commissionDetailsValidation.type1" (first row) or "commissionDetailsValidation[1].type1" (second row).
+     * The grnProductDetails list supports the same row-index syntax.
      * The list sections bagMarks and modifybagMarks: "bagMarks.bagMark2" finds that key in any row,
      * "bagMarks[1].bagMark2" reads row 1 only (same for modifybagMarks).
      * Fails with a clear message (listing the available keys) if the section or key is missing or blank.
@@ -318,6 +380,9 @@ public class ContractTestData {
         String lowerPath = (path == null) ? null : path.toLowerCase();
         if (lowerPath != null && lowerPath.startsWith("commissiondetailsvalidation")) {
             return commissionValidationValue(path);
+        }
+        if (lowerPath != null && lowerPath.startsWith("grnproductdetails")) {
+            return grnProductValue(path);
         }
         if (lowerPath != null && lowerPath.startsWith("modifybagmarks")) {
             return bagMarkValue(path, "modifybagMarks", modifybagMarks);
@@ -466,6 +531,44 @@ public class ContractTestData {
         return (String) value;
     }
 
+    private String grnProductValue(String path) {
+        int dot = path.indexOf('.');
+        if (dot < 0 || dot == path.length() - 1) {
+            throw new IllegalArgumentException(
+                    "Path must look like 'grnProductDetails[n].field' but was: " + path);
+        }
+        String head = path.substring(0, dot);
+        String field = path.substring(dot + 1);
+
+        int index = 0;
+        int open = head.indexOf('[');
+        if (open >= 0) {
+            int close = head.indexOf(']');
+            if (close < open) {
+                throw new IllegalArgumentException("Malformed row index in: " + path);
+            }
+            index = Integer.parseInt(head.substring(open + 1, close).trim());
+        }
+
+        if (grnProductDetails == null || grnProductDetails.isEmpty()) {
+            throw new IllegalStateException("Test data '" + testCaseId
+                    + "' has no grnProductDetails row " + index);
+        }
+
+        if (index < 0 || index >= grnProductDetails.size()) {
+            throw new IllegalStateException("Test data '" + testCaseId
+                    + "' has no grnProductDetails row " + index);
+        }
+        Map<String, Object> row = grnProductDetails.get(index);
+        Object value = row == null ? null : row.get(field);
+        if (!(value instanceof String) || ((String) value).trim().isEmpty()) {
+            throw new IllegalStateException("Test data '" + testCaseId + "': '" + path
+                    + "' is missing, blank or not a text value. Available grnProductDetails keys: "
+                    + (row == null ? "[]" : row.keySet()));
+        }
+        return (String) value;
+    }
+
     private Object lookup(String path) {
         Map<String, Object> section = sectionOf(path);
         return section.get(keyOf(path));
@@ -534,6 +637,12 @@ public class ContractTestData {
             case "shipmentdetails":
                 section = shipmentDetails;
                 break;
+            case "grnbasicdetails":
+                section = grnBasicDetails;
+                break;
+            case "grntruckdetails":
+                section = grnTruckDetails;
+                break;
             case "remarksandinstructions":
                 section = remarksAndInstructions;
                 break;
@@ -559,6 +668,7 @@ public class ContractTestData {
                         + "'. Use (case-insensitive) login, general, deliveryTerms, documents, remarks, contract, approval, modify, "
                         + "amendment, contractAmendment, validatedeliveryTerms, copyByContract, secondAmendment, "
                         + "contractDetails, contractShippingDetails, contractSelection, instructionDetails, shipmentDetails, "
+                        + "grnBasicDetails, grnTruckDetails, grnProductDetails[n].field, "
                         + "remarksAndInstructions, modifyDocuments, modifyDocument, modifyinstructionDetails, "
                         + "modifyshipmentDetails, modifyRemarksAndInstructions, "
                         + "commissionDetailsValidation[n].field, bagMarks[n].field, or modifybagMarks[n].field.");

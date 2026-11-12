@@ -31,6 +31,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import static pages.PageObjectManager.getCommodityContractManagementPage;
 import static utils.Constants.ROW_SETTLE_PAUSE_MS;
@@ -209,6 +210,7 @@ public class StepsContainer {
     @When("user navigates to {string} dashboard sidebar menu")
     public void userNavigatesToDashboardSidebarMenu(String arg0) {
         getCommodityContractManagementPage().clickSidebarMenu(arg0);
+        System.out.println("its an logistic dashboard");
     }
 
     @When("user clicks on {string} section on the dashboard page")
@@ -269,10 +271,20 @@ public class StepsContainer {
         getCommodityContractManagementPage().clickSpanButton(arg0);
     }
 
+    @When("use click on {string} button in the {string} section")
+    public void clickSectionButton(String buttonText, String section) {
+        getCommodityContractManagementPage().clickSectionSearchButton(section, buttonText);
+    }
+
     @When("user enters {string} in {string} text field in the {string} section")
     public void userEntersInTheTextFieldInTheSection(String arg0, String field, String section) {
         arg0 = resolve(arg0);
         getCommodityContractManagementPage().enterTextInSectionField(section, field, arg0);
+    }
+
+    @Then("verify that the {string} unit is displayed for {string} in the {string} section")
+    public void verifyUnitDisplayedForField(String unit, String field, String section) {
+        getCommodityContractManagementPage().verifyTruckTareWeightUnit(section, field, unit);
     }
 
     @And("verifies that the {string} table section is displayed")
@@ -410,13 +422,14 @@ public class StepsContainer {
 
     @Then("capture {string} {string}")
     public void capture(String arg0, String arg1) {
-        if (!"Contract No.".equals(arg1)) {
-            throw new IllegalArgumentException("capture supports only the 'Contract No.' column but got: '" + arg1 + "'");
+        if (!"Contract No.".equals(arg1) && !"SI No.".equals(arg1) && !"GRN No.".equals(arg1)) {
+            throw new IllegalArgumentException(
+                    "capture supports 'Contract No.', 'SI No.' and 'GRN No.' columns but got: '" + arg1 + "'");
         }
         webDriverCommonLibrary.waitForSetTime(setTime / 2);
 
         String contractNo = getCommodityContractManagementPage().getListColumnText(arg1).trim();
-        String key = arg0 + "ContractNumber";
+        String key = buildKey(arg0, arg1);
 
         webDriverCommonLibrary.updateTheValueInDataValuePropertiesFile(key, contractNo);
         webDriverCommonLibrary.updateTheValueInJsonFile(key, contractNo);
@@ -518,6 +531,76 @@ public class StepsContainer {
         }
     }
 
+    @Given("user fills multiple product details for test case {string}")
+    public void userFillsMultipleCcmProductDetailsForTestCase(String testCaseId) throws IOException {
+        webDriverCommonLibrary.waitForSetTime(SETTLE_PAUSE_MS);
+
+        ContractTestData data = TestDataReader.getByTestCaseId(testCaseId);
+        List<ProductDetailRow> rows = data.getProductDetails();
+        if (rows == null || rows.isEmpty()) {
+            log.info("No productDetails in test data for '" + testCaseId + "' - skipping Product Details step.");
+            return;
+        }
+
+        CommodityContractManagementPage page = getCommodityContractManagementPage();
+        final String section = "Product Details";
+        int uiRowIndex = 0;
+
+        for (int dataRowIndex = 0; dataRowIndex < rows.size(); dataRowIndex++) {
+            ProductDetailRow row = rows.get(dataRowIndex);
+            if (row == null) {
+                throw new IllegalStateException("Product Details test data contains a null row at index " + dataRowIndex + ".");
+            }
+            if (isBlank(row.getProduct())) {
+                log.warn("Skipping product detail row " + dataRowIndex + " because Product is blank.");
+                continue;
+            }
+
+            if (uiRowIndex > 0) {
+                int rowsBefore = page.getProductDetailRows().size();
+                page.addProductDetailRow(section);
+                int rowsAfter = page.getProductDetailRows().size();
+                if (rowsAfter <= rowsBefore) {
+                    throw new IllegalStateException("Product Details row was not added. "
+                            + "Expected rows > " + rowsBefore + " but found " + rowsAfter);
+                }
+                webDriverCommonLibrary.waitForSetTime(ROW_SETTLE_PAUSE_MS);
+            }
+
+            page.selectMultipleDropdownValue(section, "Product", uiRowIndex, row.getProduct());
+            page.userEnterInTheMultipleNumberFieldInTheTable("Units", section, uiRowIndex, row.getUnits());
+            page.selectMultipleTableType2DropdownValues(section, "Packing", uiRowIndex, row.getPacking());
+            page.userEnterInTheMultipleNumberFieldInTheTable("Qty.", section, uiRowIndex, row.getQty());
+            page.selectMultipleDropdownValue(section, "UOM", uiRowIndex, row.getUom());
+            page.userEnterInTheMultipleNumberFieldInTheTable("No Of Lots.", section, uiRowIndex, row.getNoOfLots());
+            page.userEnterInTheMultipleNumberFieldInTheTable("Price", section, uiRowIndex, row.getPrice());
+
+            if (isNotBlank(row.getTargetType())) {
+                page.selectMultipleDropdownValue(section, "Target Type", uiRowIndex, row.getTargetType());
+            }
+            if (isNotBlank(row.getTargetDateRange())) {
+                fillTargetDateRangeFromJson(row.getTargetDateRange(), uiRowIndex);
+            }
+            if (isNotBlank(row.getTradeMonth())) {
+                page.selectMultipleDropdownValue(section, "Trade Month", uiRowIndex, row.getTradeMonth());
+            }
+            if (isNotBlank(row.getPositionMonth())) {
+                page.selectMultipleDropdownValue(section, "Position Month", uiRowIndex, row.getPositionMonth());
+            }
+            if (isNotBlank(row.getQuality())) {
+                page.enterMultipleFieldValue("Quality", section, uiRowIndex, row.getQuality());
+            }
+//            if (isNotBlank(row.getCertificationPremium())) {
+//                page.createCertificationPremium(
+//                        section, "Certification & Premium", uiRowIndex,
+//                        row.getCertificationPremium(), row.getPremiumAmount());
+//            }
+
+            log.info("Completed Product Details row " + uiRowIndex + " for test case " + testCaseId);
+            uiRowIndex++;
+        }
+    }
+
     private boolean isBlank(String s) {
         return s == null || s.trim().isEmpty();
     }
@@ -561,79 +644,59 @@ public class StepsContainer {
         PageObjectManager.getCreateCommodityContractPage().setTargetDateRange(xpathRowIndex, startDate, endDate);
     }
 
-    @Given("user fills multiple product details for test case {string}")
-    public void userFillsMultipleProductDetailsForTestCase(String testCaseId) throws IOException {
+    @Given("user fills multiple grn product details for test case {string}")
+    public void userFillsMultipleGRNProductDetailsForTestCase(String testCaseId) throws IOException {
         webDriverCommonLibrary.waitForSetTime(SETTLE_PAUSE_MS);
         try {
             ContractTestData data = TestDataReader.getByTestCaseId(testCaseId);
-            List<ProductDetailRow> rows = data.getProductDetails();
-
-            if (rows == null || rows.isEmpty()) {
-                log.info("No productDetails in test data for '" + testCaseId + "' - skipping Product Details step.");
+            List<Map<String, Object>> grnRows = data.getBatchDetails();
+            if (grnRows == null || grnRows.isEmpty()) {
+                grnRows = data.getGrnProductDetails();
+            }
+            if (grnRows != null && !grnRows.isEmpty()) {
+                fillGrnProductDetails(getCommodityContractManagementPage(), grnRows);
                 return;
             }
-
-            CommodityContractManagementPage page = getCommodityContractManagementPage();
-
-            final String section = "Product Details";
-
-            int uiRowIndex = -1;
-
-            for (int i = 0; i < rows.size(); i++) {
-
-                ProductDetailRow row = rows.get(i);
-                // Here using 0-based index as per java -GK
-                int rowIndex = i;
-
-                if (isBlank(row.getProduct())) {
-                    log.warn("Skipping row " + rowIndex + " because Product is blank.");
-                    continue;
-                }
-
-                // From here on rowIndex means the UI row (0-based), not the JSON position.
-                rowIndex = ++uiRowIndex;
-                /* First JSON row already exist  * Row 0 -> existing UI row   * Row 1 -> click +  * Row 2 -> click + * etc.    */
-                if (rowIndex > 0) {
-                    int rowsBefore = page.getProductDetailRows().size();
-                    page.addProductDetailRow(section);
-                    int rowsAfter = page.getProductDetailRows().size();
-                    if (rowsAfter <= rowsBefore) {
-                        throw new IllegalStateException("Product Details row was not added. " + "Expected rows > " + rowsBefore + " but found " + rowsAfter);
-                    }
-                    webDriverCommonLibrary.waitForSetTime(ROW_SETTLE_PAUSE_MS);
-                }
-                page.selectMultipleDropdownValue(section, "Product", rowIndex, row.getProduct());
-                page.userEnterInTheMultipleNumberFieldInTheTable("Units", section, rowIndex, row.getUnits());
-                page.selectMultipleTableType2DropdownValues(section, "Packing", rowIndex, row.getPacking());
-                page.userEnterInTheMultipleNumberFieldInTheTable("Qty.", section, rowIndex, row.getQty());
-                page.userEnterInTheMultipleNumberFieldInTheTable("No Of Lots.", section, rowIndex, row.getNoOfLots());
-                page.userEnterInTheMultipleNumberFieldInTheTable("Price", section, rowIndex, row.getPrice());
-
-                if (isNotBlank(row.getTargetType())) {
-                    page.selectMultipleProductDetailValue(section, "Target Type", rowIndex, row.getTargetType());
-                }
-
-//                if (isNotBlank(row.getTradeMonth())) {
-//                    page.selectMultipleDropdownValue(section, "Trade Month", rowIndex, row.getTradeMonth());
-//                }
-
-                if (isNotBlank(row.getTargetDateRange())) {
-                    fillTargetDateRangeFromJson(row.getTargetDateRange(), rowIndex);}
-                log.info("COMPLETED PRODUCT ROW = " + rowIndex);
-
-                if (isNotBlank(row.getQuality())) {
-                    page.enterMultipleFieldValue("Quality", section, rowIndex, row.getQuality());
-                }
-
-//                page.selectPositionMonthValueInTheTable("Position Month", section, rowIndex, row.getPositionMonth());
-//                page.userEnterInTheMultipleQualityTextFieldInTheTable("Quality", section, rowIndex, row.getQuality());
-
-//                  page.createCertificationPremium(section, "Certification & Premium", rowIndex, row.getCertificationPremium());
-
-            }
+            throw new IllegalStateException("No GRN product rows were configured for test case '"
+                    + testCaseId + "'. Add at least one row to batchDetails.");
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    private void fillGrnProductDetails(
+            CommodityContractManagementPage page, List<Map<String, Object>> rows) {
+        int uiRowIndex = 0;
+        for (Map<String, Object> row : rows) {
+            if (row == null) {
+                throw new IllegalStateException("GRN product details contain a null row.");
+            }
+            Map<String, Object> rowValues = row;
+            String contractSI = grnProductValue(row, "contractSI");
+            if (contractSI != null && contractSI.startsWith("#")) {
+                rowValues = new java.util.LinkedHashMap<>(row);
+                rowValues.put("contractSI", resolve(contractSI));
+            }
+            for (String requiredField : List.of(
+                    "contractSI", "product", "season", "warehouseZone", "units", "packing", "grossQty", "netQty")) {
+                if (isBlank(grnProductValue(rowValues, requiredField))) {
+                    throw new IllegalStateException("GRN product row " + uiRowIndex
+                            + " is missing required test-data value '" + requiredField + "'.");
+                }
+            }
+
+            if (uiRowIndex > 0) {
+                page.addGrnProductDetailRow();
+            }
+            page.fillGrnProductDetailRow(uiRowIndex, rowValues);
+            log.info("Completed GRN Product Details row " + uiRowIndex);
+            uiRowIndex++;
+        }
+    }
+
+    private String grnProductValue(Map<String, Object> row, String key) {
+        Object value = row.get(key);
+        return value == null ? null : String.valueOf(value).trim();
     }
 
 
@@ -792,17 +855,71 @@ public class StepsContainer {
     public void searchForTheCreatedBy(String arg0, String arg1) {
         String propertyKey = arg0 + arg1;
         String recordnumber = ConfigReader.getProperty(propertyKey);
-        getCommodityContractManagementPage().searchContractNo(recordnumber);
+        getCommodityContractManagementPage().searchRecord("Contract No.", recordnumber);
     }
+
+//    @Then("search for the json created {string} by {string}")
+//    public void searchForJsonTheCreatedBy(String arg0, String arg1) {
+//        String key = arg0 + arg1;                       // e.g. CommercialCommodityPOContractNumber
+//        String recordNumber = TestContext.has(key)
+//                ? TestContext.get(key)                  // captured earlier in this run
+//                : dataValue("contractDetails.contractNo");   // fall back to the JSON for this TC
+//        getCommodityContractManagementPage().searchContractNo(recordNumber);
+//    }
 
     @Then("search for the json created {string} by {string}")
     public void searchForJsonTheCreatedBy(String arg0, String arg1) {
-        String key = arg0 + arg1;                       // e.g. CommercialCommodityPOContractNumber
+        String normalized = arg1.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+        String section = isCaptureDataSection(arg0) ? arg0 : null;
+        String column;
+        String field;
+        switch (normalized) {
+            case "contractno":
+            case "contractnumber":
+                column = "Contract No.";
+                field = "contractNo";
+                section = section == null ? "contractDetails" : section;
+                break;
+            case "shippinginstruction":
+            case "approvedshippinginstruction":
+            case "sino":
+            case "sinumber":
+                column = "SI No.";
+                field = normalized.equals("approvedshippinginstruction")
+                        || arg0.toLowerCase().contains("approvedshippinginstruction")
+                        ? "approvedShippingInstruction"
+                        : "shippingInstruction";
+                section = section == null ? "contractShippingDetails" : section;
+                break;
+            case "grnno":
+            case "grnnumber":
+            case "grnrecordnumber":
+                column = "GRN No.";
+                field = normalized.equals("grnno") || normalized.equals("grnnumber")
+                        ? (section != null && section.equals("grnBasicDetails") ? "grnNo" : "grnRecordNumber")
+                        : "grnRecordNumber";
+                section = section == null ? "contractDetails" : section;
+                break;
+            default:
+                column = arg1.trim();
+                field = toCamelCaseField(arg1);
+                section = section == null ? "contractDetails" : section;
+        }
+
+        String key = arg0 + field;
         String recordNumber = TestContext.has(key)
-                ? TestContext.get(key)                  // captured earlier in this run
-                : dataValue("contractDetails.contractNo");   // fall back to the JSON for this TC
-        getCommodityContractManagementPage().searchContractNo(recordNumber);
+                ? TestContext.get(key)
+                : TestContext.has(section + field)
+                        ? TestContext.get(section + field)
+                        : dataValue(section + "." + field);
+        if (recordNumber == null || recordNumber.trim().isEmpty()) {
+            throw new IllegalStateException("No value found for '" + section + "." + field
+                    + "' while searching the '" + column + "' list column.");
+        }
+
+        getCommodityContractManagementPage().searchRecord(column, recordNumber.trim());
     }
+
 
     @And("verify {string} is in {string} status")
     public void verifyIsInStatus(String arg0, String arg1) {
@@ -1187,7 +1304,7 @@ public class StepsContainer {
 
     @When("the user selects the {string}{string} for the created Purchase Order")
     public void theUserSelectsTheForTheCreatedPurchaseOrder(String arg0, String arg1) {
-        WebElement checkboxRoot = driver.findElement(By.xpath( "//span[normalize-space()='"+arg0+"']/preceding::div[@data-pc-name='"+arg1+"']"));
+        WebElement checkboxRoot = driver.findElement(By.xpath( "//*[normalize-space()='"+arg0+"']/preceding::div[@data-pc-name='"+arg1+"']"));
         webDriverCommonLibrary.explicitWait(driver, checkboxRoot);
         webDriverCommonLibrary.scrollIntoTheView(driver, checkboxRoot);
         WebElement checkboxBox = checkboxRoot.findElement(By.cssSelector("div.p-checkbox-box"));
@@ -1378,25 +1495,95 @@ public class StepsContainer {
 
     @Then("capture {string} {string} in json test data")
     public void captureInJsonTestData(String arg0, String arg1) {
-        if (!"Contract No.".equals(arg1)) {
-            throw new IllegalArgumentException("capture supports only the 'Contract No.' column but got: '" + arg1 + "'");
-        }
-        webDriverCommonLibrary.waitForSetTime(setTime / 2);
-        String contractNo = getCommodityContractManagementPage().getListColumnText(arg1).trim();
-        String key = arg0 + "ContractNumber";
-
-        TestContext.set(key, contractNo);
-
         if (!TestContext.has(Hooks.TEST_CASE_ID_KEY)) {
-            throw new IllegalStateException("No @TC_ tag found on the scenario, so the JSON entry can't be located");
+            throw new IllegalStateException("No test case id set. Load test data before capturing a list value.");
         }
+
+        String normalized = arg1.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+        String column;
+        String section;
+        String field;
+        switch (normalized) {
+            case "contractno":
+            case "contractnumber":
+                column = "Contract No.";
+                field = "contractNo";
+                section = "contractDetails";
+                break;
+            case "shippinginstruction":
+            case "approvedshippinginstruction":
+            case "sino":
+            case "sinumber":
+                column = "SI No.";
+                field = normalized.equals("approvedshippinginstruction")
+                        || arg0.toLowerCase().contains("approvedshippinginstruction")
+                        ? "approvedShippingInstruction"
+                        : "shippingInstruction";
+                section = "contractShippingDetails";
+                break;
+            case "grnno":
+            case "grnnumber":
+            case "grnrecordnumber":
+                column = "GRN No.";
+                field = "grnRecordNumber";
+                section = "contractDetails";
+                break;
+            default:
+                column = arg1.trim();
+                field = toCamelCaseField(arg1);
+                if (field.isEmpty()) {
+                    throw new IllegalArgumentException("List column must not be blank.");
+                }
+                section = "contractDetails";
+        }
+
+        if (isCaptureDataSection(arg0)) {
+            section = arg0;
+        }
+        if ((normalized.equals("grnno") || normalized.equals("grnnumber"))
+                && section.equals("grnBasicDetails")) {
+            field = "grnNo";
+        }
+
+        webDriverCommonLibrary.waitForSetTime(setTime / 2);
+        String value = getCommodityContractManagementPage().getListColumnText(column).trim();
+        if (value.isEmpty()) {
+            throw new IllegalStateException("The '" + column + "' list value is blank; nothing was captured.");
+        }
+
+        TestContext.set(buildKey(arg0, column), value);
+        TestContext.set(section + field, value);
+        TestContext.set(arg0 + field, value);
 
         JsonDataWriter.captureValue(
-                "src/test/resources/testdata/contractTestData.json",
+                TEST_DATA_JSON,
                 TestContext.get(Hooks.TEST_CASE_ID_KEY),
-                "contractDetails",
-                "contractNo",
-                contractNo);
+                section,
+                field,
+                value);
+        TestDataReader.reload();
+        log.info("Captured " + column + " = " + value + " -> " + section + "." + field);
+    }
+
+    private boolean isCaptureDataSection(String value) {
+        return List.of(
+                "contractDetails", "contractShippingDetails", "contractRecords",
+                "grnBasicDetails", "grnTruckDetails", "grnProductDetails")
+                .contains(value);
+    }
+
+    private String toCamelCaseField(String value) {
+        StringBuilder field = new StringBuilder();
+        boolean capitalizeNext = false;
+        for (char character : value.trim().toCharArray()) {
+            if (!Character.isLetterOrDigit(character)) {
+                capitalizeNext = field.length() > 0;
+            } else {
+                field.append(capitalizeNext ? Character.toUpperCase(character) : character);
+                capitalizeNext = false;
+            }
+        }
+        return field.toString();
     }
 
     @Then("the {string} {string} should be {string} date")
@@ -1466,6 +1653,15 @@ public class StepsContainer {
         webDriverCommonLibrary.selectDates(section, field, dateExpression);
     }
 
+    @When("the user selects {string} {string} {string} as {string}")
+    public void theUserSelectsReferenceDateAs(
+            String section, String referenceField, String dateLabel, String dateExpression) {
+        if (!"Date".equalsIgnoreCase(dateLabel)) {
+            throw new IllegalArgumentException("Expected date label 'Date' but got '" + dateLabel + "'");
+        }
+        webDriverCommonLibrary.selectReferenceDate(section, referenceField, dateExpression);
+    }
+
 
 
     @When("the user selects the type {string} {string} as {string}")
@@ -1499,6 +1695,7 @@ public class StepsContainer {
 
         // 1) TestContext, so later steps in this run can read it directly
         TestContext.set(key, value);
+        TestContext.set(jsonSection + jsonField, value);
 
         // 2) properties file
         webDriverCommonLibrary.updateTheValueInDataValuePropertiesFile(key, value);
@@ -1531,4 +1728,3 @@ public class StepsContainer {
      radio.click();
     }
 }
-

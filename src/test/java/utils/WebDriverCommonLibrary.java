@@ -47,8 +47,17 @@ public class WebDriverCommonLibrary {
     }
 
    public By dateFieldLocator(String section, String field) {
-        return By.xpath("//label[@class='selected-label' and normalize-space(translate(.,'*',''))='"+field+"']/preceding-sibling::p-calendar//input");
-    }
+      return By.xpath("//span[contains(concat(' ',normalize-space(@class),' '),' p-float-label ')"
+              + "][label[normalize-space(translate(.,'*',''))=" + xp(field) + "]]"
+              + "//p-calendar//input");
+   }
+
+   private By referenceDateFieldLocator(String section, String referenceField) {
+       return By.xpath("(//span[normalize-space(.)=" + xp(section)
+               + "]/following::span[contains(@class,'p-float-label')][.//span[normalize-space(.)="
+               + xp(referenceField) + "]])[1]"
+               + "/following::xbs-dcloud-input-calendar[1]//input[@role='combobox']");
+   }
 
     public By dateCCMFieldLocator(String section, String field) {
         return By.xpath("//*[contains(normalize-space(translate(.,'*','')),'"+field+"')]/preceding-sibling::p-calendar//input");
@@ -903,8 +912,15 @@ public class WebDriverCommonLibrary {
     }
 
     public void selectDate(String section, String field, String dateExpression) {
-        By locator = dateFieldLocator(section, field);
+        selectDate(dateFieldLocator(section, field), section, field, dateExpression);
+    }
 
+    public void selectReferenceDate(String section, String referenceField, String dateExpression) {
+        selectDate(referenceDateFieldLocator(section, referenceField),
+                section, referenceField + " Date", dateExpression);
+    }
+
+    private void selectDate(By locator, String section, String field, String dateExpression) {
         LocalDate target = DateExpressionResolver.resolve(dateExpression);
         String text = target.format(APP_DATE_FORMAT);
 

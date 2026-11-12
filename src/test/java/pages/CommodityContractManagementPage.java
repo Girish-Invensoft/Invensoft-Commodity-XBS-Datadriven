@@ -972,6 +972,240 @@ public class CommodityContractManagementPage{
         }
     }
 
+    public void addGrnProductDetailRow() {
+        int rowsBefore = grnProductRows().size();
+        By addButton = By.xpath("(//div[@formarrayname='grn_product_details']//tr[td])[last()]"
+                + "//button[.//*[contains(concat(' ',normalize-space(@class),' '),' pi-plus ')]]");
+        WebElement button = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(addButton));
+        webDriverCommonLibrary.scrollIntoTheView(driver, button);
+        button.click();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+                d -> d.findElements(By.xpath("//div[@formarrayname='grn_product_details']//tr[td]"))
+                        .size() > rowsBefore);
+    }
+
+    public void fillGrnProductDetailRow(int rowIndex, Map<String, Object> values) {
+        fillGrnDropdown(rowIndex, "Contract / SI", values, "contractSI");
+        fillGrnDropdown(rowIndex, "Product", values, "product");
+        fillGrnDropdown(rowIndex, "Season", values, "season");
+        fillGrnDropdown(rowIndex, "Warehouse -- Zone", values, "warehouseZone");
+        fillGrnNumber(rowIndex, "Units", values, "units");
+        fillGrnDropdown(rowIndex, "Packing", values, "packing");
+        fillGrnNumber(rowIndex, "Gross Qty.", values, "grossQty");
+        fillGrnNumber(rowIndex, "Net Qty.", values, "netQty");
+        fillGrnFetchWeight(rowIndex, values);
+        fillGrnSustainabilityDetails(rowIndex, values);
+    }
+
+    private void fillGrnDropdown(
+            int rowIndex, String columnName, Map<String, Object> values, String key) {
+        String value = grnValue(values, key);
+        if (value == null || value.isBlank()) {
+            return;
+        }
+
+        WebElement cell = getGrnProductCell(rowIndex, columnName);
+        WebElement trigger = cell.findElement(By.cssSelector("div.p-dropdown-trigger"));
+        webDriverCommonLibrary.scrollIntoTheView(driver, trigger);
+        webDriverCommonLibrary.clickWithOverlayRetry(trigger);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement panel = wait.until(d -> d.findElements(
+                        By.xpath("//div[contains(@class,'p-dropdown-panel')]"))
+                .stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .orElse(null));
+        List<WebElement> searchBoxes = panel.findElements(By.xpath(".//input[@role='searchbox']"));
+        if (!searchBoxes.isEmpty() && searchBoxes.get(0).isDisplayed()) {
+            WebElement searchBox = searchBoxes.get(0);
+            searchBox.clear();
+            searchBox.sendKeys(value.trim());
+        }
+
+        String optionValue = xpathLiteral(value.trim());
+        By optionLocator = By.xpath(".//li[@role='option' and (normalize-space(.)=" + optionValue
+                + " or normalize-space(@aria-label)=" + optionValue + ")]");
+        WebElement option = wait.ignoring(StaleElementReferenceException.class).until(d -> {
+            for (WebElement visiblePanel : d.findElements(
+                    By.xpath("//div[contains(@class,'p-dropdown-panel')]"))) {
+                if (!visiblePanel.isDisplayed()) {
+                    continue;
+                }
+                for (WebElement candidate : visiblePanel.findElements(optionLocator)) {
+                    if (candidate.isDisplayed() && candidate.isEnabled()) {
+                        return candidate;
+                    }
+                }
+            }
+            return null;
+        });
+        option.click();
+    }
+
+    private void fillGrnNumber(
+            int rowIndex, String columnName, Map<String, Object> values, String key) {
+        String value = grnValue(values, key);
+        if (value == null || value.isBlank()) {
+            return;
+        }
+
+        WebElement cell = getGrnProductCell(rowIndex, columnName);
+        WebElement input = cell.findElement(By.cssSelector("input"));
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(input));
+        webDriverCommonLibrary.scrollIntoTheView(driver, input);
+        input.clear();
+        input.sendKeys(value.trim());
+        input.sendKeys(Keys.TAB);
+    }
+
+    private void fillGrnFetchWeight(int rowIndex, Map<String, Object> values) {
+        Object configuredValue = values.get("fetchWeight");
+        if (configuredValue == null) {
+            return;
+        }
+        String value = String.valueOf(configuredValue).trim();
+        if (!value.equalsIgnoreCase("true") && !value.equalsIgnoreCase("yes")
+                && !value.equalsIgnoreCase("click") && !value.equalsIgnoreCase("fetch")) {
+            return;
+        }
+
+        WebElement cell = getGrnProductCell(rowIndex, "Fetch Weight");
+        if (cell.getAttribute("class").contains("x-off")) {
+            throw new IllegalStateException("Fetch Weight is disabled for GRN row " + rowIndex
+                    + " but test data requests it.");
+        }
+        WebElement fetchAction = cell.findElement(By.xpath(".//*[normalize-space()='Fetch Weight']"));
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(fetchAction))
+                .click();
+    }
+
+    private void fillGrnSustainabilityDetails(int rowIndex, Map<String, Object> values) {
+        List<String> selections = grnValues(values.get("sustainabilityDetails"));
+        if (selections.isEmpty()) {
+            return;
+        }
+
+        WebElement cell = getGrnProductCell(rowIndex, "Sustainability Details");
+        WebElement trigger = cell.findElement(By.cssSelector("p-multiselect .p-multiselect-trigger"));
+        WebElement multiSelect = cell.findElement(By.cssSelector("p-multiselect .p-multiselect"));
+        String controlClass = multiSelect.getAttribute("class");
+        if (controlClass != null && controlClass.contains("p-disabled")) {
+            throw new IllegalStateException("Sustainability Details is disabled for GRN row " + rowIndex
+                    + " but test data requests " + selections + ".");
+        }
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        for (String selection : selections) {
+            if (selection.isBlank()) {
+                continue;
+            }
+            webDriverCommonLibrary.scrollIntoTheView(driver, trigger);
+            if (!hasVisibleMultiSelectPanel()) {
+                webDriverCommonLibrary.clickWithOverlayRetry(trigger);
+            }
+            String optionText = xpathLiteral(selection.trim());
+            WebElement option = wait.until(d -> {
+                for (WebElement panel : d.findElements(
+                        By.xpath("//div[contains(@class,'p-multiselect-panel')]"))) {
+                    if (!panel.isDisplayed()) {
+                        continue;
+                    }
+                    for (WebElement candidate : panel.findElements(By.xpath(
+                            ".//li[@role='option' and (normalize-space(.)=" + optionText
+                                    + " or normalize-space(@aria-label)=" + optionText + ")]"))) {
+                        if (candidate.isDisplayed() && candidate.isEnabled()) {
+                            return candidate;
+                        }
+                    }
+                }
+                return null;
+            });
+            String optionClass = option.getAttribute("class");
+            if (optionClass == null || !optionClass.contains("p-highlight")) {
+                option.click();
+            }
+            trigger = getGrnProductCell(rowIndex, "Sustainability Details")
+                    .findElement(By.cssSelector("p-multiselect .p-multiselect-trigger"));
+        }
+
+        if (hasVisibleMultiSelectPanel()) {
+            trigger.click();
+        }
+    }
+
+    private boolean hasVisibleMultiSelectPanel() {
+        return driver.findElements(By.xpath("//div[contains(@class,'p-multiselect-panel')]"))
+                .stream()
+                .anyMatch(WebElement::isDisplayed);
+    }
+
+    private List<String> grnValues(Object configuredValue) {
+        if (configuredValue == null) {
+            return List.of();
+        }
+        if (configuredValue instanceof Iterable<?> values) {
+            List<String> result = new ArrayList<>();
+            for (Object value : values) {
+                if (value != null) {
+                    result.add(String.valueOf(value).trim());
+                }
+            }
+            return result;
+        }
+        String value = String.valueOf(configuredValue).trim();
+        if (value.isEmpty()) {
+            return List.of();
+        }
+        return List.of(value.split("\\s*,\\s*"));
+    }
+
+    private String grnValue(Map<String, Object> values, String key) {
+        Object value = values.get(key);
+        return value == null ? null : String.valueOf(value);
+    }
+
+    private WebElement getGrnProductCell(int rowIndex, String columnName) {
+        WebElement table = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("//div[@formarrayname='grn_product_details']//table")));
+        List<WebElement> headers = table.findElements(By.xpath(".//thead/tr/th"));
+        int columnIndex = -1;
+        for (int i = 0; i < headers.size(); i++) {
+            String header = headers.get(i).getText()
+                    .replace("*", "")
+                    .replace('\u00a0', ' ')
+                    .replaceAll("\\s+", " ")
+                    .trim();
+            if (columnName.equalsIgnoreCase(header)) {
+                columnIndex = i;
+                break;
+            }
+        }
+        if (columnIndex < 0) {
+            throw new NoSuchElementException("GRN Product Details has no column '" + columnName + "'.");
+        }
+
+        List<WebElement> rows = table.findElements(By.xpath(".//tr[td]"));
+        if (rowIndex < 0 || rowIndex >= rows.size()) {
+            throw new NoSuchElementException("GRN Product Details has no row " + rowIndex
+                    + "; available row count is " + rows.size() + ".");
+        }
+        List<WebElement> cells = rows.get(rowIndex).findElements(By.xpath("./td"));
+        if (columnIndex >= cells.size()) {
+            throw new NoSuchElementException("GRN Product Details row " + rowIndex
+                    + " has no cell for column '" + columnName + "'.");
+        }
+        return cells.get(columnIndex);
+    }
+
+    private List<WebElement> grnProductRows() {
+        return driver.findElements(By.xpath("//div[@formarrayname='grn_product_details']//tr[td]"));
+    }
+
     // Generic dropdown selector (Product, Trade Month, UOM, etc.)
     public void selectDropdownValue(String sectionName, String columnName, int rowIndex, String value) {
         if (value == null || value.trim().isEmpty())
@@ -985,10 +1219,11 @@ public class CommodityContractManagementPage{
         selectMultipleProductDetailValue(sectionName, columnName, rowIndex, value);
     }
 
-    public void createCertificationPremium(String sectionName, String columnName, int rowIndex, String value) {
-        if (value == null || value.trim().isEmpty())
+    public void createCertificationPremium(String sectionName, String columnName, int rowIndex,
+                                           String certification, String premiumAmount) {
+        if (certification == null || certification.trim().isEmpty())
             return;
-        selectCertificationAndPremium(sectionName, columnName, rowIndex, value);
+        selectCertificationAndPremium(sectionName, columnName, rowIndex, certification, premiumAmount);
     }
 
     public void selectMultipleCommissionDropdownValue(String sectionName, String columnName, int rowIndex, String value) {
@@ -1440,9 +1675,16 @@ public class CommodityContractManagementPage{
         // ---------------------------------------------------------
         // 1. Locate Product Details container
         // ---------------------------------------------------------
-        WebElement productDetailsContainer = driver. findElement(
-//                By.xpath("//div[@formarrayname='item_details']" + "[.//xbs-dcloud-caption//h3[normalize-space()='" +sectionName + "']]"));
-                By.xpath("//div[@formarrayname='item_details'][preceding::span[contains(@class,'form-header')][1][normalize-space()='"+sectionName+"']]"));
+        String sectionHeader = "[preceding::span[contains(@class,'form-header')][1][normalize-space()='"
+                + sectionName + "']]";
+        By productDetailsLocator = By.xpath("//div[@formarrayname='item_details']" + sectionHeader);
+        By grnProductDetailsLocator = By.xpath("//div[@formarrayname='grn_product_details']");
+        WebElement productDetailsContainer = driver.findElements(productDetailsLocator).stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .orElseGet(() -> new WebDriverWait(driver, Duration.ofSeconds(10))
+                        .until(ExpectedConditions.visibilityOfElementLocated(grnProductDetailsLocator)));
+
         // ---------------------------------------------------------
         // 2. Find ALL headers
         // ---------------------------------------------------------
@@ -1473,9 +1715,7 @@ public class CommodityContractManagementPage{
         //    Find rows from Product Details container itself
         // ---------------------------------------------------------
 
-        List<WebElement> allRows = productDetailsContainer.findElements(
-                By.xpath(".//tbody/tr")
-        );
+        List<WebElement> allRows = productDetailsContainer.findElements(By.xpath(".//tr[td]"));
 
         System.out.println("Total rows found in Product Details container = " + allRows.size());
 
@@ -1892,15 +2132,21 @@ public class CommodityContractManagementPage{
     }
 
 
-    public void selectCertificationAndPremium(String sectionName, String columnName, int rowIndex, String value) {
-//        clickMultipleGridColumnDropdown(driver, sectionName, columnName, rowIndex);
+    public void selectCertificationAndPremium(String sectionName, String columnName, int rowIndex,
+                                              String certification, String premiumAmount) {
+        if (premiumAmount == null || premiumAmount.trim().isEmpty()) {
+            throw new IllegalArgumentException("Premium amount is required when a certification is selected.");
+        }
 
-        webDriverCommonLibrary.highLightTheElement(driver,driver.findElement(By.xpath("//span[normalize-space(.)='No Certificates']")));
-        WebElement bipencil = driver.findElement(By.xpath("//span[normalize-space()='No Certificates']/following::i[contains(@class,'bi-pencil')]"));
-        bipencil.click();
+        WebElement certificationCell = getProductDetailCell(sectionName, columnName, rowIndex);
+        WebElement editButton = certificationCell.findElement(By.cssSelector("i.bi-pencil"));
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(editButton))
+                .click();
 
-        webDriverCommonLibrary.waitForSetTime(200);
-        webDriverCommonLibrary.highLightTheElement(driver,driver.findElement(By.xpath("//span[contains(text(),'Certification Details')]")));
+        By modalTitle = By.xpath("//span[contains(normalize-space(.),'Certification Details')]");
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(modalTitle));
 
         String xpath = "//th[.//span[normalize-space()='Certification']]/ancestor::table//tbody/tr[1]//td[count(//th[.//span[normalize-space()='Certification']]/preceding-sibling::th) + 1]//*[contains(@class,'dropdown') or contains(@class,'chevron')]";
         WebElement certificateDropdown = driver.findElement(By.xpath(xpath));
@@ -1908,7 +2154,8 @@ public class CommodityContractManagementPage{
         webDriverCommonLibrary.scrollIntoTheView(driver,certificateDropdown);
         certificateDropdown.click();
 
-        WebElement option = driver.findElement(By.xpath("//ul[contains(@class,'p-dropdown-items')]//li[@aria-label='"+value+"']"));
+        WebElement option = driver.findElement(By.xpath(
+                "//ul[contains(@class,'p-dropdown-items')]//li[@aria-label='" + certification + "']"));
         try{
             webDriverCommonLibrary.clickWithJavaScriptExecutor(driver,option);
         }catch (Exception e){
@@ -1920,8 +2167,10 @@ public class CommodityContractManagementPage{
         WebElement premiumNumberField = driver.findElement(By.xpath(premium));
         webDriverCommonLibrary.explicitWait(driver,premiumNumberField);
         webDriverCommonLibrary.scrollIntoTheView(driver,premiumNumberField);
+        premiumNumberField.clear();
         premiumNumberField.click();
-        premiumNumberField.sendKeys("21");
+        premiumNumberField.sendKeys(premiumAmount);
+        premiumNumberField.sendKeys(Keys.TAB);
 
         WebElement saveButton = driver.findElement(with(By.tagName("button")).toLeftOf(By.xpath("//span[normalize-space()='Cancel']")));
         webDriverCommonLibrary.explicitWait(driver,saveButton);
@@ -2134,7 +2383,7 @@ public class CommodityContractManagementPage{
     }
 
     private static By primeIconButtonLocator(String icon) {
-        return By.xpath("//p-button[contains(@icon,'pi pi-" + icon + "')]//button");
+        return By.xpath("//p-button[contains(@icon,'"+icon+"')]//button");
     }
 
     /** The button in the list-view row under the given column header (e.g. the Contract No. actions button). */
@@ -2223,6 +2472,17 @@ public class CommodityContractManagementPage{
         }
     }
 
+    public void clickSectionSearchButton(String section, String buttonText) {
+        By locator = By.xpath("//p-card[.//span[contains(normalize-space(.),"
+                + xpathLiteral(section) + ")]]//div[contains(concat(' ',normalize-space(@class),' '),"
+                + " ' bd-search ')]//button[@type='button' and .//span[normalize-space()="
+                + xpathLiteral(buttonText) + "]]");
+        WebElement button = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(locator));
+        webDriverCommonLibrary.scrollIntoTheView(driver, button);
+        button.click();
+    }
+
     /** JavaScript click on a button whose label is a span with this text (Approve ...). */
     public void clickSpanButtonWithJs(String label) {
         WebElement button = driver.findElement(By.xpath("//span[normalize-space()='" + label + "']"));
@@ -2234,12 +2494,30 @@ public class CommodityContractManagementPage{
     // ---- form fields ----
 
     public void enterTextInSectionField(String section, String field, String value) {
-        WebElement textField = driver.findElement(By.xpath("//span[text()='" + section + "']/following::span[@class='p-float-label'][.//span[text()='" + field + "']]//input"));
+        By locator = By.xpath("//p-card[.//span[contains(@class,'form-header') and normalize-space(.)="
+                + xpathLiteral(section) + "]]"
+                + "//span[contains(@class,'p-float-label')][.//label[.//span[normalize-space(.)="
+                + xpathLiteral(field) + "]]]//input");
+        WebElement textField = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(locator));
         webDriverCommonLibrary.explicitWait(driver, textField);
         webDriverCommonLibrary.scrollIntoTheView(driver, textField);
         webDriverCommonLibrary.clickWithJavaScriptExecutor(driver, textField);
         textField.clear();
         textField.sendKeys(value);
+    }
+
+    public void verifyTruckTareWeightUnit(String section, String field, String unit) {
+        By locator = By.xpath("//p-card[.//span[contains(@class,'form-header') and normalize-space(.)="
+                + xpathLiteral(section) + "]]"
+                + "//div[contains(@class,'t-pair')][.//label[.//span[normalize-space(.)="
+                + xpathLiteral(field) + "]]]"
+                + "//span[contains(@class,'t-kgs-text') and normalize-space(.)="
+                + xpathLiteral(unit) + "]");
+        WebElement unitLabel = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(locator));
+        Assert.assertEquals(unitLabel.getText().trim(), unit,
+                "Unexpected unit label for '" + field + "' in '" + section + "'.");
     }
 
     public void enterTextInSectionTextArea(String section, String field, String value) {
@@ -2422,11 +2700,18 @@ public class CommodityContractManagementPage{
     }
 
     public void searchContractNo(String contractNumber) {
-        WebElement searchbox = driver.findElement(By.xpath("//input[@placeholder='Search Contract No.']"));
+        searchRecord("Contract No.", contractNumber);
+    }
+
+    public void searchRecord(String columnHeader, String recordNumber) {
+        By searchLocator = By.xpath("//input[@placeholder="
+                + xpathLiteral("Search " + columnHeader) + "]");
+        WebElement searchbox = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(searchLocator));
         searchbox.click();
         webDriverCommonLibrary.waitForSetTime(200);
         searchbox.clear();
-        searchbox.sendKeys(contractNumber);
+        searchbox.sendKeys(recordNumber);
         webDriverCommonLibrary.waitForSetTime(200);
     }
 
@@ -2827,7 +3112,10 @@ public class CommodityContractManagementPage{
     }
 
     public WebElement getField(String section, String field, String ariaLabel) {
-        By locator = By.xpath("//p-card[.//span[contains(text(),'" + section + "')]]" + "//label[.//span[normalize-space()='" + field + "']]/.." + "//*[@aria-label='" + ariaLabel + "']");
+        String card = "//p-card[.//span[contains(text(),'" + section + "')]]";
+        String label = "//label[.//span[normalize-space()='" + field + "']]";
+        By locator = By.xpath("(" + card + label + "/preceding-sibling::input[1] | "
+                + card + label + "/..//*[@aria-label='" + ariaLabel + "'])[1]");
         return webDriverCommonLibrary.waitForVisibility(locator);
     }
 

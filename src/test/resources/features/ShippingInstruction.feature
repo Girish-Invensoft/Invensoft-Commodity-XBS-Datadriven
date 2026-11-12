@@ -19,7 +19,7 @@ Feature: Shipping Instruction Flow in Commodity Contract Management
     When user navigates to "Commercial" dashboard sidebar menu
     When user clicks on "Commodity Contract Management" section on the dashboard page
 
-    When clicks on "Create" "plus" icon on the Commodity Contract Management dashboard
+    When clicks on "Create" "create-new" icon on the Commodity Contract Management dashboard
 
     And verifies that the "General" section is displayed
     And verifies that the "Product Details" table section is displayed
@@ -118,11 +118,12 @@ Feature: Shipping Instruction Flow in Commodity Contract Management
     And click on "Save" button
     And verify the message "@contract.createdMessage" is displayed
     Then capture "CommercialCommodityPO" "Contract No."
-    Then capture "CommercialCommodityPO" "Contract No." in json test data
+    Then capture "contractShippingDetails" "contractNo" in json test data
 
     And verify "Contract No." is in "@contract.pendingStatus" status
     Then verify the "@contract.pendingMenuItems" menu items is displayed for "Contract No."
-    Then search for the json created "CommercialCommodityPO" by "ContractNumber"
+    Then search for the json created "contractShippingDetails" by "contractNo"
+
     When the user selects the "Purchase""checkbox" for the created Purchase Order
     Then apply a static wait for the web element for testing purposes only.
 
@@ -151,7 +152,7 @@ Feature: Shipping Instruction Flow in Commodity Contract Management
     When user navigates to "Logistics" dashboard sidebar menu
     When user clicks on "Shipping Instruction" section on the dashboard page
 
-    When clicks on "Create" "plus" icon on the Commodity Contract Management dashboard
+    When clicks on "Create" "create-new" icon on the Commodity Contract Management dashboard
 #
     And verifies that the "Contract Selection" section is displayed
     And verifies that the "Contract Details" section is displayed

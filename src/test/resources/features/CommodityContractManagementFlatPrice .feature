@@ -20,7 +20,7 @@ Feature: As a Contract Manager,I want to create a Commodity Contract by completi
     When user navigates to "Commercial" dashboard sidebar menu
     When user clicks on "Commodity Contract Management" section on the dashboard page
 
-    When clicks on "Create" "plus" icon on the Commodity Contract Management dashboard
+    When clicks on "Create" "create-new" icon on the Commodity Contract Management dashboard
 
     And verifies that the "General" section is displayed
     And verifies that the "Product Details" table section is displayed

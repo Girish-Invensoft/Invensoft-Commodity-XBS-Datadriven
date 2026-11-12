@@ -11,6 +11,7 @@ public class ProductDetailRow {
     private String price;
     private String targetType;
     private String targetDateRange;
+    private String premiumAmount;
     private String tradeMonth;
     private String positionMonth;
     private String quality;
@@ -87,6 +88,14 @@ public class ProductDetailRow {
     }
     public void setTargetDateRange(String targetDateRange) {
         this.targetDateRange = targetDateRange;
+    }
+
+    public String getPremiumAmount() {
+        return premiumAmount;
+    }
+
+    public void setPremiumAmount(String premiumAmount) {
+        this.premiumAmount = premiumAmount;
     }
 
     public String getTradeMonth() {

@@ -5,7 +5,7 @@
       "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/",
       "browser" : "chrome",
       "username" : "Girishkumar.MR@invensoft.co.in",
-      "password" : "Admin#01",
+      "password" : "",
       "loggedInUser" : "Girish"
     },
     "general" : {
@@ -169,9 +169,10 @@
       "targetType" : "Arrival",
       "targetDateRange" : "today - today ",
       "tradeMonth" : "Sep-2027",
-      "positionMonth" : "Oct-2026",
+      "positionMonth" : "Oct-2029",
       "quality" : "quality test",
-      "certificationPremium" : "UTZ"
+      "certificationPremium" : "UTZ",
+      "premiumAmount" : "21"
     } ],
     "commissionDetails" : [ {
       "agentBroker" : "Agent (dcsza)",
@@ -231,7 +232,7 @@
       "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
       "browser" : "chrome",
       "username" : "Girishkumar.MR@invensoft.co.in",
-      "password" : "Admin#01",
+      "password" : "",
       "loggedInUser" : "Girish"
     },
     "general" : {
@@ -397,7 +398,8 @@
       "tradeMonth" : "Sep-2027",
       "positionMonth" : "",
       "quality" : "cappuccino",
-      "certificationPremium" : "4C"
+      "certificationPremium" : "4C",
+      "premiumAmount" : "21"
     }, {
       "product" : "AC RAW",
       "units" : "200",
@@ -411,7 +413,8 @@
       "tradeMonth" : "Sep-2027",
       "positionMonth" : "",
       "quality" : "cappuccino",
-      "certificationPremium" : "UTZ"
+      "certificationPremium" : "UTZ",
+      "premiumAmount" : "21"
     }, {
       "product" : "AC AAB",
       "units" : "250",
@@ -425,7 +428,8 @@
       "tradeMonth" : "Sep-2027",
       "positionMonth" : "",
       "quality" : "cappuccino",
-      "certificationPremium" : "UTZ"
+      "certificationPremium" : "UTZ",
+      "premiumAmount" : "21"
     }, {
       "product" : "AC BBB ",
       "units" : "200",
@@ -439,7 +443,8 @@
       "tradeMonth" : "Sep-2027",
       "positionMonth" : "",
       "quality" : "cappuccino",
-      "certificationPremium" : "UTZ"
+      "certificationPremium" : "UTZ",
+      "premiumAmount" : "21"
     }, {
       "product" : "AC PB",
       "units" : "200",
@@ -453,7 +458,8 @@
       "tradeMonth" : "Sep-2027",
       "positionMonth" : "",
       "quality" : "cappuccino",
-      "certificationPremium" : "Organic"
+      "certificationPremium" : "Organic",
+      "premiumAmount" : "21"
     } ],
     "commissionDetails" : [ {
       "agentBroker" : "Agent (dcsza)",
@@ -537,7 +543,7 @@
       "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
       "browser" : "chrome",
       "username" : "Girishkumar.MR@invensoft.co.in",
-      "password" : "Admin#01",
+      "password" : "",
       "loggedInUser" : "Girish"
     },
     "general" : {
@@ -703,7 +709,8 @@
       "tradeMonth" : "Sep-2027",
       "positionMonth" : "",
       "quality" : "cappuccino",
-      "certificationPremium" : "Carbon Compliance"
+      "certificationPremium" : "Carbon Compliance",
+      "premiumAmount" : "21"
     } ],
     "commissionDetails" : [ {
       "agentBroker" : "Agent (dcsza)",
@@ -1057,7 +1064,7 @@
       "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
       "browser" : "edge",
       "username" : "Girishkumar.MR@invensoft.co.in",
-      "password" : "Admin#01",
+      "password" : "",
       "loggedInUser" : "Girish"
     },
     "general" : {
@@ -1223,7 +1230,8 @@
       "tradeMonth" : "Sep-2027",
       "positionMonth" : "",
       "quality" : "cappuccino",
-      "certificationPremium" : "Carbon Compliance"
+      "certificationPremium" : "Carbon Compliance",
+      "premiumAmount" : "21"
     } ],
     "commissionDetails" : [ {
       "agentBroker" : "Agent (dcsza)",
@@ -1877,7 +1885,7 @@
       "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
       "browser" : "edge",
       "username" : "Girishkumar.MR@invensoft.co.in",
-      "password" : "Admin#01",
+      "password" : "",
       "loggedInUser" : "Girish"
     },
     "general" : {
@@ -2041,9 +2049,10 @@
       "targetType" : "Arrival",
       "targetDateRange" : "today - today ",
       "tradeMonth" : "Sep-2027",
-      "positionMonth" : "Oct-2026",
+      "positionMonth" : "Oct-2029",
       "quality" : "quality test",
-      "certificationPremium" : "UTZ"
+      "certificationPremium" : "UTZ",
+      "premiumAmount" : "21"
     } ],
     "commissionDetails" : [ {
       "agentBroker" : "Agent (dcsza)",
@@ -2103,7 +2112,7 @@
       "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
       "browser" : "edge",
       "username" : "Girishkumar.MR@invensoft.co.in",
-      "password" : "Admin#01",
+      "password" : "",
       "loggedInUser" : "Girish"
     },
     "general" : {
@@ -2268,9 +2277,10 @@
       "targetType" : "Arrival",
       "targetDateRange" : "today - today ",
       "tradeMonth" : "Sep-2027",
-      "positionMonth" : "Oct-2026",
+      "positionMonth" : "Oct-2029",
       "quality" : "quality test",
-      "certificationPremium" : "UTZ"
+      "certificationPremium" : "UTZ",
+      "premiumAmount" : "21"
     } ],
     "commissionDetails" : [ {
       "agentBroker" : "Agent (dcsza)",
@@ -2330,7 +2340,7 @@
       "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
       "browser" : "chrome",
       "username" : "Girishkumar.MR@invensoft.co.in",
-      "password" : "Admin#01",
+      "password" : "",
       "loggedInUser" : "Girish"
     },
     "general" : {
@@ -2369,9 +2379,10 @@
       "targetType" : "Arrival",
       "targetDateRange" : "today - today ",
       "tradeMonth" : "Sep-2027",
-      "positionMonth" : "Oct-2026",
+      "positionMonth" : "Oct-2029",
       "quality" : "quality test",
-      "certificationPremium" : "UTZ"
+      "certificationPremium" : "UTZ",
+      "premiumAmount" : "21"
     } ],
     "commissionDetails" : [ {
       "agentBroker" : "Agent (dcsza)",
@@ -2458,8 +2469,8 @@
       "approvedMenuItems" : "Copy By Contract,Amendment"
     },
     "contractShippingDetails" : {
-      "contractNo" : "PO-2051",
-      "shippingInstruction" : "P-SI-0146",
+      "contractNo" : "PO-2135",
+      "shippingInstruction" : "P-SI-0169",
       "approvedShippingInstruction" : ""
     },
     "contractSelection" : {
@@ -2522,7 +2533,7 @@
       "instructions" : "Ship the goods within the specified shipment period. Verify bag marks, quantity, and shipping documents before dispatch."
     },
     "contractDetails" : {
-      "contractNo" : "PO-2051"
+      "contractNo" : "PO-2135"
     },
     "modifyinstructionDetails" : {
       "date" : "28-10-2026",
@@ -2581,65 +2592,485 @@
       "select" : [ "INSURANCE CERTIFICATE", "PREFERENTIAL ENTRY CERTIFICATE" ],
       "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE" ]
     }
-  } ],
-  "approval" : {
-    "approveButton": "Approve",
-    "approveIcon": "check",
-    "confirmationMessage": "Are you sure that you want to proceed ?",
-    "yesButton": "Yes",
-    "noButton": "No",
-    "approvedMessage": "CONTRACT APPROVED SUCCESSFULLY",
-    "approvedStatus": "Approved",
-    "approvedMenuItems": "Cancel,Modify"
-
-  },
-{
-  "testCaseId": "TC_GRN_001",
-  "grnBasicDetails": {
-    "captureGRN": "Single GRN per Truck",
-    "grnNo": "AUTO",
-    "date": "",
-    "location": "No. 122 (MSL2)",
-    "counterparty": "ABC Coffee Supplier (No. 77)",
-    "cpReferenceNo": "CPR-120",
-    "cpReferenceDate": "",
-    "otherReferenceNo": "REF-989",
-    "otherReferenceDate": "",
-    "remarks": "Truck received at warehouse with all supporting documents verified.",
-    "recordWeight": "25000"
-  },
-  {
-    "grnTruckDetails": {
-      "transporter": "Purchase agent",
-      "truckManufacture": "Tata Motors",
-      "truckPlateNumber": "KA01AB1234",
-      "truckColor": "White",
-      "tareWeight": "12000",
-      "registrationCertificate": "TEST-RC-GRN-001.pdf",
-      "companyRefNumber": "ABC/GRN/2026/0045",
-      "transporterReferenceNumber": "ABC/TRN/2026/0089",
-      "driverName": "Rajesh Kumar",
-      "driverLicenseNo": "KA0120260012345"
+  }, {
+    "testCaseId" : "TC_GRN_001",
+    "login" : {
+      "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/",
+      "browser" : "chrome",
+      "username" : "Girishkumar.MR@invensoft.co.in",
+      "password" : "",
+      "loggedInUser" : "Girish"
     },
-    "grnProductDetails": [
-      {
-        "batchNumber": "Auto",
-        "contractSI": "SI-0027",
-        "product": "AC A ",
-        "balance": "25000",
-        "season": "2026-2027",
-        "warehouseZone": "Mys-Loc-2-WH 1 -- ML2-Zone1",
-        "units": "200",
-        "packing": "60 Kg Jute Bags",
-        "grossQty": "25000",
-        "netQty": "24500",
-        "fetchWeight": "24500",
-        "sustainabilityDetails": "",
-        "action": ""
-      }
-    ],
-    "remarks": "Truck received at warehouse. Product quality and supporting documents verified.",
-    "recordWeight": "24500"
-  }
-}
+    "general" : {
+      "class" : "Coffee Farmer Purchase Contract",
+      "pricing" : "FLAT PRICE",
+      "billingLocation" : "No. 122 (MSL2)",
+      "shippingLocation" : "No. 122 (MSL2)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "cpRef1" : "SUP-2026-00125",
+      "cpRef2" : "PO-ABC-4587",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "SELLER'S CALL",
+      "fixationTerms" : "Prior to 1st Notice Day",
+      "invoiceCurrency" : "EUR",
+      "paymentTerms" : "IMMEDIATE",
+      "paymentTermsDescription" : "---Advance payment: 100% payment required before order processing or service commencement.",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1"
+    },
+    "deliveryTerms" : {
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China"
+    },
+    "validatedeliveryTerms" : {
+      "portOfDischarge" : "Busan",
+      "portOfLoading" : "Busan"
+    },
+    "documents" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE", "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE", "PHYTOSANITARY CERTIFICATE", "NON-RADIATION CERTIFICATE", "CERTIFICATE OF ORIGIN" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ]
+    },
+    "remarks" : {
+      "remarks" : "Delivery should meet the agreed quality specifications.",
+      "instructions" : "Price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+    },
+    "contract" : {
+      "createdMessage" : "CONTRACT CREATED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "pendingMenuItems" : "Modify,Copy By Contract,Cancel"
+    },
+    "approval" : {
+      "approveButton" : "Approve",
+      "approveIcon" : "check",
+      "confirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "approvedMessage" : "CONTRACT APPROVED SUCCESSFULLY",
+      "approvedStatus" : "Approved",
+      "approvedMenuItems" : "Copy By Contract,Amendment"
+    },
+    "productDetails" : [ {
+      "product" : "AC A ",
+      "units" : "200",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "3434",
+      "uom" : "Kg",
+      "noOfLots" : "1000",
+      "price" : "1220",
+      "targetType" : "Arrival",
+      "targetDateRange" : "today - today ",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "Oct-2029",
+      "quality" : "quality test",
+      "certificationPremium" : "UTZ",
+      "premiumAmount" : "21"
+    } ],
+    "commissionDetails" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "EUR/Kg"
+    } ],
+    "commissionDetailsValidation" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type1" : "Flat Amount",
+      "type2" : "Value",
+      "value" : "1.5"
+    } ],
+    "modify" : {
+      "menuItem" : "Modify",
+      "class" : "Coffee Vendor Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "Default (DND)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Modifying price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "contractDetails" : {
+      "contractNo" : "PO-2120",
+      "shippingInstruction" : "P-SI-0146",
+      "approvedShippingInstruction" : "",
+      "approvedcontractNo" : "PO-2052",
+      "grnRecordNumber" : ""
+    },
+    "grnBasicDetails" : {
+      "captureGRN" : "Single GRN per Truck",
+      "grnNo" : "AUTO",
+      "date" : "",
+      "location" : "No. 122 (MSL2)",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "cpReferenceNo" : "CPR-120",
+      "cpReferenceDate" : "",
+      "otherReferenceNo" : "REF-989",
+      "otherReferenceDate" : "",
+      "remarks" : "Truck received at warehouse with all supporting documents verified.",
+      "recordWeight" : "25000"
+    },
+    "grnTruckDetails" : {
+      "transporter" : "Purchase agent",
+      "truckManufacture" : "Tata Motors",
+      "truckPlateNumber" : "KA01AB1234",
+      "truckColor" : "White",
+      "tareWeight" : "12000",
+      "registrationCertificate" : "TEST-RC-GRN-001.pdf",
+      "companyRefNumber" : "ABC/GRN/2026/0045",
+      "transporterReferenceNumber" : "ABC/TRN/2026/0089",
+      "driverName" : "Rajesh Kumar",
+      "driverLicenseNo" : "KA0120260012345"
+    },
+    "grnProductDetails" : {
+      "contractSI" : "PO-2113"
+    },
+    "batchDetails" : [ {
+      "grnProductDetails" : "AUTO",
+      "contractSI" : "PO-0394",
+      "product" : "RC RAW",
+      "balance" : "",
+      "season" : "Season 2026 - 2027",
+      "warehouseZone" : " ML2-Zone2 ",
+      "units" : "50",
+      "packing" : "50 Kg Jute Bags",
+      "grossQty" : "20",
+      "netQty" : "20",
+      "fetchWeight" : "",
+      "sustainabilityDetails" : "",
+      "action" : ""
+    } ],
+    "contractRecords" : {
+      "approvedcontractNo" : "PO-2113"
+    }
+  }, {
+    "testCaseId" : "TC_GRN_SI_001",
+    "login" : {
+      "url" : "https://wepapp-xbsdcloud-qa-001-bzb9ayhabacwfbgq.centralindia-01.azurewebsites.net/#/",
+      "browser" : "chrome",
+      "username" : "Girishkumar.MR@invensoft.co.in",
+      "password" : "",
+      "loggedInUser" : "Girish"
+    },
+    "general" : {
+      "class" : "Coffee Vendor Purchase Contract with SI",
+      "pricing" : "FLAT PRICE",
+      "billingLocation" : "No. 122 (MSL2)",
+      "shippingLocation" : "No. 122 (MSL2)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "counterpartyAddress" : "No. 77",
+      "billingLocationPO" : "No. 122",
+      "counterpartyNamePO" : "ABC Coffee Supplier",
+      "cpRef1" : "SUP-2026-00125",
+      "cpRef2" : "PO-ABC-4587",
+      "exchange" : "LONDON - ROBUSTA",
+      "exchangePriceCurrencyUom" : "USD/MT",
+      "changedExchange" : "NEW YORK - ARABICA",
+      "changedExchangePriceCurrencyUom" : "USC/LB",
+      "fixationBy" : "SELLER'S CALL",
+      "fixationTerms" : "Prior to 1st Notice Day",
+      "invoiceCurrency" : "EUR",
+      "paymentTerms" : "IMMEDIATE",
+      "paymentTermsDescription" : "---Advance payment: 100% payment required before order processing or service commencement.",
+      "taxStructure" : "GST 18%",
+      "withHoldingTaxStructure" : "TAX WHT1"
+    },
+    "productDetails" : [ {
+      "product" : "AC A ",
+      "units" : "200",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "10000",
+      "uom" : "Kg",
+      "noOfLots" : "1000",
+      "price" : "1220",
+      "targetType" : "Arrival",
+      "targetDateRange" : "today - today ",
+      "tradeMonth" : "Sep-2027",
+      "positionMonth" : "Oct-2029",
+      "quality" : "quality test",
+      "certificationPremium" : "UTZ",
+      "premiumAmount" : "21"
+    } ],
+    "commissionDetails" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type" : "Value",
+      "value" : "2.5",
+      "valueUnit" : "EUR/Kg"
+    } ],
+    "commissionDetailsValidation" : [ {
+      "agentBroker" : "Agent (dcsza)",
+      "refNo" : "REF-1001",
+      "type1" : "Flat Amount",
+      "type2" : "Value",
+      "value" : "1.5"
+    } ],
+    "deliveryTerms" : {
+      "incoTerms" : "DWH",
+      "portOfDischarge" : "Hamburg",
+      "weightTerms" : "Re Weights",
+      "place" : "Uganda",
+      "podDescription" : "Nhava Sheva Port, Maharashtra, India",
+      "arbitration" : "AB",
+      "basisOfSale" : "SAS - Repeat",
+      "finalDestination" : "Busan",
+      "portOfLoading" : "Busan",
+      "termsAndConditions" : "The goods must meet the agreed quality.",
+      "polDescription" : "Port of Santos, Sao Paulo, Brazil",
+      "countryOfOrigin" : "China"
+    },
+    "modify" : {
+      "menuItem" : "Modify",
+      "class" : "Coffee Vendor Purchase Contract",
+      "billingLocation" : "demo (DE)",
+      "shippingLocation" : "No. 122 (MSL2)",
+      "season" : "Season 2026 - 2027",
+      "counterparty" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "shipper" : "India Coffee Farms (No. 10, Chikmagalur)",
+      "invoiceCurrency" : "EUR",
+      "exchangePriceCurrencyUom" : "USC/GM",
+      "portOfLoading" : "Geneva",
+      "portOfDischarge" : "Houston",
+      "termsAndConditions" : "Modifying the goods must meet the agreed quality and packaging standards.",
+      "polDescription" : "Modifying Port of Santos, Sao Paulo, Brazil",
+      "incoTerms" : "DEQ",
+      "weightTerms" : "Net Delivered Weights",
+      "arbitration" : "Hamburg",
+      "remarks" : "Modifying delivery should meet the agreed quality specifications and agreed delivery schedule.",
+      "instructions" : "Modifying price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Modifying pack in 1 MT Big Bags and deliver to the designated warehouse.",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "validatedeliveryTerms" : {
+      "portOfDischarge" : "Busan",
+      "portOfLoading" : "Busan"
+    },
+    "documents" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "PREFERENTIAL ENTRY CERTIFICATE", "INSURANCE CERTIFICATE", "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE", "3/3 ORIGINAL BILL OF LADING AND COPY OF NON-NEGOTIABLE", "PHYTOSANITARY CERTIFICATE", "NON-RADIATION CERTIFICATE", "CERTIFICATE OF ORIGIN" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE", "HEALTH PHYTOSANITARY AND NON-RADIATION CERTIFICATES", "FUMIGATION CERTIFICATE" ]
+    },
+    "modifyDocuments" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "WEIGHT AND QUALITY CERTIFICATE" ],
+      "deselect" : [ "INSURANCE CERTIFICATE", "PREFERENTIAL ENTRY CERTIFICATE" ]
+    },
+    "remarks" : {
+      "remarks" : "Delivery should meet the agreed quality specifications.",
+      "instructions" : "Price confirmed with supplier; pending manager approval.",
+      "internalRemarks" : "Pack in 1 MT Big Bags and deliver to the designated warehouse."
+    },
+    "contract" : {
+      "createdMessage" : "CONTRACT CREATED SUCCESSFULLY.",
+      "pendingStatus" : "Pending",
+      "pendingMenuItems" : "Modify,Copy By Contract,Cancel"
+    },
+    "approval" : {
+      "approveButton" : "Approve",
+      "approveIcon" : "check",
+      "confirmationMessage" : "Are you sure that you want to proceed ?",
+      "yesButton" : "Yes",
+      "noButton" : "No",
+      "approvedMessage" : "CONTRACT APPROVED SUCCESSFULLY",
+      "approvedStatus" : "Approved",
+      "approvedMenuItems" : "Copy By Contract,Amendment"
+    },
+    "contractShippingDetails" : {
+      "contractNo" : "PO-2145",
+      "shippingInstruction" : "P-SI-0175",
+      "approvedShippingInstruction" : "P-SI-0175"
+    },
+    "contractSelection" : {
+      "contractNoAndDate" : "PO-0027 & 24 Jun 2026",
+      "counterpartyName" : "ABC Coffee Supplier",
+      "billingLocation" : "100, MG Road",
+      "counterpartyAddress" : "No. 77"
+    },
+    "instructionDetails" : {
+      "instructionType" : "AUTO",
+      "instructionNo" : "AUTO",
+      "date" : "28-10-2026",
+      "bookingRefNo" : "BK-20261029-001",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "shipToLocation" : "No. 122 (MSL2)",
+      "product" : "AC A",
+      "balanceQtyToInstruct" : "",
+      "balanceQty" : "",
+      "units" : "11",
+      "packing" : "1 MT Big Bags",
+      "qty" : "10000",
+      "qtyValidationMessage" : "Qty. Must Be Less Than Or Equal To Balance Qty",
+      "fromDate" : "28-10-2026",
+      "toDate" : "28-10-2026"
+    },
+    "shipmentDetails" : {
+      "shippingLine" : "Shipping Line 2 (SL2)",
+      "forwardingAgent" : "Transporter (busan)",
+      "freightTerms" : "Terms",
+      "portOfLoading" : "",
+      "portOfDischarge" : "",
+      "finalDestination" : "",
+      "containerStatus" : "LCL/FCL",
+      "etaAtLoadPort" : "",
+      "etaAtDischargePort" : "",
+      "etd" : "",
+      "noOfContainers" : "20",
+      "consignee" : "Consignee 2 (CN2)",
+      "consigneeDescription" : "Global Coffee Trading Ltd.",
+      "notify1" : "Notify 1 (NT1)",
+      "notify1Description" : "---Global Shipping Services Ltd.",
+      "notify2" : "Notify 2 (NT2)",
+      "notify2Description" : "---Ocean Freight Solutions Pvt. Ltd.",
+      "notify3" : "Notify 3 (NT3)",
+      "notify3Description" : "---Notify Party 1 as per Contract"
+    },
+    "bagMarks" : [ {
+      "bagMark1" : "ABC COFFEE"
+    }, {
+      "bagMark2" : "PRODUCT OF INDIA"
+    }, {
+      "bagMark3" : "CONTRACT PO-0027"
+    }, {
+      "bagMark4" : "CROP YEAR 2026-2027"
+    }, {
+      "bagMark5" : "NET WEIGHT 60 KG"
+    } ],
+    "remarksAndInstructions" : {
+      "remarks" : "Please ensure the coffee bags are properly packed and inspected before shipment.",
+      "instructions" : "Ship the goods within the specified shipment period. Verify bag marks, quantity, and shipping documents before dispatch."
+    },
+    "contractDetails" : {
+      "contractNo" : "PO-2143"
+    },
+    "modifyinstructionDetails" : {
+      "date" : "28-10-2026",
+      "bookingRefNo" : "BK-20261029-002",
+      "shipper" : "ABC Coffee Supplier (No. 77)",
+      "shipToLocation" : "No. 122 (MSL2)",
+      "product" : "AC A",
+      "balanceQtyToInstruct" : "",
+      "balanceQty" : "",
+      "units" : "12",
+      "packing" : "50 Kg Jute Bags",
+      "qty" : "10000",
+      "qtyValidationMessage" : "Qty. Must Be Less Than Or Equal To Balance Qty",
+      "fromDate" : "28-10-2026",
+      "toDate" : "28-10-2026",
+      "modifiedMessage" : "CONTRACT MODIFIED SUCCESSFULLY."
+    },
+    "modifyshipmentDetails" : {
+      "shippingLine" : "Maersk (SL1)",
+      "forwardingAgent" : "Purchase agent (00)",
+      "freightTerms" : "Terms",
+      "portOfLoading" : "Busan",
+      "portOfDischarge" : "Geneva",
+      "finalDestination" : "",
+      "containerStatus" : "FCL/FCL",
+      "etaAtLoadPort" : "",
+      "etaAtDischargePort" : "",
+      "etd" : "",
+      "noOfContainers" : "10",
+      "consignee" : "Consignee 2 (CN2)",
+      "consigneeDescription" : "modify Global Coffee Trading Ltd.",
+      "notify1" : "Notify 1 (NT1)",
+      "notify1Description" : "modify Global Shipping Services Ltd.",
+      "notify2" : "Notify 2 (NT2)",
+      "notify2Description" : "modify Ocean Freight Solutions Pvt. Ltd.",
+      "notify3" : "Notify 3 (NT3)",
+      "notify3Description" : "modifyNotify Party 1 as per Contract"
+    },
+    "modifybagMarks" : [ {
+      "bagMark1" : "Modified ABC COFFEE"
+    }, {
+      "bagMark2" : "Modified PRODUCT OF INDIA"
+    }, {
+      "bagMark3" : "Modified CONTRACT PO-0027"
+    }, {
+      "bagMark4" : "Modified CROP YEAR 2026-2027"
+    }, {
+      "bagMark5" : "Modified NET WEIGHT 60 KG"
+    } ],
+    "modifyRemarksAndInstructions" : {
+      "remarks" : "Modified Please ensure the coffee bags are properly packed and inspected before shipment.",
+      "instructions" : "Modified Ship the goods within the specified shipment period. Verify bag marks, quantity, and shipping documents before dispatch."
+    },
+    "modifyDocument" : {
+      "documentSet" : "CERTIFICATES REQUIRED FOR ECC",
+      "select" : [ "INSURANCE CERTIFICATE", "PREFERENTIAL ENTRY CERTIFICATE" ],
+      "deselect" : [ "WEIGHT AND QUALITY CERTIFICATE" ]
+    },
+    "grnBasicDetails" : {
+      "captureGRN" : "Single GRN per Truck",
+      "grnNo" : "AUTO",
+      "date" : "",
+      "location" : "No. 122 (MSL2)",
+      "counterparty" : "ABC Coffee Supplier (No. 77)",
+      "cpReferenceNo" : "SUP-2026-00125",
+      "cpReferenceDate" : "",
+      "otherReferenceNo" : "PO-ABC-4587",
+      "otherReferenceDate" : "",
+      "remarks" : "Delivery should meet the agreed quality specifications.",
+      "recordWeight" : "25000"
+    },
+    "grnTruckDetails" : {
+      "transporter" : "Purchase agent",
+      "truckManufacture" : "Tata Motors",
+      "truckPlateNumber" : "KA01AB1234",
+      "truckColor" : "White",
+      "tareWeight" : "12000",
+      "registrationCertificate" : "TEST-RC-GRN-001.pdf",
+      "companyRefNumber" : "ABC/GRN/2026/0045",
+      "transporterReferenceNumber" : "ABC/TRN/2026/0089",
+      "driverName" : "Rajesh Kumar",
+      "driverLicenseNo" : "KA0120260012345"
+    },
+    "grnProductDetails" : {
+      "contractSI" : "#ApprovedShippingInstructionSINumber"
+    },
+    "batchDetails" : [ {
+      "grnProductDetails" : "AUTO",
+      "contractSI" : "#ApprovedShippingInstructionSINumber",
+      "product" : "AC A",
+      "balance" : "",
+      "season" : "Season 2026 - 2027",
+      "warehouseZone" : " ML2-Zone2 ",
+      "units" : "50",
+      "packing" : "50 Kg Jute Bags",
+      "grossQty" : "20",
+      "netQty" : "20",
+      "fetchWeight" : "",
+      "sustainabilityDetails" : "",
+      "action" : ""
+    } ]
+  } ]
 }

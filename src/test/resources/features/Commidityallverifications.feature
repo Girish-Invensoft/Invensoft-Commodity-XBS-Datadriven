@@ -55,7 +55,7 @@ Feature: Commodity Contract Management
     And verify "Status" field is displaying in list view
 
     ## Commodity Contract Management
-    When clicks on "Create" "plus" icon on the Commodity Contract Management dashboard
+    When clicks on "Create" "create-new" icon on the Commodity Contract Management dashboard
     Then verifies that the "Commodity Contract Management - Create General" popup is displayed
 
     And verifies that the "General" section is displayed
@@ -130,7 +130,7 @@ Feature: Commodity Contract Management
     When user navigates to "Commercial" dashboard sidebar menu
     When user clicks on "Commodity Contract Management" section on the dashboard page
 
-    When clicks on "Create" "plus" icon on the Commodity Contract Management dashboard
+    When clicks on "Create" "create-new" icon on the Commodity Contract Management dashboard
 
     And verifies that the "<General>" section is displayed
     And verifies that the "<ProductDetails>" table section is displayed
