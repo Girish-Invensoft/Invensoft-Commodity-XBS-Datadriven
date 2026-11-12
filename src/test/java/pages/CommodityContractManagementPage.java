@@ -1025,8 +1025,8 @@ public class CommodityContractManagementPage{
         }
 
         String optionValue = xpathLiteral(value.trim());
-        By optionLocator = By.xpath(".//li[@role='option' and (normalize-space(.)=" + optionValue
-                + " or normalize-space(@aria-label)=" + optionValue + ")]");
+        By optionLocator = By.xpath(".//li[@role='option' and (contains(normalize-space(.), " + optionValue
+                + ") or contains(normalize-space(@aria-label), " + optionValue + "))]");
         WebElement option = wait.ignoring(StaleElementReferenceException.class).until(d -> {
             for (WebElement visiblePanel : d.findElements(
                     By.xpath("//div[contains(@class,'p-dropdown-panel')]"))) {

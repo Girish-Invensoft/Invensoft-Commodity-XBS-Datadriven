@@ -200,10 +200,10 @@ Feature: Goods Receipt Note Flow in Commodity Contract Management
     When enter the user name as "@login.username"
     When enter the user password as "@login.password"
     Then the user should be navigated to the dashboard
-#
-    ## ═════════════════════════════════════════════════════════════════════════
-    ## 🧭  NAVIGATION
-    ## ═════════════════════════════════════════════════════════════════════════
+
+    # ═════════════════════════════════════════════════════════════════════════
+    # 🧭  NAVIGATION
+    # ═════════════════════════════════════════════════════════════════════════
     When user navigates to "Commercial" dashboard sidebar menu
     When user clicks on "Commodity Contract Management" section on the dashboard page
 
@@ -293,7 +293,6 @@ Feature: Goods Receipt Note Flow in Commodity Contract Management
     Then search for the json created "contractDetails" by "contractNo"
 
     When the user selects the "Purchase""checkbox" for the created Purchase Order
-    Then apply a static wait for the web element for testing purposes only.
     ## ═════════════════════════════════════════════════════════════════════════
     ## ✅  APPROVAL FLOW
     ## ═════════════════════════════════════════════════════════════════════════
@@ -313,7 +312,7 @@ Feature: Goods Receipt Note Flow in Commodity Contract Management
     Then capture "CommercialCommodityPO" "Contract No."
     Then captures the "CommercialCommodityPO" "Contract No." into properties and json "contractShippingDetails" "contractNo"
 
-    #═════════════════════════════════════════════════════════════════════════
+    ## ═════════════════════════════════════════════════════════════════════════
     ## ✅  Shipping Instruction Flow
     ## ═════════════════════════════════════════════════════════════════════════
     When user navigates to "Logistics" dashboard sidebar menu
@@ -324,6 +323,7 @@ Feature: Goods Receipt Note Flow in Commodity Contract Management
     ## ✅  Contract Details Section
     ## ═════════════════════════════════════════════════════════════════════════
     When user selects "#CommercialCommodityPOContractNumber" from the "Contract No." modified dropdown in the "Contract Selection" section
+    ## ═════════════════════════════════════════════════════════════════════════
     ## ✅  Instruction Details Section
     ## ═════════════════════════════════════════════════════════════════════════
     When the user selects the "Instruction details" "Date" as "today"
@@ -343,7 +343,7 @@ Feature: Goods Receipt Note Flow in Commodity Contract Management
 
      ## ═════════════════════════════════════════════════════════════════════════
      ## ✅  Shipment Details Section
-#    ## ═════════════════════════════════════════════════════════════════════════
+    ## ═════════════════════════════════════════════════════════════════════════
     When user selects "@shipmentDetails.shippingLine" from the "Shipping Line" modified dropdown in the "Shipment Details" section
     When user selects "@shipmentDetails.forwardingAgent" from the "Forwarding Agent" modified dropdown in the "Shipment Details" section
     When user selects "@shipmentDetails.freightTerms" from the "Freight Terms" modified dropdown in the "Shipment Details" section
@@ -422,17 +422,17 @@ Feature: Goods Receipt Note Flow in Commodity Contract Management
     When user selects "Single GRN per Truck" custom radio in "Basic Details" section
 
     Then verify that the "GRN No." field in "Basic Details" section with value "@grnBasicDetails.grnNo" is "disabled" and displays "@grnBasicDetails.grnNo"
-    When the user selects "Basic Details" "Date" as "today-1"
+    When the user selects "Basic Details" "Date" as "today"
 
     When user selects "@grnBasicDetails.location" from the "Location" modified dropdown in the "Basic Details" section
     When user selects "@grnBasicDetails.counterparty" from the "Counterparty" modified dropdown in the "Basic Details" section
 
     When user enters "@grnBasicDetails.cpReferenceNo" in "CP Reference No." text field in the "Basic Details" section
-    When the user selects "Basic Details" "CP Reference No." "Date" as "today-1"
+    When the user selects "Basic Details" "CP Reference No." "Date" as "today"
 
 
     When user enters "@grnBasicDetails.otherReferenceNo" in "Other Reference No." text field in the "Basic Details" section
-    When the user selects "Basic Details" "Other Reference No." "Date" as "today-1"
+    When the user selects "Basic Details" "Other Reference No." "Date" as "today"
 
     Then user enters "@grnBasicDetails.remarks" in "Remarks" long text field in the "Basic Details" section
 
@@ -455,6 +455,8 @@ Feature: Goods Receipt Note Flow in Commodity Contract Management
 
     And click on "Save" button
 
+#    And verify the message "@grnTruckDetails.createdMessage" is displayed
+    Then captures the "contractShippingDetails" "GRN No." into properties and json "contractShippingDetails" "grnN0"
 
     ## ═════════════════════════════════════════════════════════════════════════
     ##   TEST DATA  (one row per test case id in contractTestData.json)

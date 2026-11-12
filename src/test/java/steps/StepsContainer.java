@@ -147,7 +147,40 @@ public class StepsContainer {
     }
 
     private String resolveLogin(String arg) {
-        return (arg != null && arg.startsWith("@")) ? resolve(arg) : ConfigReader.getProperty(arg);
+        if (arg == null) return null;
+
+        // plain key -> value.properties
+        if (!arg.startsWith("@") && !arg.startsWith("*")) {
+            return ConfigReader.getProperty(arg);
+        }
+
+        String key = arg.substring(1);                       // "login.password"
+        String shortKey = key.substring(key.lastIndexOf('.') + 1);   // "password"
+
+        // 1. test data first
+        try {
+            String value = resolve(arg);
+            if (value != null && !value.isBlank()) {
+                return value;
+            }
+        } catch (IllegalStateException ignored) {
+            // missing/blank/non-text in test data -> fall back
+        }
+
+        // 2. value.properties: full key, then last segment
+        for (String k : new String[] { key, shortKey }) {
+            try {
+                String fallback = ConfigReader.getProperty(k);
+                if (fallback != null && !fallback.isBlank()) {
+                    return fallback;
+                }
+            } catch (RuntimeException ignored) {
+                // key not in properties -> try next
+            }
+        }
+
+        throw new IllegalStateException("Login credential '" + key
+                + "' not found in test data or value.properties");
     }
 
     @Given("open browser")
@@ -663,6 +696,7 @@ public class StepsContainer {
             throw e;
         }
     }
+
 
     private void fillGrnProductDetails(
             CommodityContractManagementPage page, List<Map<String, Object>> rows) {

@@ -22,7 +22,7 @@ public class RetryAnalyzer implements IRetryAnalyzer {
         if (used < MAX_RETRY) {
             attempts.put(key, used + 1);
             System.out.println("Retrying scenario (" + (used + 1) + "/" + MAX_RETRY + "): " + key);
-            return false;
+            return true;
         }
         return false;
     }
