@@ -972,21 +972,73 @@ public class CommodityContractManagementPage{
         }
     }
 
-    public void addGrnProductDetailRow() {
+    public void addGrnProductDetailRow(int rowIndex) {
+        if (rowIndex < 1) {
+            throw new IllegalArgumentException("Only GRN rows after the first can be added: " + rowIndex);
+        }
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.ignoring(StaleElementReferenceException.class);
+        wait.withMessage("GRN Product Details table is not visible.");
+        wait.until(d -> visibleGrnProductTable(d) != null);
+        if (grnProductRows().size() > rowIndex) {
+            return;
+        }
+
         int rowsBefore = grnProductRows().size();
-        By addButton = By.xpath("(//div[@formarrayname='grn_product_details']//tr[td])[last()]"
-                + "//button[.//*[contains(concat(' ',normalize-space(@class),' '),' pi-plus ')]]");
-        WebElement button = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(addButton));
-        webDriverCommonLibrary.scrollIntoTheView(driver, button);
+        // The GRN action button is rendered as a PrimeNG button containing
+        // a span with the pi-plus icon (see the grn_product_details markup).
+        By addButton = By.xpath(".//tr[td][last()]"
+                + "//button[.//span[contains(concat(' ',normalize-space(@class),' '),' pi-plus ')]]");
+        wait.withMessage("GRN Product Details: row " + rowIndex
+                + " is missing and the add-row (+) button was not available.");
+        WebElement button = clickGrnAddButton(wait, addButton);
+        wait.until(ExpectedConditions.elementToBeClickable(button));
         button.click();
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
-                d -> d.findElements(By.xpath("//div[@formarrayname='grn_product_details']//tr[td]"))
-                        .size() > rowsBefore);
+
+        wait.withMessage("GRN Product Details: clicking (+) did not create row " + rowIndex
+                + "; visible row count before click was " + rowsBefore + ".");
+        wait.until(d -> grnProductRows(d).size() > rowsBefore);
+    }
+
+    private WebElement clickGrnAddButton(WebDriverWait wait, By addButton) {
+        WebElement button = wait.until(d -> {
+            List<WebElement> tables = d.findElements(
+                    By.xpath("//div[@formarrayname='grn_product_details']//table"));
+            for (int tableIndex = tables.size() - 1; tableIndex >= 0; tableIndex--) {
+                WebElement table = tables.get(tableIndex);
+                if (!table.isDisplayed()) {
+                    continue;
+                }
+                List<WebElement> buttons = table.findElements(addButton);
+                for (int buttonIndex = buttons.size() - 1; buttonIndex >= 0; buttonIndex--) {
+                    WebElement candidate = buttons.get(buttonIndex);
+                    if (candidate.isDisplayed() && candidate.isEnabled()) {
+                        return candidate;
+                    }
+                }
+            }
+            return null;
+        });
+        webDriverCommonLibrary.scrollIntoTheView(driver, button);
+        return button;
     }
 
     public void fillGrnProductDetailRow(int rowIndex, Map<String, Object> values) {
         fillGrnDropdown(rowIndex, "Contract / SI", values, "contractSI");
+        fillGrnDropdown(rowIndex, "Product", values, "product");
+        fillGrnDropdown(rowIndex, "Season", values, "season");
+        fillGrnDropdown(rowIndex, "Warehouse -- Zone", values, "warehouseZone");
+        fillGrnNumber(rowIndex, "Units", values, "units");
+        fillGrnDropdown(rowIndex, "Packing", values, "packing");
+        fillGrnNumber(rowIndex, "Gross Qty.", values, "grossQty");
+        fillGrnNumber(rowIndex, "Net Qty.", values, "netQty");
+        fillGrnFetchWeight(rowIndex, values);
+        fillGrnSustainabilityDetails(rowIndex, values);
+    }
+
+    public void fillGrnSecondProductDetailRow(int rowIndex, Map<String, Object> values) {
+        fillGrnDropdownSecond(rowIndex, "Contract / SI", values, "contractSI");
         fillGrnDropdown(rowIndex, "Product", values, "product");
         fillGrnDropdown(rowIndex, "Season", values, "season");
         fillGrnDropdown(rowIndex, "Warehouse -- Zone", values, "warehouseZone");
@@ -1010,7 +1062,9 @@ public class CommodityContractManagementPage{
         webDriverCommonLibrary.scrollIntoTheView(driver, trigger);
         webDriverCommonLibrary.clickWithOverlayRetry(trigger);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.withMessage("GRN Product Details: dropdown panel did not open for column '"
+                + columnName + "', row " + rowIndex + ".");
         WebElement panel = wait.until(d -> d.findElements(
                         By.xpath("//div[contains(@class,'p-dropdown-panel')]"))
                 .stream()
@@ -1027,6 +1081,8 @@ public class CommodityContractManagementPage{
         String optionValue = xpathLiteral(value.trim());
         By optionLocator = By.xpath(".//li[@role='option' and (contains(normalize-space(.), " + optionValue
                 + ") or contains(normalize-space(@aria-label), " + optionValue + "))]");
+        wait.withMessage("GRN Product Details: option '" + value + "' did not appear in column '"
+                + columnName + "', row " + rowIndex + ".");
         WebElement option = wait.ignoring(StaleElementReferenceException.class).until(d -> {
             for (WebElement visiblePanel : d.findElements(
                     By.xpath("//div[contains(@class,'p-dropdown-panel')]"))) {
@@ -1041,6 +1097,58 @@ public class CommodityContractManagementPage{
             }
             return null;
         });
+        option.click();
+    }
+
+    private void fillGrnDropdownSecond(
+            int rowIndex, String columnName, Map<String, Object> values, String key) {
+        String value = grnValue(values, key);
+        if (value == null || value.isBlank()) {
+            return;
+        }
+
+        WebElement cell = getGrnProductCell(rowIndex, columnName);
+        WebElement trigger = cell.findElement(By.cssSelector("div.p-dropdown-trigger"));
+        webDriverCommonLibrary.scrollIntoTheView(driver, trigger);
+        webDriverCommonLibrary.clickWithOverlayRetry(trigger);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.withMessage("GRN Product Details: dropdown panel did not open for column '"
+                + columnName + "', row " + rowIndex + ".");
+        WebElement panel = wait.until(d -> d.findElements(
+                        By.xpath("//div[contains(@class,'p-dropdown-panel')]"))
+                .stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .orElse(null));
+        List<WebElement> searchBoxes = panel.findElements(By.xpath(".//input[@role='searchbox']"));
+        if (!searchBoxes.isEmpty() && searchBoxes.get(0).isDisplayed()) {
+            WebElement searchBox = searchBoxes.get(0);
+            searchBox.clear();
+            searchBox.sendKeys(value.trim());
+        }
+
+        String optionValue = xpathLiteral(value.trim());
+        By firstOptionLocator = By.xpath(".//li[@role='option']");
+
+        wait.withMessage("GRN Product Details: no selectable option appeared for column '"
+                + columnName + "', row " + rowIndex + " while resolving '" + value + "'.");
+        WebElement option = wait.ignoring(StaleElementReferenceException.class).until(d -> {
+            for (WebElement visiblePanel : d.findElements(
+                    By.xpath("//div[contains(@class,'p-dropdown-panel')]"))) {
+                if (!visiblePanel.isDisplayed()) {
+                    continue;
+                }
+
+                for (WebElement candidate : visiblePanel.findElements(firstOptionLocator)) {
+                    if (candidate.isDisplayed() && candidate.isEnabled()) {
+                        return candidate;
+                    }
+                }
+            }
+            return null;
+        });
+
         option.click();
     }
 
@@ -1169,9 +1277,13 @@ public class CommodityContractManagementPage{
     }
 
     private WebElement getGrnProductCell(int rowIndex, String columnName) {
-        WebElement table = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(
-                        By.xpath("//div[@formarrayname='grn_product_details']//table")));
+        if (rowIndex < 0) {
+            throw new IllegalArgumentException("GRN product row index cannot be negative: " + rowIndex);
+        }
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.ignoring(StaleElementReferenceException.class);
+        wait.withMessage("GRN Product Details table is not visible.");
+        WebElement table = wait.until(d -> visibleGrnProductTable(d));
         List<WebElement> headers = table.findElements(By.xpath(".//thead/tr/th"));
         int columnIndex = -1;
         for (int i = 0; i < headers.size(); i++) {
@@ -1189,11 +1301,16 @@ public class CommodityContractManagementPage{
             throw new NoSuchElementException("GRN Product Details has no column '" + columnName + "'.");
         }
 
-        List<WebElement> rows = table.findElements(By.xpath(".//tr[td]"));
-        if (rowIndex < 0 || rowIndex >= rows.size()) {
+        try {
+            wait.withMessage("GRN Product Details row " + rowIndex + " did not become available.");
+            wait.until(d -> visibleGrnProductRows(d).size() > rowIndex);
+        } catch (TimeoutException e) {
+            int availableRows = grnProductRows().size();
             throw new NoSuchElementException("GRN Product Details has no row " + rowIndex
-                    + "; available row count is " + rows.size() + ".");
+                    + " after waiting for it; available row count is " + availableRows + ".", e);
         }
+        wait.until(d -> visibleGrnProductTable(d) != null);
+        List<WebElement> rows = visibleGrnProductRows(driver);
         List<WebElement> cells = rows.get(rowIndex).findElements(By.xpath("./td"));
         if (columnIndex >= cells.size()) {
             throw new NoSuchElementException("GRN Product Details row " + rowIndex
@@ -1203,7 +1320,50 @@ public class CommodityContractManagementPage{
     }
 
     private List<WebElement> grnProductRows() {
-        return driver.findElements(By.xpath("//div[@formarrayname='grn_product_details']//tr[td]"));
+        return grnProductRows(driver);
+    }
+
+    private List<WebElement> grnProductRows(WebDriver webDriver) {
+        return visibleGrnProductRows(webDriver);
+    }
+
+    private List<WebElement> visibleGrnProductRows(WebDriver webDriver) {
+        List<WebElement> rows = new ArrayList<>();
+        By tableLocator = By.xpath("//div[@formarrayname='grn_product_details']//table");
+        for (WebElement table : webDriver.findElements(tableLocator)) {
+            try {
+                if (table.isDisplayed()) {
+                    rows.addAll(table.findElements(By.xpath(".//tr[td]")));
+                }
+            } catch (StaleElementReferenceException ignored) {
+                // Re-query tables on the next explicit-wait poll after Angular rerenders.
+            }
+        }
+        return rows;
+    }
+
+    private WebElement visibleGrnProductTable(WebDriver webDriver) {
+        By tableLocator = By.xpath("//div[@formarrayname='grn_product_details']//table");
+        WebElement tableWithMostRows = null;
+        int mostRows = -1;
+        for (WebElement table : webDriver.findElements(tableLocator)) {
+            try {
+                if (!table.isDisplayed()) {
+                    continue;
+                }
+                if (!table.findElements(By.xpath(".//thead/tr/th")).isEmpty()) {
+                    return table;
+                }
+                int rowCount = table.findElements(By.xpath(".//tr[td]")).size();
+                if (rowCount > mostRows) {
+                    tableWithMostRows = table;
+                    mostRows = rowCount;
+                }
+            } catch (StaleElementReferenceException ignored) {
+                // Re-query tables on the next explicit-wait poll after Angular rerenders.
+            }
+        }
+        return tableWithMostRows;
     }
 
     // Generic dropdown selector (Product, Trade Month, UOM, etc.)

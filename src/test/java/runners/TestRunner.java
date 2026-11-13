@@ -10,7 +10,7 @@ import utils.RetryAnalyzer;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = {"steps","hooks"},
-        tags = "@XBS_Commodity_Contract_Management_With_GRN_SI",
+        tags = "@XBS_Commodity_Contract_Management_With_GRN_SI_Multiple_GRN_per_Truck",
         plugin = {"pretty",
                 "html:target/cucumber-reports/cucumber.html",
                 "json:target/cucumber-reports/cucumber.json",

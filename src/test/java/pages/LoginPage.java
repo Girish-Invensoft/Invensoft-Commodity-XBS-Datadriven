@@ -11,6 +11,8 @@ import java.time.Duration;
 
 public class LoginPage {
 
+    private static final Duration LOGIN_WAIT = Duration.ofSeconds(45);
+
     private final WebDriverCommonLibrary webDriverCommonLibrary;
     private final WebDriver driver;
 
@@ -31,92 +33,67 @@ public class LoginPage {
 
 
     public void enterUsername(String username) {
-        By usernameLocator = By.id("username");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        for (int attempt = 1; attempt <= 3; attempt++) {
-            try {
-                WebElement usernameField = wait.until(webDriver -> {
-                    for (WebElement candidate : webDriver.findElements(usernameLocator)) {
-                        if (candidate.isDisplayed() && candidate.isEnabled()) {
-                            return candidate;
-                        }
-                    }
-                    return null;
-                });
-                wait.until(ExpectedConditions.visibilityOf(usernameField));
-                usernameField.clear();
-                usernameField.sendKeys(username);
-                return;
-            } catch (StaleElementReferenceException | ElementNotInteractableException e) {
-                if (attempt == 3) {
-                    throw e;
-                }
-            }
-        }
+        enterTextWhenAvailable(By.id("username"), username, "username");
     }
 
     public void enterPassword(String password) {
         By passwordLocator = By.cssSelector(
                 "input#password, input[name='password'], input[type='password'], input[autocomplete='current-password']");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        for (int attempt = 1; attempt <= 3; attempt++) {
-            try {
-                WebElement passwordField = wait.until(webDriver -> {
-                    for (WebElement candidate : webDriver.findElements(passwordLocator)) {
-                        if (candidate.isDisplayed() && candidate.isEnabled()) {
-                            return candidate;
-                        }
+        enterTextWhenAvailable(passwordLocator, password, "password");
+    }
+
+    private void enterTextWhenAvailable(By locator, String value, String fieldName) {
+        WebDriverWait wait = new WebDriverWait(driver, LOGIN_WAIT);
+        wait.ignoring(StaleElementReferenceException.class);
+        wait.ignoring(ElementNotInteractableException.class);
+        wait.withMessage("Timed out entering the " + fieldName + " on the login page.");
+
+        try {
+            wait.until(webDriver -> {
+                for (WebElement candidate : webDriver.findElements(locator)) {
+                    if (candidate.isDisplayed() && candidate.isEnabled()) {
+                        candidate.clear();
+                        candidate.sendKeys(value);
+                        return true;
                     }
-                    return null;
-                });
-                passwordField.clear();
-                passwordField.sendKeys(password);
-                return;
-            } catch (StaleElementReferenceException | ElementNotInteractableException e) {
-                if (attempt == 3) {
-                    throw e;
                 }
-            } catch (TimeoutException e) {
-                throw new TimeoutException(
-                        "Password field was not found or enabled within 30 seconds. Current URL: "
-                                + driver.getCurrentUrl() + ", page title: " + driver.getTitle()
-                                + ". Check whether the login page advanced to the password step or the field is inside an iframe.",
-                        e);
-            }
+                return false;
+            });
+        } catch (TimeoutException e) {
+            throw new TimeoutException(
+                    "Could not enter the " + fieldName + " within " + LOGIN_WAIT.toSeconds()
+                            + " seconds. Current URL: " + driver.getCurrentUrl()
+                            + ", page title: " + driver.getTitle()
+                            + ". Check whether the login form is ready or the field is inside an iframe.",
+                    e);
         }
     }
 
-
     public void clickLogin() {
-        By loginButton = By.xpath("//button[@type='submit' and @label='Sign in']");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        // 1. Wait until the page is fully loaded
-        wait.until(webDriver -> "complete".equals(((JavascriptExecutor) webDriver).executeScript("return document.readyState")));
-        // 2. Wait until the login button is visible
-        WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(loginButton));
+        By loginButton = By.xpath("//button[normalize-space()='Sign in']");
+        WebDriverWait wait = new WebDriverWait(driver, LOGIN_WAIT);
+        wait.ignoring(StaleElementReferenceException.class);
+        wait.ignoring(ElementNotInteractableException.class);
+        wait.withMessage("Timed out waiting to click the Sign in button.");
 
-        // 3. Scroll button into the center of the viewport
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
-
-        // 4. Wait until the button is enabled
-        wait.until(ExpectedConditions.elementToBeClickable(loginButton));
-
-        // 5. Check whether another element is covering the button
-        wait.until(webDriver -> {WebElement element = webDriver.findElement(loginButton);
-
-            return (Boolean) ((JavascriptExecutor) webDriver).executeScript(
-                    "const rect = arguments[0].getBoundingClientRect();" +
-                            "const x = rect.left + rect.width / 2;" +
-                            "const y = rect.top + rect.height / 2;" +
-                            "const topElement = document.elementFromPoint(x, y);" +
-                            "return topElement === arguments[0] || " +
-                            "arguments[0].contains(topElement);",
-                    element);
-        });
-
-        // 6. Perform normal Selenium click
-        button = wait.until(ExpectedConditions.elementToBeClickable(loginButton));
-        button.click();
+        try {
+            wait.until(webDriver -> {
+                WebElement button = ExpectedConditions.elementToBeClickable(loginButton).apply(webDriver);
+                if (button == null) {
+                    return false;
+                }
+                ((JavascriptExecutor) webDriver).executeScript(
+                        "arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
+                button.click();
+                return true;
+            });
+        } catch (TimeoutException e) {
+            throw new TimeoutException(
+                    "Could not click the Sign in button within " + LOGIN_WAIT.toSeconds()
+                            + " seconds. Current URL: " + driver.getCurrentUrl()
+                            + ", page title: " + driver.getTitle(),
+                    e);
+        }
     }
 
     public boolean isDashboardDisplayed() {

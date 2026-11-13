@@ -720,9 +720,39 @@ public class StepsContainer {
             }
 
             if (uiRowIndex > 0) {
-                page.addGrnProductDetailRow();
+                page.addGrnProductDetailRow(uiRowIndex);
             }
             page.fillGrnProductDetailRow(uiRowIndex, rowValues);
+            log.info("Completed GRN Product Details row " + uiRowIndex);
+            uiRowIndex++;
+        }
+    }
+
+    private void fillGrnSecondProductDetails(
+            CommodityContractManagementPage page, List<Map<String, Object>> rows) {
+        int uiRowIndex = 0;
+        for (Map<String, Object> row : rows) {
+            if (row == null) {
+                throw new IllegalStateException("GRN product details contain a null row.");
+            }
+            Map<String, Object> rowValues = row;
+            String contractSI = grnProductValue(row, "contractSI");
+            if (contractSI != null && contractSI.startsWith("#")) {
+                rowValues = new java.util.LinkedHashMap<>(row);
+                rowValues.put("contractSI", resolve(contractSI));
+            }
+            for (String requiredField : List.of(
+                    "contractSI", "product", "season", "warehouseZone", "units", "packing", "grossQty", "netQty")) {
+                if (isBlank(grnProductValue(rowValues, requiredField))) {
+                    throw new IllegalStateException("GRN product row " + uiRowIndex
+                            + " is missing required test-data value '" + requiredField + "'.");
+                }
+            }
+
+            if (uiRowIndex > 0) {
+                page.addGrnProductDetailRow(uiRowIndex);
+            }
+            page.fillGrnSecondProductDetailRow(uiRowIndex, rowValues);
             log.info("Completed GRN Product Details row " + uiRowIndex);
             uiRowIndex++;
         }
@@ -1760,5 +1790,31 @@ public class StepsContainer {
      webDriverCommonLibrary.scrollIntoTheView(driver,radio);
      webDriverCommonLibrary.explicitWait(driver,radio);
      radio.click();
+    }
+
+    @Given("user fills multiple grn second product details for test case {string}")
+    public void userFillsMultipleGrnSecondProductDetailsForTestCase(String testCaseId) throws IOException {
+        webDriverCommonLibrary.waitForSetTime(SETTLE_PAUSE_MS);
+        try {
+            ContractTestData data = TestDataReader.getByTestCaseId(testCaseId);
+            List<Map<String, Object>> grnRows = data.getBatchDetails();
+            if (grnRows == null || grnRows.isEmpty()) {
+                grnRows = data.getGrnProductDetails();
+            }
+            if (grnRows != null && !grnRows.isEmpty()) {
+                fillGrnSecondProductDetails(getCommodityContractManagementPage(), grnRows);
+                return;
+            }
+            throw new IllegalStateException("No GRN product rows were configured for test case '"
+                    + testCaseId + "'. Add at least one row to batchDetails.");
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @Then("Click on remove row buttton in the {string} section")
+    public void clickOnRemoveRowButttonInTheSection(String arg0) {
+      WebElement button = driver.findElement(By.xpath("(//button[contains(@class,'p-button-danger')][.//span[contains(@class,'pi-times')]])[2]"));
+      button.click();
     }
 }

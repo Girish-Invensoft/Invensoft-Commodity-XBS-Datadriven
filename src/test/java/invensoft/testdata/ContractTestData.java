@@ -53,6 +53,7 @@ public class ContractTestData {
     private Map<String, Object> grnBasicDetails;
     private Map<String, Object> grnTruckDetails;
     private List<Map<String, Object>> grnProductDetails;
+    private List<Map<String, Object>> grnSecondProductDetails;
     private List<Map<String, Object>> batchDetails;
 
     // Bag marks: JSON array of objects
@@ -206,6 +207,10 @@ public class ContractTestData {
 
     public List<Map<String, Object>> getGrnProductDetails() {
         return grnProductDetails;
+    }
+
+    public List<Map<String, Object>> getGrnSecondProductDetails() {
+        return grnSecondProductDetails;
     }
 
     @JsonSetter("grnProductDetails")
